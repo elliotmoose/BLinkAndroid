@@ -1,4 +1,4 @@
-package javanesecoffee.com.blink;
+package javanesecoffee.com.blink.registration;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.util.BitSet;
+
+import javanesecoffee.com.blink.MoreInfo;
+import javanesecoffee.com.blink.R;
 
 public class FaceScanActivity extends AppCompatActivity {
     private static final int pic_id = 123;

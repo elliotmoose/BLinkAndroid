@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import javanesecoffee.com.blink.registration.RegComplete;
+
 import static javanesecoffee.com.blink.R.layout.more_info;
 
 public class MoreInfo extends AppCompatActivity {

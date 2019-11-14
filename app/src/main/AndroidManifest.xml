@@ -23,7 +23,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".RegisterActivity">
+            android:name=".registration.RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,9 +35,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".FaceScanActivity"></activity>
+        <activity android:name=".registration.FaceScanActivity"></activity>
         <activity android:name=".MoreInfo"></activity>
-        <activity android:name=".RegComplete"></activity>
+        <activity android:name=".registration.RegComplete"></activity>
         <activity android:name=".EventDescriptionActivity"></activity>
     </application>
 
