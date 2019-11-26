@@ -66,8 +66,6 @@ public class SocialFragment extends Fragment {
 
     public void initCards(){
         Log.d(TAG, "initCards: preparing recent contacts");
-
-
     }
 
 }

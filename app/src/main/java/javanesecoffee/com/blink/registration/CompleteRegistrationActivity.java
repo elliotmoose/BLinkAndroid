@@ -15,7 +15,7 @@ public class CompleteRegistrationActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.complete_reg);
+        setContentView(R.layout.activity_registration_confirmation);
         letsgo = findViewById(R.id.letsgo);
         letsgo.setOnClickListener(new View.OnClickListener() {
             @Override

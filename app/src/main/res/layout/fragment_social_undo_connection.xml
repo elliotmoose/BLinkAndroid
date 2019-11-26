@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="horizontal"
+    android:paddingStart="62dp"
+    android:paddingEnd="24dp"
+    tools:context=".social.SocialUndoConnectionFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/undoUsernameTextView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="@string/username"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorWhite"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="Undo"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="20sp" />
+
+</LinearLayout>

@@ -3,6 +3,7 @@ package javanesecoffee.com.blink.registration;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -137,6 +138,7 @@ public class LoginActivity extends BlinkActivity implements BLinkEventObserver {
 
     @Override
     public void onBLinkEventException(BLinkApiException exception, String taskId) {
+        Log.d("LOGIN_ACTIVITY", exception.toString());
         if(taskId == ApiCodes.TASK_LOGIN) {
             HideProgressDialog();
             new AlertDialog.Builder(LoginActivity.this).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();

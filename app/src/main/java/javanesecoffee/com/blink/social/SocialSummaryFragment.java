@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,27 +47,7 @@ public class SocialSummaryFragment extends Fragment implements ImageLoadObserver
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        editUsername = view.findViewById(R.id.fieldSocialUsername);
-        editProfilePic = view.findViewById(R.id.social_profile_pic);
-        viewProfile = view.findViewById(R.id.fieldSocialViewProfile);
-
-
-        recyclerView_NameCard = view.findViewById(R.id.socialNameCardRecycler);
-        recyclerView_SmallCard = view.findViewById(R.id.socialSmallCardRecycler);
-
-        //view profile button
-        viewProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (getActivity(), UserDetailsActivity.class);
-                intent.putExtra(IntentExtras.USER.USER_TYPE_KEY,IntentExtras.USER.USER_TYPE_SELF);
-                startActivity(intent);
-            }
-        });
-
-        initRecyclerView();
-        UpdateUserData();
+        loadSocialSummary(view, savedInstanceState);
     }
 
     private void initRecyclerView(){
@@ -121,6 +102,37 @@ public class SocialSummaryFragment extends Fragment implements ImageLoadObserver
 
     @Override
     public void onImageLoadFailed(BLinkApiException exception) {
+        UpdateUserData();
+    }
+    public void loadSocialSummary(@NonNull final View view, @Nullable final Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        editUsername = view.findViewById(R.id.fieldSocialUsername);
+        editProfilePic = view.findViewById(R.id.social_profile_pic);
+        viewProfile = view.findViewById(R.id.fieldSocialViewProfile);
+
+
+        recyclerView_NameCard = view.findViewById(R.id.socialNameCardRecycler);
+        recyclerView_SmallCard = view.findViewById(R.id.socialSmallCardRecycler);
+
+        //view profile button
+        viewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (getActivity(), UserDetailsActivity.class);
+                intent.putExtra(IntentExtras.USER.USER_TYPE_KEY,IntentExtras.USER.USER_TYPE_SELF);
+                startActivity(intent);
+            }
+        });
+        final SwipeRefreshLayout swipeRefreshLayoutSocial2 = getView().findViewById(R.id.swipeRefreshSocial2);
+        swipeRefreshLayoutSocial2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadSocialSummary(view, savedInstanceState);
+                swipeRefreshLayoutSocial2.setRefreshing(false);
+            }
+        });
+
+        initRecyclerView();
         UpdateUserData();
     }
 }
