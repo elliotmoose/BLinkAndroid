@@ -112,8 +112,8 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
         AdapterView.OnItemClickListener temp = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println(events.get(position));
-                Toast.makeText(getContext(), String.valueOf(events.get(position)), Toast.LENGTH_SHORT).show();
+                //System.out.println(events.get(position));
+                //Toast.makeText(getContext(), String.valueOf(events.get(position)), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent (getActivity(), EventDetailActivity.class);
                 intent.putExtra(IntentExtras.EVENT.EVENT_ID_KEY,String.valueOf(events.get(position).getEvent_id()));
                 intent.putExtra(IntentExtras.EVENT.EVENT_TYPE_KEY,type.toString());
