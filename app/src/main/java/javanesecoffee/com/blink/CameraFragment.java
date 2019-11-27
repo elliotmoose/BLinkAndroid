@@ -59,7 +59,6 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         UserManager.getInstance().deregisterObserver(this);
         ConnectionsManager.getInstance().deregisterObserver(this);
     }

@@ -53,7 +53,7 @@ public class SocialTabCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soci
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
-
+        final ViewHolder fholder = holder;
         holder.user = users.get(i);
         holder.UpdateData();
 
@@ -62,11 +62,12 @@ public class SocialTabCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soci
 
             @Override
             public void onClick(View view) {
+                String username = fholder.user.getUsername();
                 Log.d(TAG, "onClick: clicked on view profile");
                 Toast.makeText(sCardContext, "loading user profile", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(sCardContext, UserDetailsActivity.class);
                 intent.putExtra(IntentExtras.USER.USER_TYPE_KEY, IntentExtras.USER.USER_TYPE_EXPLORE);
-                //intent.putExtra(IntentExtras.USER.USER_NAME_KEY, holder.cardUsername);
+                intent.putExtra(IntentExtras.USER.USER_NAME_KEY, username);
                 sCardContext.startActivity(intent);
             }
         });

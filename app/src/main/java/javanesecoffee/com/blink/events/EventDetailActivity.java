@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,12 +26,18 @@ import javanesecoffee.com.blink.entities.Event;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.EventManager;
+import javanesecoffee.com.blink.managers.UserManager;
 import javanesecoffee.com.blink.social.SocialNameCard_RecyclerViewAdapter;
 import javanesecoffee.com.blink.social.SocialSummaryFragment;
 import javanesecoffee.com.blink.social.SocialTabCard_RecyclerViewAdapter;
 
 public class EventDetailActivity extends AppCompatActivity implements ImageLoadObserver {
+    User currentUser;
     Event currentEvent;
+    ArrayList<Event> eventArray;
+    String eventType;
+    String eventID;
+    int eventPosition;
 
     TextView eventName;
     TextView eventDate;
@@ -44,7 +51,7 @@ public class EventDetailActivity extends AppCompatActivity implements ImageLoadO
     RecyclerView eventTags;
     RecyclerView eventAlsoAttending;
 
-    Event EVENT_KEY;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +66,6 @@ public class EventDetailActivity extends AppCompatActivity implements ImageLoadO
         eventPrice = findViewById(R.id.event_detail_price);
         eventDescription = findViewById(R.id.event_detail_description);
 
-
         //button
         eventRegister = findViewById(R.id.event_detail_register_button);
 
@@ -67,10 +73,39 @@ public class EventDetailActivity extends AppCompatActivity implements ImageLoadO
         eventTags = findViewById(R.id.event_detail_tags);
         eventAlsoAttending = findViewById(R.id.event_also_attending_profile_pic);
 
+        currentUser = UserManager.getLoggedInUser();
+
         Intent intent = getIntent();
-        if (intent.hasExtra(String.valueOf(EVENT_KEY))) {
-            currentEvent = EVENT_KEY;
+        eventID = intent.getStringExtra(IntentExtras.EVENT.EVENT_ID_KEY);
+        eventType = intent.getStringExtra(IntentExtras.EVENT.EVENT_TYPE_KEY);
+        eventPosition = intent.getIntExtra(IntentExtras.EVENT.EVENT_POSITION_KEY,0);
+
+        if (eventID != null) {
+            eventArray = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType));
+            currentEvent = eventArray.get(eventPosition);
+
+            /*switch (eventType){
+                case IntentExtras.EVENT.EVENT_TYPE_EXPLORE:
+                    eventArray = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType));
+                    currentEvent = eventArray.get(eventPosition);
+                    break;
+                case IntentExtras.EVENT.EVENT_TYPE_UPCOMING:
+                    eventArray = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType));
+                    currentEvent = eventArray.get(eventPosition);
+                    break;
+                case IntentExtras.EVENT.EVENT_TYPE_PAST:
+        }*/
         }
+
+        /*eventRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(EventDetailActivity.this);
+
+            }
+        });*/
+
+
 
         UpdateData();
         //initRecyclerView();

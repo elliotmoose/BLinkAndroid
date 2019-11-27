@@ -2,10 +2,12 @@ package javanesecoffee.com.blink.social;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,10 +42,7 @@ public class SocialAllContactsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        recyclerView_NameCard = view.findViewById(R.id.socialNameCardRecycler_all);
-
-        initRecyclerView();
+        loadAllContacts(view, savedInstanceState);
     }
 
     private void initRecyclerView(){
@@ -51,8 +50,35 @@ public class SocialAllContactsFragment extends Fragment {
 
         ArrayList<User> allConnections= ConnectionsManager.getInstance().getAllConnections();
         SocialNameCard_RecyclerViewAdapter nameCard_adapter = new SocialNameCard_RecyclerViewAdapter(allConnections, getActivity());
+        VerticalSpaceItemDecoration spaceDecoration = new VerticalSpaceItemDecoration(40);
+        recyclerView_NameCard.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView_NameCard.setAdapter(nameCard_adapter);
+    }
 
-        recyclerView_NameCard.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+    public class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
+
+        private final int space;
+
+        public VerticalSpaceItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.bottom = space;
+        }
+    }
+    public void loadAllContacts(@NonNull final View view, @Nullable final Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView_NameCard = view.findViewById(R.id.socialNameCardRecycler_all);
+        initRecyclerView();
+        final SwipeRefreshLayout swipeRefreshLayoutSocial = getView().findViewById(R.id.swipeRefreshSocial);
+        swipeRefreshLayoutSocial.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadAllContacts(view, savedInstanceState);
+                swipeRefreshLayoutSocial.setRefreshing(false);
+            }
+        });
     }
 }

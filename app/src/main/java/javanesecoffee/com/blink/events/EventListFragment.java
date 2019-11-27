@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,25 +74,8 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        eventListView = getView().findViewById(R.id.eventListView);
-        AdapterView.OnItemClickListener temp = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO complete this function to call eventDescriptionActivity wrt events.get(position)
-                System.out.println(events.get(position));
-                Toast.makeText(getContext(), String.valueOf(events.get(position)), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent (getActivity(), EventDetailActivity.class);
-                intent.putExtra(String.valueOf(EVENT_KEY),String.valueOf(events.get(position)));
-                startActivity(intent);
-            }
-        };
-
-        eventListView.setOnItemClickListener(temp);
-        eventListAdapter = new EventsListAdapter(getContext(), R.layout.fragment_event, events);
-        eventListView.setAdapter(eventListAdapter);
-        UpdateEventList();
+    public void onViewCreated(@NonNull View view, @Nullable final Bundle savedInstanceState) {
+        loadLayout(view, savedInstanceState);
     }
 
     public void SetEvents(ArrayList<Event> newEvents) {
@@ -121,5 +105,34 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
     @Override
     public void onBLinkEventException(BLinkApiException exception, String taskId) {
 
+    }
+    public void loadLayout(@NonNull final View view, @Nullable final Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        eventListView = getView().findViewById(R.id.eventListView);
+        AdapterView.OnItemClickListener temp = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //System.out.println(events.get(position));
+                //Toast.makeText(getContext(), String.valueOf(events.get(position)), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent (getActivity(), EventDetailActivity.class);
+                intent.putExtra(IntentExtras.EVENT.EVENT_ID_KEY,String.valueOf(events.get(position).getEvent_id()));
+                intent.putExtra(IntentExtras.EVENT.EVENT_TYPE_KEY,type.toString());
+                intent.putExtra(IntentExtras.EVENT.EVENT_POSITION_KEY,position);
+                startActivity(intent);
+            }
+        };
+        final SwipeRefreshLayout swipeRefreshLayout = getView().findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh(){
+                loadLayout(view, savedInstanceState);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        eventListView.setOnItemClickListener(temp);
+        eventListAdapter = new EventsListAdapter(getContext(), R.layout.fragment_event, events);
+        eventListView.setAdapter(eventListAdapter);
+        UpdateEventList();
     }
 }

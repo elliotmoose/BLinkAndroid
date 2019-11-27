@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/gradient_rect"
-    tools:context=".social.UserDetailsActivity">
+    tools:context=".social.UserDetailsActivity"
+    >
 
     <!--If company name too long, might
     need to change font size ie give a condition-->

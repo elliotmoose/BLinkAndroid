@@ -40,11 +40,12 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".registration.FaceScanActivity" />
-        <activity android:name=".registration.MoreInfoActivity" />
-        <activity android:name=".registration.CompleteRegistrationActivity" />
-        <activity android:name=".events.MainActivity" />
-        <activity android:name=".social.UserDetailsActivity" />
+        <activity android:name=".registration.FaceScanActivity"></activity>
+        <activity android:name=".registration.MoreInfoActivity"></activity>
+        <activity android:name=".registration.CompleteRegistrationActivity"></activity>
+        <activity android:name=".events.MainActivity"></activity>
+        <activity android:name=".events.EventDetailActivity"></activity>
+        <activity android:name=".social.UserDetailsActivity"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

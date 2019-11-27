@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:fontFamily="@font/montserrat"
         android:gravity="center"
-        android:text="@username"
+        android:text="@string/username"
         android:textAlignment="viewStart"
         android:textColor="@color/colorWhite"
         android:textSize="22sp" />
