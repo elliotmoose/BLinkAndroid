@@ -33,6 +33,9 @@ import static android.support.constraint.Constraints.TAG;
 
 public class SocialSummaryFragment extends Fragment implements ImageLoadObserver {
 
+    SocialNameCard_RecyclerViewAdapter nameCard_adapter;
+    SocialTabCard_RecyclerViewAdapter smallCard_adapter;
+
     CircleImageView editProfilePic;
     TextView editUsername;
     Button viewProfile;
@@ -48,13 +51,15 @@ public class SocialSummaryFragment extends Fragment implements ImageLoadObserver
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         loadSocialSummary(view, savedInstanceState);
+        initRecyclerView();
+        UpdateUserData();
     }
 
     private void initRecyclerView(){
         ArrayList<User> recentConnections = ConnectionsManager.getInstance().getRecentConnections();
         ArrayList<User> recommendedConnections = ConnectionsManager.getInstance().getRecommendedConnections();
-        SocialNameCard_RecyclerViewAdapter nameCard_adapter = new SocialNameCard_RecyclerViewAdapter(recentConnections, getActivity());
-        SocialTabCard_RecyclerViewAdapter smallCard_adapter = new SocialTabCard_RecyclerViewAdapter(recommendedConnections,getActivity());
+        nameCard_adapter = new SocialNameCard_RecyclerViewAdapter(recentConnections, getActivity());
+        smallCard_adapter = new SocialTabCard_RecyclerViewAdapter(recommendedConnections,getActivity());
 
         recyclerView_NameCard.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
         recyclerView_SmallCard.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
@@ -95,6 +100,12 @@ public class SocialSummaryFragment extends Fragment implements ImageLoadObserver
         }
     }
 
+    private void UpdateData() {
+        UpdateUserData();
+        smallCard_adapter.notifyDataSetChanged();
+        nameCard_adapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onImageLoad(Bitmap bitmap) {
         UpdateUserData();
@@ -132,7 +143,6 @@ public class SocialSummaryFragment extends Fragment implements ImageLoadObserver
             }
         });
 
-        initRecyclerView();
-        UpdateUserData();
+        UpdateData();
     }
 }
