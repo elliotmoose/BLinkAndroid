@@ -64,6 +64,14 @@ public class ConnectionsManager extends Manager {
         }
     }
 
+    public void undoSuccessForConnectionId(String connection_id) {
+        for(int i=0; i<justConnected.size(); i++) {
+            if(justConnected.get(i).getConnection_id().equals(connection_id)) {
+                justConnected.remove(i);
+            }
+        }
+    }
+
     public User getUserFromConnections(String username) {
         for (User user: ConnectionsManager.getInstance().allConnections) {
             if(username.equals(user.getUsername())) {
@@ -126,6 +134,19 @@ public class ConnectionsManager extends Manager {
 
                     //both api calls will return a list of the recently connected to update the ui
                 case ApiCodes.TASK_UNDO_CONNECT:
+                    boolean undoSuccess = ResponseParser.ResponseIsSuccess(response);
+                    if(undoSuccess)
+                    {
+                        try {
+                            String connection_id = response.getString("data");
+                            ConnectionsManager.getInstance().undoSuccessForConnectionId(connection_id);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            throw BLinkApiException.MALFORMED_DATA_EXCEPTION();
+                        }
+                    }
+                    break;
                 case ApiCodes.TASK_CONNECT_USERS:
                     try {
                         boolean connectSuccess = ResponseParser.ResponseIsSuccess(response);
@@ -137,7 +158,6 @@ public class ConnectionsManager extends Manager {
                                 justConnected.add(new Connection(array.getJSONObject(i)));
                             }
 
-                            Log.d("CONNECTIONS_MANAGER", justConnected.size() + "");
                         }
                     } catch (BLinkApiException e) {
                         e.printStackTrace();

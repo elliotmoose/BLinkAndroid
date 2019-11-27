@@ -20,7 +20,7 @@ public class UndoConnectTask extends BLinkAsyncTask{
         String connection_id = params[0];
 
         RequestHandler request_handler = RequestHandler.PostRequestHandler(Endpoints.UNDO_CONNECT);
-        request_handler.addFormField("connection_id", connection_id);
+        request_handler.addPostField("connection_id", connection_id);
         return request_handler.sendPostRequest();
     }
 }

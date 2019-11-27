@@ -2,6 +2,8 @@ package javanesecoffee.com.blink;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,6 +34,8 @@ import java.util.Calendar;
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.BLinkEventObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
+import javanesecoffee.com.blink.constants.BuildModes;
+import javanesecoffee.com.blink.constants.Config;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.Connection;
 import javanesecoffee.com.blink.entities.User;
@@ -70,6 +75,36 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
         selfieButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
+                if(Config.buildMode == BuildModes.TEST_CONNECT) {
+                    //register face
+                    ShowProgressDialog("Testing Connections...");
+                    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.sidelliot);
+                    FileOutputStream fos = null;
+
+                    String pictureFileName = "TestConnect" + Calendar.getInstance().getTimeInMillis();
+                    File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    imageFile = new File(storageDir,pictureFileName);
+
+                    try {
+                        fos = new FileOutputStream(imageFile);
+                        bm.compress(Bitmap.CompressFormat.JPEG,100,fos);
+                        fos.close();
+                    }
+                    catch (IOException e) {
+                        Log.e("app",e.getMessage());
+                        if (fos != null) {
+                            try {
+                                fos.close();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                    ConnectionsManager.getInstance().ConnectUsers(imageFile, "mooselliot");
+                    return;
+                }
+
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 try {
                     //create file to store image in
@@ -192,5 +227,10 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
             HideProgressDialog();
             new AlertDialog.Builder(getActivity()).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();
         }
+    }
+
+    public String getURLForResource (int resourceId) {
+        //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
+        return Uri.parse("drawable://"+R.class.getPackage().getName()+"/" +resourceId).toString();
     }
 }

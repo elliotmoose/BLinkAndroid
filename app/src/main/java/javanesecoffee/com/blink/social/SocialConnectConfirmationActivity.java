@@ -1,15 +1,21 @@
 package javanesecoffee.com.blink.social;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javanesecoffee.com.blink.R;
@@ -31,8 +37,12 @@ public class SocialConnectConfirmationActivity extends AppCompatActivity impleme
 
         ImageView imageView = findViewById(R.id.connectImageView);
         RecyclerView newConnectionsRecyclerView = findViewById(R.id.newConnectionsRecyclerView);
+        Button button = findViewById(R.id.connectConfirmationButton);
 
-        String path = getIntent().getStringExtra(IntentExtras.CONNECT.IMAGE_PATH_KEY);
+
+
+
+        final String path = getIntent().getStringExtra(IntentExtras.CONNECT.IMAGE_PATH_KEY);
         if(path != null) {
             Bitmap image = BitmapFactory.decodeFile(path);
             if(image != null) {
@@ -40,10 +50,20 @@ public class SocialConnectConfirmationActivity extends AppCompatActivity impleme
             }
         }
 
-        ArrayList<Connection> connections = ConnectionsManager.getInstance().getJustConnected();
-         adapter = new SocialUndoConnectionsRecyclerViewAdapter(connections, this);
-        newConnectionsRecyclerView.setAdapter(adapter);
+        final Activity activity = this;
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                activity.finish();
+                File file = new File(path);
+                file.delete();
+            }
+        });
 
+        adapter = new SocialUndoConnectionsRecyclerViewAdapter(ConnectionsManager.getInstance().getJustConnected(), this);
+        newConnectionsRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+//        SocialSummaryFragment.HorizontalSpaceItemDecoration spaceDecoration = new SocialSummaryFragment.HorizontalSpaceItemDecoration(40);
+        newConnectionsRecyclerView.setAdapter(adapter);
         ConnectionsManager.getInstance().registerObserver(this);
     }
 
@@ -54,6 +74,7 @@ public class SocialConnectConfirmationActivity extends AppCompatActivity impleme
     }
 
     private void UpdateData() {
+        new AlertDialog.Builder(this).setTitle("Connections Left").setMessage(ConnectionsManager.getInstance().getJustConnected().size() +"").setPositiveButton("Ok", null).show();
         adapter.notifyDataSetChanged();
     }
 

@@ -43,7 +43,7 @@ public class LoginActivity extends BlinkActivity implements BLinkEventObserver {
         EditText usernameField = findViewById(R.id.loginUsername);
         EditText passwordField = findViewById(R.id.loginPassword);
 
-        if(Config.buildMode == BuildModes.TEST_REGISTRATION)
+        if(Config.buildMode == BuildModes.TEST_REGISTRATION || Config.buildMode == BuildModes.TEST_CONNECT)
         {
             usernameField.setText("mooselliot");
             passwordField.setText("12345");
