@@ -18,12 +18,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
+import javanesecoffee.com.blink.api.BLinkEventObserver;
 import javanesecoffee.com.blink.api.ImageLoadObserver;
+import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
@@ -31,7 +35,10 @@ import javanesecoffee.com.blink.managers.UserManager;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class SocialSummaryFragment extends Fragment implements ImageLoadObserver {
+public class SocialSummaryFragment extends Fragment implements ImageLoadObserver, BLinkEventObserver {
+
+    SocialNameCard_RecyclerViewAdapter nameCard_adapter;
+    SocialTabCard_RecyclerViewAdapter smallCard_adapter;
 
     CircleImageView editProfilePic;
     TextView editUsername;
@@ -39,22 +46,33 @@ public class SocialSummaryFragment extends Fragment implements ImageLoadObserver
     RecyclerView recyclerView_NameCard;
     RecyclerView recyclerView_SmallCard;
 
+    SwipeRefreshLayout swipeRefreshLayout;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        ConnectionsManager.getInstance().registerObserver(this);
         return inflater.inflate(R.layout.fragment_social_summary, container, false);
+    }
+
+    @Override
+    public void onDestroy() {
+        ConnectionsManager.getInstance().deregisterObserver(this);
+        super.onDestroy();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         loadSocialSummary(view, savedInstanceState);
+        initRecyclerView();
+        UpdateUserData();
     }
 
     private void initRecyclerView(){
         ArrayList<User> recentConnections = ConnectionsManager.getInstance().getRecentConnections();
         ArrayList<User> recommendedConnections = ConnectionsManager.getInstance().getRecommendedConnections();
-        SocialNameCard_RecyclerViewAdapter nameCard_adapter = new SocialNameCard_RecyclerViewAdapter(recentConnections, getActivity());
-        SocialTabCard_RecyclerViewAdapter smallCard_adapter = new SocialTabCard_RecyclerViewAdapter(recommendedConnections,getActivity());
+        nameCard_adapter = new SocialNameCard_RecyclerViewAdapter(recentConnections, getActivity());
+        smallCard_adapter = new SocialTabCard_RecyclerViewAdapter(recommendedConnections,getActivity());
 
         recyclerView_NameCard.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
         recyclerView_SmallCard.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
@@ -95,6 +113,17 @@ public class SocialSummaryFragment extends Fragment implements ImageLoadObserver
         }
     }
 
+    private void UpdateData() {
+        UpdateUserData();
+        if(smallCard_adapter != null) {
+            smallCard_adapter.notifyDataSetChanged();
+        }
+
+        if(nameCard_adapter != null) {
+            nameCard_adapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onImageLoad(Bitmap bitmap) {
         UpdateUserData();
@@ -123,16 +152,31 @@ public class SocialSummaryFragment extends Fragment implements ImageLoadObserver
                 startActivity(intent);
             }
         });
-        final SwipeRefreshLayout swipeRefreshLayoutSocial2 = getView().findViewById(R.id.swipeRefreshSocial2);
-        swipeRefreshLayoutSocial2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRefreshLayout = getView().findViewById(R.id.swipeRefreshSocial2);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 loadSocialSummary(view, savedInstanceState);
-                swipeRefreshLayoutSocial2.setRefreshing(false);
+                swipeRefreshLayout.setRefreshing(false);
+                ConnectionsManager.getInstance().LoadAllConnections();
+                UpdateData();
             }
         });
 
-        initRecyclerView();
-        UpdateUserData();
+    }
+
+    @Override
+    public void onBLinkEventTriggered(JSONObject response, String taskId) throws BLinkApiException {
+        if(taskId == ApiCodes.TASK_LOAD_CONNECTIONS) {
+            UpdateData();
+            if(swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }
+    }
+
+    @Override
+    public void onBLinkEventException(BLinkApiException exception, String taskId) {
+
     }
 }
