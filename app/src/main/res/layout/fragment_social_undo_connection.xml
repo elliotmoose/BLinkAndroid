@@ -22,7 +22,7 @@
         android:textSize="22sp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/undoButton"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:background="@android:color/transparent"

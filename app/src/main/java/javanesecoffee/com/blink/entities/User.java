@@ -3,15 +3,9 @@ package javanesecoffee.com.blink.entities;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
@@ -133,7 +127,8 @@ public class User implements ImageLoadObserver {
     }
 
     public void notifyAllObserversImageLoaded(Bitmap bitmap) {
-        for (ImageLoadObserver o: observers) {
+        for (int i=0; i<observers.size(); i++) {
+            ImageLoadObserver o = observers.get(i);
             o.onImageLoad(bitmap);
             deregisterObserver(o); //only notify once
         }

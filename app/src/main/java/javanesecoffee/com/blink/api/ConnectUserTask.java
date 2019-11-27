@@ -34,7 +34,7 @@ public class ConnectUserTask extends BLinkAsyncTask{
     @Override
     protected void onTaskComplete(JSONObject jsonObject){
         if(image_file != null){
-            image_file.delete();
+//            image_file.delete();
         }
     }
 }

@@ -18,4 +18,8 @@ public class IntentExtras {
         public static final String EVENT_TYPE_UPCOMING = "UPCOMING";
         public static final String EVENT_TYPE_PAST = "PAST_EVENTS";
     }
+
+    public static class CONNECT {
+        public static final String IMAGE_PATH_KEY = "CONNECT_IMAGE_PATH";
+    }
 }

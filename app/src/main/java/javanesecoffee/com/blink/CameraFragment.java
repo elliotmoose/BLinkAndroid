@@ -19,20 +19,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.BLinkEventObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
+import javanesecoffee.com.blink.constants.IntentExtras;
+import javanesecoffee.com.blink.entities.Connection;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.helpers.ImageHelper;
 import javanesecoffee.com.blink.helpers.ResponseParser;
+import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.UserManager;
 import javanesecoffee.com.blink.registration.FaceScanActivity;
+import javanesecoffee.com.blink.social.SocialConnectConfirmationActivity;
 
 public class CameraFragment extends Fragment implements BLinkEventObserver {
     private File imageFile;
@@ -43,6 +50,8 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
         InitProgressDialog();
 
         UserManager.getInstance().registerObserver(this);
+        ConnectionsManager.getInstance().registerObserver(this);
+
 
         return inflater.inflate(R.layout.fragment_camera, container, false);
     }
@@ -51,6 +60,7 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
     public void onDestroyView() {
         super.onDestroyView();
         UserManager.getInstance().deregisterObserver(this);
+        ConnectionsManager.getInstance().deregisterObserver(this);
     }
 
     @Override
@@ -117,7 +127,7 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
 
             //register face
             ShowProgressDialog("Making Connections...");
-            UserManager.ConnectUsers(ImageHelper.RotateFileIfNeeded(imageFile), username);
+            ConnectionsManager.getInstance().ConnectUsers(ImageHelper.RotateFileIfNeeded(imageFile), username);
         }
     }
 
@@ -151,6 +161,12 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
         }
     }
 
+    private void ShowConfirmationScreen(String image_path) {
+        Intent intent = new Intent(getContext(), SocialConnectConfirmationActivity.class);
+        intent.putExtra(IntentExtras.CONNECT.IMAGE_PATH_KEY, image_path);
+        startActivity(intent);
+    }
+
     @Override
     public void onBLinkEventTriggered(JSONObject response, String taskId) throws BLinkApiException {
         if(taskId == ApiCodes.TASK_CONNECT_USERS) {
@@ -159,7 +175,13 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
             boolean success = ResponseParser.ResponseIsSuccess(response);
             if(success)
             {
-//                NextActivity();
+                if(imageFile != null) {
+                    ShowConfirmationScreen(imageFile.getPath());
+                }
+                else {
+                    //if we can't show the image, we'll default to saying it has connected
+                    throw new BLinkApiException("NO_IMAGE","Success!", "You have been connected!");
+                }
             }
         }
     }
