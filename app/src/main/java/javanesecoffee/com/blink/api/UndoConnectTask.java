@@ -10,31 +10,17 @@ import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.Endpoints;
 import javanesecoffee.com.blink.helpers.RequestHandler;
 
-public class ConnectUserTask extends BLinkAsyncTask{
+public class UndoConnectTask extends BLinkAsyncTask{
 
-    private File image_file;
-
-    public ConnectUserTask(AsyncResponseHandler responseHandler){
-        super(responseHandler, ApiCodes.TASK_CONNECT_USERS);
+    public UndoConnectTask(AsyncResponseHandler responseHandler){
+        super(responseHandler, ApiCodes.TASK_UNDO_CONNECT);
     }
     @Override
     JSONObject executeMainTask(String... params) throws IOException, JSONException, BLinkApiException {
-        String username = params[0];
-        String image_path = params[1];
+        String connection_id = params[0];
 
-        image_file = new File(image_path);
-
-        RequestHandler request_handler = RequestHandler.FormRequestHandler(Endpoints.CONNECT_USERS);
-        request_handler.addFormField("username", username);
-        request_handler.addFilePart("image_file", image_file);
-
-        return request_handler.sendFormDataRequest();
-    }
-
-    @Override
-    protected void onTaskComplete(JSONObject jsonObject){
-        if(image_file != null){
-//            image_file.delete();
-        }
+        RequestHandler request_handler = RequestHandler.PostRequestHandler(Endpoints.UNDO_CONNECT);
+        request_handler.addFormField("connection_id", connection_id);
+        return request_handler.sendPostRequest();
     }
 }

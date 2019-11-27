@@ -12,5 +12,6 @@ public class Endpoints {
     public static final String LOAD_EVENT_LIST = "getEvents";
     public static final String LOAD_CONNECTIONS_LIST = "getConnectionsSummary";
     public static final String CONNECT_USERS = "connect";
+    public static final String UNDO_CONNECT = "undoConnect";
 
 }
