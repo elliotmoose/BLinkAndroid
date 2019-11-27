@@ -1,5 +1,7 @@
 package javanesecoffee.com.blink.managers;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -134,6 +136,8 @@ public class ConnectionsManager extends Manager {
                             for(int i=0;i<array.length(); i++) {
                                 justConnected.add(new Connection(array.getJSONObject(i)));
                             }
+
+                            Log.d("CONNECTIONS_MANAGER", justConnected.size() + "");
                         }
                     } catch (BLinkApiException e) {
                         e.printStackTrace();

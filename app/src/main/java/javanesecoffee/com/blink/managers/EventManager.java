@@ -66,7 +66,6 @@ public class EventManager extends Manager {
     @Override //UserManager on async task complete, call super to notify observers
     public void onAsyncTaskComplete(JSONObject response, String taskId) {
 
-
         switch (taskId)
         {
             case ApiCodes.TASK_LOAD_PARTICIPANT_LIST:
