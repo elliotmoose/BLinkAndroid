@@ -23,13 +23,6 @@ import javanesecoffee.com.blink.helpers.ResponseParser;
 
 
 public class UserManager extends Manager{
-    //TODO update ROOT_URL
-//    private static final String ROOT_URL = "http://10.12.185.214";
-    private static final String ROOT_URL = "http://192.168.1.88";
-    private static final String LOGIN_URL = ROOT_URL+"/login";
-    private static final String REGISTER_URL = ROOT_URL+"/register";
-    private static final String REGISTER_FACE_URL = ROOT_URL+"/registerFace";
-    private static final String CONNECT_URL = ROOT_URL+"/connect";
 
     public static UserManager singleton = new UserManager();
     public static UserManager getInstance() {
@@ -37,11 +30,6 @@ public class UserManager extends Manager{
     }
 
     private static User loggedInUser;
-    private static ArrayList<String> user_recognised = new ArrayList<>();
-
-    public static void setUser_recognised(ArrayList<String> user_recognised) {
-        UserManager.user_recognised = user_recognised;
-    }
 
     public static User getLoggedInUser() {
         return loggedInUser;
@@ -98,10 +86,6 @@ public class UserManager extends Manager{
         }
     }
 
-    public static void ConnectUsers(File image_file, String username){
-        ConnectUserTask task = new ConnectUserTask(getInstance());
-        task.execute(username, image_file.getPath());
-    }
 
 
     @Override //UserManager on async task complete, call super to notify observers
@@ -144,58 +128,11 @@ public class UserManager extends Manager{
                     e.printStackTrace();
                 }
                 break;
-            case ApiCodes.TASK_CONNECT_USERS:
-                try {
-                    boolean success = ResponseParser.ResponseIsSuccess(response);
-                    if(success)
-                    {
 
-                        JSONObject data = ResponseParser.DataFromResponse(response);
-                        JSONArray users_regconised = data.getJSONArray("data");
-                        setUser_recognised(ConnectUser(users_regconised)); //this update the latest
-                        //TODO SEND A SECOND REQUEST HERE TO UPDATE THE RECENT USER
-
-                    }
-                } catch (BLinkApiException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                break;
             default:
                 Log.d("UserManager", "Unhandled Async Task Completion");
         }
 
         super.onAsyncTaskComplete(response, taskId); //notify observers
     }
-
-    public ArrayList<String> ConnectUser(JSONArray json_array){
-        ArrayList<String> connected_user = new ArrayList<>();
-        for(int i = 0; i < json_array.length(); i++){
-            try {
-                connected_user.add(json_array.getString(i));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return connected_user;
-    }
-
-//    public static void Connect(String username, File image_file) throws BLinkApiException{
-//        try {
-//            RequestHandler register_req_handler = RequestHandler.FormRequestHandler(CONNECT_URL);
-//            register_req_handler.addFormField("username", username);
-//            register_req_handler.addFilePart("image_file", image_file);
-//            register_req_handler.sendFormDataRequest();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            throw new BLinkApiException("REGISTER_FACE_FAILED", "Request Failed");
-//        }
-//        catch (JSONException e) {
-//            e.printStackTrace();
-//            throw BLinkApiException.MALFORMED_DATA_EXCEPTION();
-//        }
-//    }
 }

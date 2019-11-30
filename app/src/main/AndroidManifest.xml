@@ -25,7 +25,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
+        >
         <activity android:name=".social.SocialConnectConfirmationActivity"></activity>
         <activity android:name=".registration.RegisterActivity">
             <intent-filter>

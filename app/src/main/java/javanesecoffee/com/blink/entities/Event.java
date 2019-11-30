@@ -2,7 +2,6 @@ package javanesecoffee.com.blink.entities;
 
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.widget.EditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -121,7 +120,8 @@ public class Event implements ImageLoadObserver {
     }
 
     public void notifyAllObserversImageLoaded(Bitmap bitmap) {
-        for (ImageLoadObserver o: observers) {
+        for (int i=0; i<observers.size(); i++) {
+            ImageLoadObserver o = observers.get(i);
             o.onImageLoad(bitmap);
             deregisterObserver(o); //only notify once
         }

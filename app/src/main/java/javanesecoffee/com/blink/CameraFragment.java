@@ -2,6 +2,8 @@ package javanesecoffee.com.blink;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,20 +21,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.BLinkEventObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
+import javanesecoffee.com.blink.constants.BuildModes;
+import javanesecoffee.com.blink.constants.Config;
+import javanesecoffee.com.blink.constants.IntentExtras;
+import javanesecoffee.com.blink.entities.Connection;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.helpers.ImageHelper;
 import javanesecoffee.com.blink.helpers.ResponseParser;
+import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.UserManager;
 import javanesecoffee.com.blink.registration.FaceScanActivity;
+import javanesecoffee.com.blink.social.SocialConnectConfirmationActivity;
 
 public class CameraFragment extends Fragment implements BLinkEventObserver {
     private File imageFile;
@@ -43,6 +55,8 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
         InitProgressDialog();
 
         UserManager.getInstance().registerObserver(this);
+        ConnectionsManager.getInstance().registerObserver(this);
+
 
         return inflater.inflate(R.layout.fragment_camera, container, false);
     }
@@ -51,6 +65,7 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
     public void onDestroyView() {
         super.onDestroyView();
         UserManager.getInstance().deregisterObserver(this);
+        ConnectionsManager.getInstance().deregisterObserver(this);
     }
 
     @Override
@@ -60,6 +75,36 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
         selfieButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
+                if(Config.buildMode == BuildModes.TEST_CONNECT) {
+                    //register face
+                    ShowProgressDialog("Testing Connections...");
+                    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.sidelliot);
+                    FileOutputStream fos = null;
+
+                    String pictureFileName = "TestConnect" + Calendar.getInstance().getTimeInMillis();
+                    File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    imageFile = new File(storageDir,pictureFileName);
+
+                    try {
+                        fos = new FileOutputStream(imageFile);
+                        bm.compress(Bitmap.CompressFormat.JPEG,100,fos);
+                        fos.close();
+                    }
+                    catch (IOException e) {
+                        Log.e("app",e.getMessage());
+                        if (fos != null) {
+                            try {
+                                fos.close();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                    ConnectionsManager.getInstance().ConnectUsers(imageFile, "mooselliot");
+                    return;
+                }
+
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 try {
                     //create file to store image in
@@ -117,7 +162,7 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
 
             //register face
             ShowProgressDialog("Making Connections...");
-            UserManager.ConnectUsers(ImageHelper.RotateFileIfNeeded(imageFile), username);
+            ConnectionsManager.getInstance().ConnectUsers(ImageHelper.RotateFileIfNeeded(imageFile), username);
         }
     }
 
@@ -151,6 +196,12 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
         }
     }
 
+    private void ShowConfirmationScreen(String image_path) {
+        Intent intent = new Intent(getContext(), SocialConnectConfirmationActivity.class);
+        intent.putExtra(IntentExtras.CONNECT.IMAGE_PATH_KEY, image_path);
+        startActivity(intent);
+    }
+
     @Override
     public void onBLinkEventTriggered(JSONObject response, String taskId) throws BLinkApiException {
         if(taskId == ApiCodes.TASK_CONNECT_USERS) {
@@ -159,7 +210,13 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
             boolean success = ResponseParser.ResponseIsSuccess(response);
             if(success)
             {
-//                NextActivity();
+                if(imageFile != null) {
+                    ShowConfirmationScreen(imageFile.getPath());
+                }
+                else {
+                    //if we can't show the image, we'll default to saying it has connected
+                    throw new BLinkApiException("NO_IMAGE","Success!", "You have been connected!");
+                }
             }
         }
     }
@@ -170,5 +227,10 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
             HideProgressDialog();
             new AlertDialog.Builder(getActivity()).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();
         }
+    }
+
+    public String getURLForResource (int resourceId) {
+        //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
+        return Uri.parse("drawable://"+R.class.getPackage().getName()+"/" +resourceId).toString();
     }
 }

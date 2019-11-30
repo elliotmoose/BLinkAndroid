@@ -6,5 +6,6 @@ public enum BuildModes
     OFFLINE,
     TEST_REGISTRATION,
     PRODUCTION,
-    TEST_SOCIAL_DETAIL
+    TEST_SOCIAL_DETAIL,
+    TEST_CONNECT
 }

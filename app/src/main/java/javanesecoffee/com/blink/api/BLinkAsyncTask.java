@@ -17,6 +17,8 @@ import javanesecoffee.com.blink.helpers.RequestHandler;
  *
  * This class helps to handle exceptions too
  */
+
+
 public abstract class BLinkAsyncTask extends AsyncTask<String, Void, JSONObject> {
 
     public AsyncResponseHandler responseHandler;

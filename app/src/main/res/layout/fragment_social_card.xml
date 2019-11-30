@@ -144,6 +144,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
                     android:text="@string/email"
+                    android:autoLink="email"
                     android:textColor="#474BAC"
                     android:textSize="8sp"/>
 
@@ -154,6 +155,7 @@
                     android:fontFamily="@font/montserrat"
                     android:layout_marginTop="8dp"
                     android:text="@string/linkedin"
+                    android:autoLink="web"
                     android:textColor="#474BAC"
                     android:textSize="8sp"/>
 
@@ -164,6 +166,7 @@
                     android:fontFamily="@font/montserrat"
                     android:layout_marginTop="8dp"
                     android:text="@string/facebook"
+                    android:autoLink="web"
                     android:textColor="#474BAC"
                     android:textSize="8sp"/>
 

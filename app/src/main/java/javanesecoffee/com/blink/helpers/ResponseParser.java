@@ -1,13 +1,10 @@
 package javanesecoffee.com.blink.helpers;
 
-import android.provider.ContactsContract;
-import android.util.Log;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
-import javanesecoffee.com.blink.entities.User;
 
 public class ResponseParser {
     public static boolean ResponseIsSuccess(JSONObject response) throws BLinkApiException
@@ -42,6 +39,17 @@ public class ResponseParser {
     {
         try {
             JSONObject data = response.getJSONObject("data");
+            return data;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            throw BLinkApiException.MALFORMED_DATA_EXCEPTION();
+        }
+    }
+
+    public static JSONArray ArrayDataFromResponse(JSONObject response) throws BLinkApiException
+    {
+        try {
+            JSONArray data = response.getJSONArray("data");
             return data;
         } catch (JSONException e) {
             e.printStackTrace();
