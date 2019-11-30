@@ -17,10 +17,12 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
+import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.api.ImageLoadObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.Event;
 import javanesecoffee.com.blink.entities.User;
+import javanesecoffee.com.blink.managers.ImageManager;
 import javanesecoffee.com.blink.social.SocialNameCard_RecyclerViewAdapter;
 import javanesecoffee.com.blink.social.UserDetailsActivity;
 
@@ -71,9 +73,7 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements ImageLoadObserver{
-
-        Event event;
+    public class ViewHolder extends RecyclerView.ViewHolder implements ImageEntityObserver {
         User user;
 
         CircleImageView also_attendedImage;
@@ -89,25 +89,20 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
                 return;
             }
 
-            Bitmap image = user.getProfilepictureAndLoadIfNeeded(this);
+            Bitmap image = ImageManager.getImageOrLoadIfNeeded(user.getUsername(), this, ImageManager.ImageType.PROFILE_IMAGE);
 
             if(image != null) {
                 also_attendedImage.setImageBitmap(image);
             }
-
+            else {
+                //resets when view is being reused
+                also_attendedImage.setImageBitmap(ImageManager.dpPlaceholder);
+            }
         }
 
-
         @Override
-        public void onImageLoad(Bitmap bitmap) {
+        public void onImageUpdated(Bitmap bitmap) {
             UpdateData();
         }
-
-        @Override
-        public void onImageLoadFailed(BLinkApiException exception) {
-
-        }
     }
-
-
 }

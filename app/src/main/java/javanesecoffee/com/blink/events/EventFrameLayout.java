@@ -6,16 +6,18 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
-import javanesecoffee.com.blink.api.ImageLoadObserver;
+import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.entities.Event;
+import javanesecoffee.com.blink.managers.ImageManager;
 
-public class EventFrameLayout extends FrameLayout implements ImageLoadObserver {
+public class EventFrameLayout extends FrameLayout implements ImageEntityObserver {
 
     private Event event;
 
@@ -52,22 +54,23 @@ public class EventFrameLayout extends FrameLayout implements ImageLoadObserver {
             eventDateTextView.setText(event.getDate());
             eventTimeTextView.setText(event.getTime());
             eventOrganiserTextView.setText(event.getOrganiser());
+            ImageView imageView = this.findViewById(R.id.EventImage);
 
-            Bitmap image = this.event.getEventImageAndLoadIfNeeded(this);
+            Bitmap image = ImageManager.getImageOrLoadIfNeeded(this.event.getEvent_id(), this, ImageManager.ImageType.EVENT_IMAGE);
+
             if(image != null) {
-                ImageView imageView = this.findViewById(R.id.EventImage);
+                Log.d("IMAGE_MANAGER", "Image updated" + image.getByteCount());
                 imageView.setImageBitmap(image);
+            }
+            else {
+                //resets when view is being reused
+                imageView.setImageBitmap(ImageManager.eventPlaceholder);
             }
         }
     }
 
     @Override
-    public void onImageLoad(Bitmap bitmap) {
+    public void onImageUpdated(Bitmap bitmap) {
         this.UpdateData();
-    }
-
-    @Override
-    public void onImageLoadFailed(BLinkApiException exception) {
-
     }
 }

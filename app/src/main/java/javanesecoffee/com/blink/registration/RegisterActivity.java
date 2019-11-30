@@ -84,13 +84,21 @@ public class RegisterActivity extends BlinkActivity implements BLinkEventObserve
                     startActivity(intent);
                 }
                 else {
-
                     EditText usernameField = findViewById(R.id.fieldUsername);
                     EditText passwordField = findViewById(R.id.fieldPassword);
                     EditText displaynameField = findViewById(R.id.fieldDisplayname);
                     EditText emailField = findViewById(R.id.positionField);
 
                     username = usernameField.getText().toString();
+
+                    //AUTO FILL:
+                    if(Config.REGISTER_AUTOFILL)
+                    {
+                        passwordField.setText("12345");
+                        displaynameField.setText(displaynameField.getText().toString().equals("") ? username : displaynameField.getText().toString());
+                        emailField.setText(username + "@gmail.com");
+                    }
+
                     password = passwordField.getText().toString();
                     displayname = displaynameField.getText().toString();
                     email = emailField.getText().toString();

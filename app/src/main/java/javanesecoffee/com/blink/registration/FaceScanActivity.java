@@ -127,7 +127,7 @@ public class FaceScanActivity extends BlinkActivity implements BLinkEventObserve
             }
 
             //register face
-            ShowProgressDialog("Recognizing you...");
+            ShowProgressDialog("Preparing your profile...");
             UserManager.RegisterFace(ImageHelper.RotateFileIfNeeded(imageFile), username);
         }
     }

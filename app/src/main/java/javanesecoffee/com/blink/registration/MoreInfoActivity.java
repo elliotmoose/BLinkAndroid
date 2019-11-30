@@ -18,6 +18,7 @@ import javanesecoffee.com.blink.api.BLinkEventObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.BuildModes;
 import javanesecoffee.com.blink.constants.Config;
+import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.helpers.ResponseParser;
 import javanesecoffee.com.blink.managers.UserManager;
 
@@ -33,14 +34,28 @@ public class MoreInfoActivity extends BlinkActivity implements BLinkEventObserve
         setContentView(more_info);
         next = findViewById(R.id.next);
 
-        if(Config.buildMode == BuildModes.TEST_REGISTRATION) {
-            EditText bioField = findViewById(R.id.bioField);
-            EditText positionField = findViewById(R.id.positionField);
-            EditText companyField = findViewById(R.id.companyField);
-            EditText linkedinField = findViewById(R.id.linkedinField);
-            EditText facebookField = findViewById(R.id.facebookField);
-            EditText instagramField = findViewById(R.id.instagramField);
+        EditText bioField = findViewById(R.id.bioField);
+        EditText positionField = findViewById(R.id.positionField);
+        EditText companyField = findViewById(R.id.companyField);
+        EditText linkedinField = findViewById(R.id.linkedinField);
+        EditText facebookField = findViewById(R.id.facebookField);
+        EditText instagramField = findViewById(R.id.instagramField);
 
+
+        if(Config.REGISTER_AUTOFILL) {
+            User user = UserManager.getLoggedInUser();
+            if(user != null) {
+                String username = user.getUsername();
+                bioField.setText("My name is " + username + " and this is my bio");
+                positionField.setText("Full Time Student");
+                companyField.setText("SUTD");
+                linkedinField.setText("facebook.com/"+username);
+                linkedinField.setText("linkedin.com/in/"+username);
+                instagramField.setText(username);
+            }
+        }
+
+        if(Config.buildMode == BuildModes.TEST_REGISTRATION) {
             bioField.setText("I'm a moose");
             positionField.setText("Full Stack Developer");
             companyField.setText("SUTD");

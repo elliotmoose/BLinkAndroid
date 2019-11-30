@@ -24,10 +24,12 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
+import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.api.ImageLoadObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
+import javanesecoffee.com.blink.managers.ImageManager;
 import javanesecoffee.com.blink.managers.UserManager;
 
 public class SocialTabCard_RecyclerViewAdapter extends RecyclerView.Adapter<SocialTabCard_RecyclerViewAdapter.ViewHolder>  {
@@ -80,7 +82,7 @@ public class SocialTabCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soci
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements ImageLoadObserver {
+    public class ViewHolder extends RecyclerView.ViewHolder implements ImageEntityObserver {
 
         User user;
         CircleImageView cardImage;
@@ -105,23 +107,24 @@ public class SocialTabCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soci
                 return;
             }
 
-            Bitmap image = user.getProfilepictureAndLoadIfNeeded(this);
+            Bitmap image = ImageManager.getImageOrLoadIfNeeded(user.getUsername(), this, ImageManager.ImageType.PROFILE_IMAGE);
+
             if(image != null) {
                 cardImage.setImageBitmap(image);
             }
+            else {
+                //resets when view is being reused
+                cardImage.setImageBitmap(ImageManager.dpPlaceholder);
+            }
+
             cardUsername.setText(user.getUsername());
             cardDesignation.setText(user.getPosition());
             cardCompany.setText(user.getCompany());
         }
 
         @Override
-        public void onImageLoad(Bitmap bitmap) {
+        public void onImageUpdated(Bitmap bitmap) {
             UpdateData();
-        }
-
-        @Override
-        public void onImageLoadFailed(BLinkApiException exception) {
-
         }
     }
 }

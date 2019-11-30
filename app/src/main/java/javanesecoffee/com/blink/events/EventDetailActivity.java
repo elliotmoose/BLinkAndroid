@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
+import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.api.ImageLoadObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.Event;
@@ -31,7 +32,7 @@ import javanesecoffee.com.blink.social.SocialNameCard_RecyclerViewAdapter;
 import javanesecoffee.com.blink.social.SocialSummaryFragment;
 import javanesecoffee.com.blink.social.SocialTabCard_RecyclerViewAdapter;
 
-public class EventDetailActivity extends AppCompatActivity implements ImageLoadObserver {
+public class EventDetailActivity extends AppCompatActivity {
     User currentUser;
     Event currentEvent;
     ArrayList<Event> eventArray;
@@ -152,15 +153,5 @@ public class EventDetailActivity extends AppCompatActivity implements ImageLoadO
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             outRect.left = space;
         }
-    }
-
-        @Override
-    public void onImageLoad(Bitmap bitmap) {
-
-    }
-
-    @Override
-    public void onImageLoadFailed(BLinkApiException exception) {
-
     }
 }

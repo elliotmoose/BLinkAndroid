@@ -16,6 +16,8 @@ import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.LoadEventListTask;
 import javanesecoffee.com.blink.api.LoadParticipantListTask;
 import javanesecoffee.com.blink.constants.ApiCodes;
+import javanesecoffee.com.blink.constants.BuildModes;
+import javanesecoffee.com.blink.constants.Config;
 import javanesecoffee.com.blink.entities.Event;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.events.EventListTypes;
@@ -36,11 +38,13 @@ public class EventManager extends Manager {
 
     EventManager() {
         super();
-        upcomingEvents.add(new Event("Industry Night 2019", "SUTD", "We are having industry night whoop!", "8 Somapah Road", "08/10/19", "9:00pm","FREE", "SOME_EVENT_ID"));
-        upcomingEvents.add(new Event("Hackathon 2019", "SUTD", "We are having industry night whoop!", "8 Somapah Road", "08/10/19", "9:00pm","FREE", "SOME_EVENT_ID"));
-        exploreEvents.add(new Event("Recruitment Talk", "MasterCard", "A talk!", "8 Somapah Road", "12/12/19", "6:00pm", "FREE", "event2" ));
-        exploreEvents.add(new Event("Information Session", "Google", "A talk!", "8 Somapah Road", "18/12/19", "3:00pm", "FREE", "event2" ));
-        exploreEvents.add(new Event("Interview Workshop", "Facebook", "A talk!", "8 Somapah Road", "25/12/19", "1:00pm", "FREE", "event2" ));
+        if(Config.TEMPLATE_EVENTS) {
+            upcomingEvents.add(new Event("Industry Night 2019", "SUTD", "We are having industry night whoop!", "8 Somapah Road", "08/10/19", "9:00pm","FREE", "SOME_EVENT_ID"));
+            upcomingEvents.add(new Event("Hackathon 2019", "SUTD", "We are having industry night whoop!", "8 Somapah Road", "08/10/19", "9:00pm","FREE", "SOME_EVENT_ID"));
+            exploreEvents.add(new Event("Recruitment Talk", "MasterCard", "A talk!", "8 Somapah Road", "12/12/19", "6:00pm", "FREE", "event2" ));
+            exploreEvents.add(new Event("Information Session", "Google", "A talk!", "8 Somapah Road", "18/12/19", "3:00pm", "FREE", "event2" ));
+            exploreEvents.add(new Event("Interview Workshop", "Facebook", "A talk!", "8 Somapah Road", "25/12/19", "1:00pm", "FREE", "event2" ));
+        }
     }
 
     /**

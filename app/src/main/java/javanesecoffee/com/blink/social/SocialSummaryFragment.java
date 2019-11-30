@@ -26,16 +26,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.BLinkEventObserver;
+import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.api.ImageLoadObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
+import javanesecoffee.com.blink.managers.ImageManager;
 import javanesecoffee.com.blink.managers.UserManager;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class SocialSummaryFragment extends Fragment implements ImageLoadObserver, BLinkEventObserver {
+public class SocialSummaryFragment extends Fragment implements ImageEntityObserver, BLinkEventObserver {
 
     SocialNameCard_RecyclerViewAdapter nameCard_adapter;
     SocialTabCard_RecyclerViewAdapter smallCard_adapter;
@@ -102,13 +104,19 @@ public class SocialSummaryFragment extends Fragment implements ImageLoadObserver
     }
 
     private void UpdateUserData() {
+
         User user = UserManager.getLoggedInUser();
 
         if(user != null) {
-            editUsername.setText(user.getUsername());
-            Bitmap image = user.getProfilepictureAndLoadIfNeeded(this);
+            String username = user.getUsername();
+            editUsername.setText(username);
+            Bitmap image = ImageManager.getImageOrLoadIfNeeded(username, this, ImageManager.ImageType.PROFILE_IMAGE);
             if(image != null){
                 editProfilePic.setImageBitmap(image);
+            }
+            else {
+                //resets when view is being reused
+                editProfilePic.setImageBitmap(ImageManager.dpPlaceholder);
             }
         }
     }
@@ -125,14 +133,10 @@ public class SocialSummaryFragment extends Fragment implements ImageLoadObserver
     }
 
     @Override
-    public void onImageLoad(Bitmap bitmap) {
+    public void onImageUpdated(Bitmap bitmap) {
         UpdateUserData();
     }
 
-    @Override
-    public void onImageLoadFailed(BLinkApiException exception) {
-        UpdateUserData();
-    }
     public void loadSocialSummary(@NonNull final View view, @Nullable final Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         editUsername = view.findViewById(R.id.fieldSocialUsername);

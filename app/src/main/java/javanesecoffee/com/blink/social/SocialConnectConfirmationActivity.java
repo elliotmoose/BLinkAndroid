@@ -25,6 +25,7 @@ import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.Connection;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
+import javanesecoffee.com.blink.managers.ImageManager;
 
 public class SocialConnectConfirmationActivity extends AppCompatActivity implements BLinkEventObserver {
 
@@ -48,12 +49,17 @@ public class SocialConnectConfirmationActivity extends AppCompatActivity impleme
             if(image != null) {
                 imageView.setImageBitmap(image);
             }
+            else {
+                //resets when view is being reused
+                imageView.setImageBitmap(ImageManager.eventPlaceholder);
+            }
         }
 
         final Activity activity = this;
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                ConnectionsManager.getInstance().LoadAllConnections();
                 activity.finish();
                 File file = new File(path);
                 file.delete();
