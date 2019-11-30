@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 import javanesecoffee.com.blink.helpers.RequestHandler;
-import javanesecoffee.com.blink.managers.ImageManager;
 
 public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
@@ -26,7 +25,7 @@ public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
         Bitmap image = null;
         try {
-            image = RequestHandler.GetImage(url_extension);
+            image = RequestHandler.getImage(url_extension);
         } catch (BLinkApiException e) {
             this.exception = e;
         }

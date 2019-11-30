@@ -115,7 +115,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     public void UpdateData(){
         if(currentEvent!=null){
-            Log.d("EVENT DETIALS ACTIVITY", "UpdateData: EVENT DETAILS ACTIITY");
+            Log.d("EVENT DETIALS ACTIVITY", "updateData: EVENT DETAILS ACTIITY");
             eventName.setText(currentEvent.getName());
             eventDate.setText(currentEvent.getDate());
             eventTime.setText(currentEvent.getTime());

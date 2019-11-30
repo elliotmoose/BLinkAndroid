@@ -8,10 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,15 +25,12 @@ import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.BLinkEventObserver;
 import javanesecoffee.com.blink.api.ImageEntityObserver;
-import javanesecoffee.com.blink.api.ImageLoadObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.ImageManager;
 import javanesecoffee.com.blink.managers.UserManager;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class SocialSummaryFragment extends Fragment implements ImageEntityObserver, BLinkEventObserver {
 
@@ -162,7 +157,7 @@ public class SocialSummaryFragment extends Fragment implements ImageEntityObserv
             public void onRefresh() {
                 loadSocialSummary(view, savedInstanceState);
                 swipeRefreshLayout.setRefreshing(false);
-                ConnectionsManager.getInstance().LoadAllConnections();
+                ConnectionsManager.getInstance().loadAllConnections();
                 UpdateData();
             }
         });

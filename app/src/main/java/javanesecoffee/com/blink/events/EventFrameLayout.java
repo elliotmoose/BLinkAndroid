@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import javanesecoffee.com.blink.R;
-import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.entities.Event;
 import javanesecoffee.com.blink.managers.ImageManager;
@@ -43,7 +42,7 @@ public class EventFrameLayout extends FrameLayout implements ImageEntityObserver
         this.event = event;
     }
 
-    public void UpdateData() {
+    public void updateData() {
         if(this.event != null) {
             TextView eventName = this.findViewById(R.id.eventNameTextView);
             TextView eventDateTextView = this.findViewById(R.id.eventDateTextView);
@@ -71,6 +70,6 @@ public class EventFrameLayout extends FrameLayout implements ImageEntityObserver
 
     @Override
     public void onImageUpdated(Bitmap bitmap) {
-        this.UpdateData();
+        this.updateData();
     }
 }

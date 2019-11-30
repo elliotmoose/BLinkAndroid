@@ -1,22 +1,17 @@
 package javanesecoffee.com.blink.managers;
 
-import android.renderscript.AllocationAdapter;
-import android.util.JsonReader;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.LoadEventListTask;
 import javanesecoffee.com.blink.api.LoadParticipantListTask;
 import javanesecoffee.com.blink.constants.ApiCodes;
-import javanesecoffee.com.blink.constants.BuildModes;
 import javanesecoffee.com.blink.constants.Config;
 import javanesecoffee.com.blink.entities.Event;
 import javanesecoffee.com.blink.entities.User;
@@ -59,7 +54,7 @@ public class EventManager extends Manager {
     /**
      * Method to be called from activity
      */
-    public void LoadEventsList(){
+    public void loadEventsList(){
         if(UserManager.getLoggedInUser() != null) {
             String username = UserManager.getLoggedInUser().getUsername();
             LoadEventListTask loadEventTask = new LoadEventListTask(getInstance());
@@ -75,11 +70,11 @@ public class EventManager extends Manager {
             case ApiCodes.TASK_LOAD_PARTICIPANT_LIST:
 
                 try {
-                    boolean success = ResponseParser.ResponseIsSuccess(response);
+                    boolean success = ResponseParser.responseIsSuccess(response);
                     if(success)
                     {
-                        JSONObject data = ResponseParser.DataFromResponse(response);
-                        EventManager.participant_list = UserListFromData(data);
+                        JSONObject data = ResponseParser.dataFromResponse(response);
+                        EventManager.participant_list = userListFromData(data);
                     }
                 } catch (BLinkApiException e) {
                     e.printStackTrace();
@@ -88,11 +83,11 @@ public class EventManager extends Manager {
 
             case ApiCodes.TASK_LOAD_EVENTS_LIST:
                 try {
-                    boolean success = ResponseParser.ResponseIsSuccess(response);
+                    boolean success = ResponseParser.responseIsSuccess(response);
                     if(success)
                     {
-                        JSONObject data = ResponseParser.DataFromResponse(response);
-                        UpdateEventListsWithData(data);
+                        JSONObject data = ResponseParser.dataFromResponse(response);
+                        updateEventListsWithData(data);
                     }
                 } catch (BLinkApiException e) {
                     e.printStackTrace();
@@ -105,7 +100,7 @@ public class EventManager extends Manager {
         super.onAsyncTaskComplete(response, taskId); //notify observers
     }
 
-    public ArrayList<User> UserListFromData(JSONObject data){
+    public ArrayList<User> userListFromData(JSONObject data){
         ArrayList<User> user_list = new ArrayList<>();
         try {
             //TODO: change user_list into the correct json field name
@@ -122,7 +117,7 @@ public class EventManager extends Manager {
     }
 
 
-    public ArrayList<Event> EventListFromData(JSONObject data, String key) throws BLinkApiException{
+    public ArrayList<Event> eventListFromData(JSONObject data, String key) throws BLinkApiException{
 
         ArrayList<Event> output = new ArrayList<>();
         try {
@@ -138,11 +133,11 @@ public class EventManager extends Manager {
         return output;
     }
 
-    public void UpdateEventListsWithData(JSONObject data) {
+    public void updateEventListsWithData(JSONObject data) {
         try {
-            exploreEvents = EventListFromData(data, "explore");
-            upcomingEvents = EventListFromData(data, "upcoming");
-            pastEvents = EventListFromData(data, "past");
+            exploreEvents = eventListFromData(data, "explore");
+            upcomingEvents = eventListFromData(data, "upcoming");
+            pastEvents = eventListFromData(data, "past");
         } catch (BLinkApiException e) {
             e.printStackTrace();
         }

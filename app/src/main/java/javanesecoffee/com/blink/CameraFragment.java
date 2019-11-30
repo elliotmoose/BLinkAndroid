@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,14 +20,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
@@ -37,13 +33,11 @@ import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.BuildModes;
 import javanesecoffee.com.blink.constants.Config;
 import javanesecoffee.com.blink.constants.IntentExtras;
-import javanesecoffee.com.blink.entities.Connection;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.helpers.ImageHelper;
 import javanesecoffee.com.blink.helpers.ResponseParser;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.UserManager;
-import javanesecoffee.com.blink.registration.FaceScanActivity;
 import javanesecoffee.com.blink.social.SocialConnectConfirmationActivity;
 
 public class CameraFragment extends Fragment implements BLinkEventObserver {
@@ -52,7 +46,7 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        InitProgressDialog();
+        initProgressDialog();
 
         UserManager.getInstance().registerObserver(this);
         ConnectionsManager.getInstance().registerObserver(this);
@@ -78,7 +72,7 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
 
                 if(Config.buildMode == BuildModes.TEST_CONNECT) {
                     //register face
-                    ShowProgressDialog("Testing Connections...");
+                    showProgressDialog("Testing Connections...");
                     Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.sidelliot);
                     FileOutputStream fos = null;
 
@@ -101,7 +95,7 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
                             }
                         }
                     }
-                    ConnectionsManager.getInstance().ConnectUsers(imageFile, "mooselliot");
+                    ConnectionsManager.getInstance().connectUsers(imageFile, "mooselliot");
                     return;
                 }
 
@@ -161,14 +155,14 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
             }
 
             //register face
-            ShowProgressDialog("Making Connections...");
-            ConnectionsManager.getInstance().ConnectUsers(ImageHelper.RotateFileIfNeeded(imageFile), username);
+            showProgressDialog("Making Connections...");
+            ConnectionsManager.getInstance().connectUsers(ImageHelper.rotateFileIfNeeded(imageFile), username);
         }
     }
 
     private ProgressDialog dialog;
 
-    public void InitProgressDialog()
+    public void initProgressDialog()
     {
         if(dialog == null) {
             dialog = new ProgressDialog(getActivity());
@@ -176,27 +170,27 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
         }
     }
 
-    public void ShowProgressDialog()
+    public void showProgressDialog()
     {
-        InitProgressDialog();
+        initProgressDialog();
         dialog.show();
     }
 
-    public void ShowProgressDialog(String message)
+    public void showProgressDialog(String message)
     {
-        InitProgressDialog();
+        initProgressDialog();
         dialog.setMessage(message);
         dialog.show();
     }
 
-    public void HideProgressDialog() {
-        InitProgressDialog();
+    public void hideProgressDialog() {
+        initProgressDialog();
         if(dialog.isShowing()) {
             dialog.hide();
         }
     }
 
-    private void ShowConfirmationScreen(String image_path) {
+    private void showConfirmationScreen(String image_path) {
         Intent intent = new Intent(getContext(), SocialConnectConfirmationActivity.class);
         intent.putExtra(IntentExtras.CONNECT.IMAGE_PATH_KEY, image_path);
         startActivity(intent);
@@ -205,13 +199,13 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
     @Override
     public void onBLinkEventTriggered(JSONObject response, String taskId) throws BLinkApiException {
         if(taskId == ApiCodes.TASK_CONNECT_USERS) {
-            HideProgressDialog();
+            hideProgressDialog();
 
-            boolean success = ResponseParser.ResponseIsSuccess(response);
+            boolean success = ResponseParser.responseIsSuccess(response);
             if(success)
             {
                 if(imageFile != null) {
-                    ShowConfirmationScreen(imageFile.getPath());
+                    showConfirmationScreen(imageFile.getPath());
                 }
                 else {
                     //if we can't show the image, we'll default to saying it has connected
@@ -224,7 +218,7 @@ public class CameraFragment extends Fragment implements BLinkEventObserver {
     @Override
     public void onBLinkEventException(BLinkApiException exception, String taskId) {
         if(taskId == ApiCodes.TASK_CONNECT_USERS) {
-            HideProgressDialog();
+            hideProgressDialog();
             new AlertDialog.Builder(getActivity()).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();
         }
     }

@@ -1,21 +1,10 @@
 package javanesecoffee.com.blink.entities;
-
-import android.graphics.Bitmap;
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 import javanesecoffee.com.blink.api.BLinkApiException;
-import javanesecoffee.com.blink.api.ImageLoadObserver;
-import javanesecoffee.com.blink.api.LoadImageTask;
-import javanesecoffee.com.blink.constants.Endpoints;
 
 public class User {
 
-    private ArrayList<ImageLoadObserver> observers = new ArrayList<>();
     private String username;
     private String displayname;
     private String bio;
@@ -25,8 +14,6 @@ public class User {
     private String linkedin;
     private String facebook;
     private String instagram;
-//    private Bitmap profilepicture;
-
 
     public User(String username) {
         this.username = username;
@@ -75,62 +62,9 @@ public class User {
     public String getDisplayname() { return displayname; }
     public String getCompany() { return company; }
     public String getBio() { return bio; }
-//    public Bitmap getProfilepictureAndLoadIfNeeded(ImageLoadObserver onFinishedObserver) {
-//        if (this.profilepicture == null) {
-//            LoadImage(onFinishedObserver);
-//            return null;
-//        }
-//        else {
-//            return profilepicture;
-//        }
-//    }
     public String getPosition() { return position; }
     public String getLinkedin() { return linkedin; }
     public String getFacebook() { return facebook; }
     public String getInstagram() { return instagram; }
 
-//    private void LoadImage(ImageLoadObserver onFinishedObserver) {
-//        registerObserver(onFinishedObserver); //only notify once, so will remove once loaded
-//
-//        if(this.username != "")
-//        {
-//            LoadImageTask task = new LoadImageTask(this);
-//            task.execute(Endpoints.GET_PROFILE_IMAGE, this.username);
-//        }
-//        else
-//        {
-//            Log.e("User_Error", "User has no valid username");
-//        }
-//    }
-//
-//    @Override
-//    public void onImageLoad(Bitmap bitmap) {
-//        this.profilepicture = bitmap;
-//        notifyAllObserversImageLoaded(bitmap);
-//    }
-//
-//    @Override
-//    public void onImageLoadFailed(BLinkApiException exception) {
-//        Log.e("User_Error", exception.message);
-//    }
-//
-//    public void registerObserver(ImageLoadObserver o) {
-//        if(!observers.contains(o)) {
-//            observers.add(o);
-//        }
-//    }
-//
-//    public void deregisterObserver(ImageLoadObserver o) {
-//        if(observers.contains(o)) {
-//            observers.remove(o);
-//        }
-//    }
-//
-//    public void notifyAllObserversImageLoaded(Bitmap bitmap) {
-//        for (int i=0; i<observers.size(); i++) {
-//            ImageLoadObserver o = observers.get(i);
-//            o.onImageLoad(bitmap);
-//            deregisterObserver(o); //only notify once
-//        }
-//    }
 }

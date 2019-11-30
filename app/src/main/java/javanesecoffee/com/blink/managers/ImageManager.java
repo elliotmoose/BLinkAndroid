@@ -71,7 +71,7 @@ public class ImageManager implements ImageLoadObserver {
 
 //                Log.d("IMAGE_MANAGER", "Loading image for key: " + key);
                 loadingImages.add(key);
-                LoadImageForKey(key, type);
+                loadImageForKey(key, type);
             }
             return null;
         }
@@ -107,7 +107,7 @@ public class ImageManager implements ImageLoadObserver {
 
     }
 
-    public static void LoadImageForKey(String key, ImageType type) {
+    public static void loadImageForKey(String key, ImageType type) {
         LoadImageTask task = new LoadImageTask(getInstance());
         String endpoint = (type == ImageType.EVENT_IMAGE ? Endpoints.GET_EVENT_IMAGE : Endpoints.GET_PROFILE_IMAGE);
         task.execute(endpoint, key);

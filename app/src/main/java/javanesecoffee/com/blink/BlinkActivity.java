@@ -13,10 +13,10 @@ public class BlinkActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
 
-        InitProgressDialog();
+        initProgressDialog();
     }
 
-    public void InitProgressDialog()
+    public void initProgressDialog()
     {
         if(dialog == null) {
             dialog = new ProgressDialog(this);
@@ -24,21 +24,21 @@ public class BlinkActivity extends AppCompatActivity {
         }
     }
 
-    public void ShowProgressDialog()
+    public void showProgressDialog()
     {
-        InitProgressDialog();
+        initProgressDialog();
         dialog.show();
     }
 
-    public void ShowProgressDialog(String message)
+    public void showProgressDialog(String message)
     {
-        InitProgressDialog();
+        initProgressDialog();
         dialog.setMessage(message);
         dialog.show();
     }
 
-    public void HideProgressDialog() {
-        InitProgressDialog();
+    public void hideProgressDialog() {
+        initProgressDialog();
         if(dialog.isShowing()) {
             dialog.hide();
         }

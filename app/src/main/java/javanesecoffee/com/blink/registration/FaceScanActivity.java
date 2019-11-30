@@ -127,8 +127,8 @@ public class FaceScanActivity extends BlinkActivity implements BLinkEventObserve
             }
 
             //register face
-            ShowProgressDialog("Preparing your profile...");
-            UserManager.RegisterFace(ImageHelper.RotateFileIfNeeded(imageFile), username);
+            showProgressDialog("Preparing your profile...");
+            UserManager.registerFace(ImageHelper.rotateFileIfNeeded(imageFile), username);
         }
     }
 
@@ -136,8 +136,8 @@ public class FaceScanActivity extends BlinkActivity implements BLinkEventObserve
     public void onBLinkEventTriggered(JSONObject response, String taskId) throws BLinkApiException{
         if(taskId == ApiCodes.TASK_REGISTER_FACE)
         {
-            HideProgressDialog();
-            boolean success = ResponseParser.ResponseIsSuccess(response);
+            hideProgressDialog();
+            boolean success = ResponseParser.responseIsSuccess(response);
             if(success)
             {
                 NextActivity();
@@ -148,7 +148,7 @@ public class FaceScanActivity extends BlinkActivity implements BLinkEventObserve
     @Override
     public void onBLinkEventException(BLinkApiException exception, String taskId) {
         if(taskId == ApiCodes.TASK_REGISTER_FACE) {
-            HideProgressDialog();
+            hideProgressDialog();
             new AlertDialog.Builder(FaceScanActivity.this).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();
 
             if(Config.buildMode == BuildModes.OFFLINE) {

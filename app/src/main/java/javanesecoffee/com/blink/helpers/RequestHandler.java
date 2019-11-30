@@ -277,7 +277,7 @@ public class RequestHandler {
         return new JSONObject(responseString);
     }
 
-    public static Bitmap GetImage(String endpoint) throws BLinkApiException {
+    public static Bitmap getImage(String endpoint) throws BLinkApiException {
         try {
             String src = DOMAIN + endpoint;
             URL url = new URL(src);

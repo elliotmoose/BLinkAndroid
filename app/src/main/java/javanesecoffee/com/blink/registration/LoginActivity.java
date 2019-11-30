@@ -75,8 +75,8 @@ public class LoginActivity extends BlinkActivity implements BLinkEventObserver {
 
 
                     if(validifyInputs(username, password)){
-                        ShowProgressDialog("Logging in...");
-                        UserManager.Login(username, password);
+                        showProgressDialog("Logging in...");
+                        UserManager.login(username, password);
                     }
                 }
             }
@@ -85,7 +85,7 @@ public class LoginActivity extends BlinkActivity implements BLinkEventObserver {
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MoveToRegisterActivity();
+                moveToRegisterActivity();
             }
         });
     }
@@ -104,15 +104,15 @@ public class LoginActivity extends BlinkActivity implements BLinkEventObserver {
         return true;
     }
 
-    public void NextActivity()
+    public void nextActivity()
     {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void MoveToRegisterActivity(){
-        HideProgressDialog();
+    public void moveToRegisterActivity(){
+        hideProgressDialog();
         Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
         startActivity(intent);
         finish();
@@ -122,16 +122,16 @@ public class LoginActivity extends BlinkActivity implements BLinkEventObserver {
     public void onBLinkEventTriggered(JSONObject response, String taskId) throws BLinkApiException{
         if(taskId == ApiCodes.TASK_LOGIN)
         {
-            HideProgressDialog();
-            boolean success = ResponseParser.ResponseIsSuccess(response);
+            hideProgressDialog();
+            boolean success = ResponseParser.responseIsSuccess(response);
 
             if(success)
             {
-                NextActivity();
+                nextActivity();
             }
             else
             {
-                throw ResponseParser.ExceptionFromResponse(response);
+                throw ResponseParser.exceptionFromResponse(response);
             }
         }
     }
@@ -140,10 +140,10 @@ public class LoginActivity extends BlinkActivity implements BLinkEventObserver {
     public void onBLinkEventException(BLinkApiException exception, String taskId) {
         Log.d("LOGIN_ACTIVITY", exception.toString());
         if(taskId == ApiCodes.TASK_LOGIN) {
-            HideProgressDialog();
+            hideProgressDialog();
             new AlertDialog.Builder(LoginActivity.this).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();
             if(Config.buildMode == BuildModes.OFFLINE) {
-                NextActivity();
+                nextActivity();
             }
         }
     }

@@ -3,7 +3,6 @@ package javanesecoffee.com.blink.registration;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -84,8 +83,8 @@ public class MoreInfoActivity extends BlinkActivity implements BLinkEventObserve
 
 
                 try {
-                    ShowProgressDialog("Updating info...");
-                    UserManager.RegisterMoreInfo(bio, position, company, linkedin, facebook, instagram);
+                    showProgressDialog("Updating info...");
+                    UserManager.registerMoreInfo(bio, position, company, linkedin, facebook, instagram);
                 } catch (BLinkApiException e) {
                     e.printStackTrace();
                     Toast.makeText(MoreInfoActivity.this, e.message, Toast.LENGTH_LONG).show();
@@ -114,14 +113,14 @@ public class MoreInfoActivity extends BlinkActivity implements BLinkEventObserve
     @Override
     public void onBLinkEventTriggered(JSONObject response, String taskId) throws BLinkApiException {
         if(taskId == ApiCodes.TASK_MORE_INFO){
-            HideProgressDialog();
-            boolean success = ResponseParser.ResponseIsSuccess(response);
+            hideProgressDialog();
+            boolean success = ResponseParser.responseIsSuccess(response);
 
             if(success){
                 NextActivity();
             }
             else{
-                throw ResponseParser.ExceptionFromResponse(response);
+                throw ResponseParser.exceptionFromResponse(response);
             }
         }
     }
@@ -129,7 +128,7 @@ public class MoreInfoActivity extends BlinkActivity implements BLinkEventObserve
     @Override
     public void onBLinkEventException(BLinkApiException exception, String taskId){
         if(taskId == ApiCodes.TASK_MORE_INFO){
-            HideProgressDialog();
+            hideProgressDialog();
             new AlertDialog.Builder(MoreInfoActivity.this).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();
             if(Config.buildMode == BuildModes.OFFLINE) {
                 NextActivity();

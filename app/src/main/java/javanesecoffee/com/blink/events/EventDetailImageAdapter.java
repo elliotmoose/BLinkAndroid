@@ -16,14 +16,10 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
-import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.ImageEntityObserver;
-import javanesecoffee.com.blink.api.ImageLoadObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
-import javanesecoffee.com.blink.entities.Event;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.managers.ImageManager;
-import javanesecoffee.com.blink.social.SocialNameCard_RecyclerViewAdapter;
 import javanesecoffee.com.blink.social.UserDetailsActivity;
 
 public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailImageAdapter.ViewHolder> {
@@ -49,7 +45,7 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
 
         holder.user = users.get(i);
-        holder.UpdateData();
+        holder.updateData();
         final ViewHolder holderfinal = holder;
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +80,7 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
             parentLayout = itemView.findViewById(R.id.event_also_attending);
         }
 
-        public void UpdateData() {
+        public void updateData() {
             if(user == null) {
                 return;
             }
@@ -102,7 +98,7 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
 
         @Override
         public void onImageUpdated(Bitmap bitmap) {
-            UpdateData();
+            updateData();
         }
     }
 }

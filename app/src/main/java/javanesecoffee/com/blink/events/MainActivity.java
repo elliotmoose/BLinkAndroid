@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private void LoadAllData() {
         User user = UserManager.getLoggedInUser();
         if(user != null) {
-            EventManager.getInstance().LoadEventsList();
-            ConnectionsManager.getInstance().LoadAllConnections();
+            EventManager.getInstance().loadEventsList();
+            ConnectionsManager.getInstance().loadAllConnections();
         }
     }
 

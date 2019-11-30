@@ -11,24 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.sql.Connection;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
-import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.ImageEntityObserver;
-import javanesecoffee.com.blink.api.ImageLoadObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.User;
-import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.ImageManager;
 import javanesecoffee.com.blink.managers.UserManager;
 
@@ -57,7 +49,7 @@ public class SocialTabCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soci
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         final ViewHolder fholder = holder;
         holder.user = users.get(i);
-        holder.UpdateData();
+        holder.updateData();
 
 
         holder.cardViewProfile.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +94,7 @@ public class SocialTabCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soci
             cardViewProfile = itemView.findViewById(R.id.card_view_profile);
         }
 
-        public void UpdateData() {
+        public void updateData() {
             if(user == null) {
                 return;
             }
@@ -124,7 +116,7 @@ public class SocialTabCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soci
 
         @Override
         public void onImageUpdated(Bitmap bitmap) {
-            UpdateData();
+            updateData();
         }
     }
 }

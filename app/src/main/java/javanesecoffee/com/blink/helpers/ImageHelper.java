@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class ImageHelper {
-    public static File RotateFileIfNeeded(File file)
+    public static File rotateFileIfNeeded(File file)
     {
         try {
             String filePath = file.getPath();
@@ -25,15 +25,15 @@ public class ImageHelper {
             switch(orientation) {
 
                 case ExifInterface.ORIENTATION_ROTATE_90:
-                    rotatedBitmap = RotateImage(bitmap, 90);
+                    rotatedBitmap = rotateImage(bitmap, 90);
                     break;
 
                 case ExifInterface.ORIENTATION_ROTATE_180:
-                    rotatedBitmap = RotateImage(bitmap, 180);
+                    rotatedBitmap = rotateImage(bitmap, 180);
                     break;
 
                 case ExifInterface.ORIENTATION_ROTATE_270:
-                    rotatedBitmap = RotateImage(bitmap, 270);
+                    rotatedBitmap = rotateImage(bitmap, 270);
                     break;
 
                 case ExifInterface.ORIENTATION_NORMAL:
@@ -57,7 +57,7 @@ public class ImageHelper {
     }
 
 
-    public static Bitmap RotateImage(Bitmap source, float angle) {
+    public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),

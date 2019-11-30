@@ -59,12 +59,12 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
             }
         }
 
-        UpdateData();
+        updateData();
     }
 
 
 
-    public void UpdateData() {
+    public void updateData() {
         if(currentUser != null) {
             Log.d("USER_DETAILS_ACTIVITY", currentUser.getUsername());
             editUsername.setText(currentUser.getUsername());
@@ -87,6 +87,6 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
 
     @Override
     public void onImageUpdated(Bitmap bitmap) {
-        UpdateData();
+        updateData();
     }
 }

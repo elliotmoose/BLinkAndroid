@@ -70,37 +70,4 @@ public class Event {
     public String getPrice() { return price; }
 
     public String getTime() { return time; }
-
-
-//
-//    @Override
-//    public void onImageLoad(Bitmap bitmap) {
-//        this.eventpicture = bitmap;
-//        notifyAllObserversImageLoaded(bitmap);
-//    }
-//
-//    @Override
-//    public void onImageLoadFailed(BLinkApiException exception) {
-//        Log.e("User_Error", exception.message);
-//    }
-//
-//    public void registerObserver(ImageLoadObserver o) {
-//        if(!observers.contains(o)) {
-//            observers.add(o);
-//        }
-//    }
-//
-//    public void deregisterObserver(ImageLoadObserver o) {
-//        if(observers.contains(o)) {
-//            observers.remove(o);
-//        }
-//    }
-//
-//    public void notifyAllObserversImageLoaded(Bitmap bitmap) {
-//        for (int i=0; i<observers.size(); i++) {
-//            ImageLoadObserver o = observers.get(i);
-//            o.onImageLoad(bitmap);
-//            deregisterObserver(o); //only notify once
-//        }
-//    }
 }
