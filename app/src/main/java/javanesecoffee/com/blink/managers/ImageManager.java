@@ -63,8 +63,10 @@ public class ImageManager implements ImageLoadObserver {
                     imageObservers.add(observer);
                     observers.put(key, imageObservers);
                 }
-                else { //register
-                    observers.get(key).add(observer);
+                else { //register if not registered yet
+                    if(!observers.get(key).contains(observer)) {
+                        observers.get(key).add(observer);
+                    }
                 }
 
 //                Log.d("IMAGE_MANAGER", "Loading image for key: " + key);
@@ -95,7 +97,7 @@ public class ImageManager implements ImageLoadObserver {
                 ImageEntityObserver o = imageObservers.get(i);
 //                Log.d("IMAGE_MANAGER", "Updating observer for key: " + key);
                 o.onImageUpdated(bitmap);
-                imageObservers.remove(o);
+                imageObservers.remove(o); //won't be updated anymore
             }
         }
     }
