@@ -16,12 +16,10 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
-import javanesecoffee.com.blink.api.BLinkApiException;
-import javanesecoffee.com.blink.api.ImageLoadObserver;
+import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
-import javanesecoffee.com.blink.entities.Event;
 import javanesecoffee.com.blink.entities.User;
-import javanesecoffee.com.blink.social.SocialNameCard_RecyclerViewAdapter;
+import javanesecoffee.com.blink.managers.ImageManager;
 import javanesecoffee.com.blink.social.UserDetailsActivity;
 
 public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailImageAdapter.ViewHolder> {
@@ -47,7 +45,7 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
 
         holder.user = users.get(i);
-        holder.UpdateData();
+        holder.updateData();
         final ViewHolder holderfinal = holder;
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +55,7 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
                 Log.d(TAG, "onClick: clicked on view profile");
                 Toast.makeText(mContext, "loading user image",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, UserDetailsActivity.class);
-                intent.putExtra(IntentExtras.USER.USER_TYPE_KEY,IntentExtras.USER.USER_TYPE_CONNECTION);
+                intent.putExtra(IntentExtras.USER.USER_TYPE_KEY,IntentExtras.USER.USER_TYPE_EXPLORE);
                 intent.putExtra(IntentExtras.USER.USER_NAME_KEY,username);
                 mContext.startActivity(intent);
             }
@@ -71,9 +69,7 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements ImageLoadObserver{
-
-        Event event;
+    public class ViewHolder extends RecyclerView.ViewHolder implements ImageEntityObserver {
         User user;
 
         CircleImageView also_attendedImage;
@@ -84,30 +80,25 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
             parentLayout = itemView.findViewById(R.id.event_also_attending);
         }
 
-        public void UpdateData() {
+        public void updateData() {
             if(user == null) {
                 return;
             }
 
-            Bitmap image = user.getProfilepictureAndLoadIfNeeded(this);
+            Bitmap image = ImageManager.getImageOrLoadIfNeeded(user.getUsername(), this, ImageManager.ImageType.PROFILE_IMAGE);
 
             if(image != null) {
                 also_attendedImage.setImageBitmap(image);
             }
-
-        }
-
-
-        @Override
-        public void onImageLoad(Bitmap bitmap) {
-            UpdateData();
+            else {
+                //resets when view is being reused
+                also_attendedImage.setImageBitmap(ImageManager.dpPlaceholder);
+            }
         }
 
         @Override
-        public void onImageLoadFailed(BLinkApiException exception) {
-
+        public void onImageUpdated(Bitmap bitmap) {
+            updateData();
         }
     }
-
-
 }

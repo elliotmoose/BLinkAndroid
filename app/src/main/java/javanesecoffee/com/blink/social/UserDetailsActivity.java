@@ -11,14 +11,14 @@ import android.widget.Toast;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
-import javanesecoffee.com.blink.api.BLinkApiException;
-import javanesecoffee.com.blink.api.ImageLoadObserver;
+import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
+import javanesecoffee.com.blink.managers.ImageManager;
 import javanesecoffee.com.blink.managers.UserManager;
 
-public class UserDetailsActivity extends AppCompatActivity implements ImageLoadObserver {
+public class UserDetailsActivity extends AppCompatActivity implements ImageEntityObserver {
     User currentUser;
 
     TextView editUsername;
@@ -59,21 +59,25 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageLoadO
             }
         }
 
-        UpdateData();
+        updateData();
     }
 
 
 
-    public void UpdateData() {
+    public void updateData() {
         if(currentUser != null) {
             Log.d("USER_DETAILS_ACTIVITY", currentUser.getUsername());
             editUsername.setText(currentUser.getUsername());
             editBio.setText(currentUser.getBio());
             editDesignation.setText(currentUser.getPosition());
             editCompany.setText(currentUser.getCompany());
-            Bitmap image = currentUser.getProfilepictureAndLoadIfNeeded(this);
+            Bitmap image = ImageManager.getImageOrLoadIfNeeded(currentUser.getUsername(), this, ImageManager.ImageType.PROFILE_IMAGE);
             if(image != null) {
                 editProfilePic.setImageBitmap(image);
+            }
+            else {
+                //resets when view is being reused
+                editProfilePic.setImageBitmap(ImageManager.dpPlaceholder);
             }
         }
         else {
@@ -82,12 +86,7 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageLoadO
     }
 
     @Override
-    public void onImageLoad(Bitmap bitmap) {
-        UpdateData();
-    }
-
-    @Override
-    public void onImageLoadFailed(BLinkApiException exception) {
-        UpdateData();
+    public void onImageUpdated(Bitmap bitmap) {
+        updateData();
     }
 }

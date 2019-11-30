@@ -3,7 +3,6 @@ package javanesecoffee.com.blink.registration;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +17,7 @@ import javanesecoffee.com.blink.api.BLinkEventObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.BuildModes;
 import javanesecoffee.com.blink.constants.Config;
+import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.helpers.ResponseParser;
 import javanesecoffee.com.blink.managers.UserManager;
 
@@ -33,14 +33,28 @@ public class MoreInfoActivity extends BlinkActivity implements BLinkEventObserve
         setContentView(more_info);
         next = findViewById(R.id.next);
 
-        if(Config.buildMode == BuildModes.TEST_REGISTRATION) {
-            EditText bioField = findViewById(R.id.bioField);
-            EditText positionField = findViewById(R.id.positionField);
-            EditText companyField = findViewById(R.id.companyField);
-            EditText linkedinField = findViewById(R.id.linkedinField);
-            EditText facebookField = findViewById(R.id.facebookField);
-            EditText instagramField = findViewById(R.id.instagramField);
+        EditText bioField = findViewById(R.id.bioField);
+        EditText positionField = findViewById(R.id.positionField);
+        EditText companyField = findViewById(R.id.companyField);
+        EditText linkedinField = findViewById(R.id.linkedinField);
+        EditText facebookField = findViewById(R.id.facebookField);
+        EditText instagramField = findViewById(R.id.instagramField);
 
+
+        if(Config.REGISTER_AUTOFILL) {
+            User user = UserManager.getLoggedInUser();
+            if(user != null) {
+                String username = user.getUsername();
+                bioField.setText("My name is " + username + " and this is my bio");
+                positionField.setText("Full Time Student");
+                companyField.setText("SUTD");
+                linkedinField.setText("facebook.com/"+username);
+                linkedinField.setText("linkedin.com/in/"+username);
+                instagramField.setText(username);
+            }
+        }
+
+        if(Config.buildMode == BuildModes.TEST_REGISTRATION) {
             bioField.setText("I'm a moose");
             positionField.setText("Full Stack Developer");
             companyField.setText("SUTD");
@@ -69,8 +83,8 @@ public class MoreInfoActivity extends BlinkActivity implements BLinkEventObserve
 
 
                 try {
-                    ShowProgressDialog("Updating info...");
-                    UserManager.RegisterMoreInfo(bio, position, company, linkedin, facebook, instagram);
+                    showProgressDialog("Updating info...");
+                    UserManager.registerMoreInfo(bio, position, company, linkedin, facebook, instagram);
                 } catch (BLinkApiException e) {
                     e.printStackTrace();
                     Toast.makeText(MoreInfoActivity.this, e.message, Toast.LENGTH_LONG).show();
@@ -99,14 +113,14 @@ public class MoreInfoActivity extends BlinkActivity implements BLinkEventObserve
     @Override
     public void onBLinkEventTriggered(JSONObject response, String taskId) throws BLinkApiException {
         if(taskId == ApiCodes.TASK_MORE_INFO){
-            HideProgressDialog();
-            boolean success = ResponseParser.ResponseIsSuccess(response);
+            hideProgressDialog();
+            boolean success = ResponseParser.responseIsSuccess(response);
 
             if(success){
                 NextActivity();
             }
             else{
-                throw ResponseParser.ExceptionFromResponse(response);
+                throw ResponseParser.exceptionFromResponse(response);
             }
         }
     }
@@ -114,7 +128,7 @@ public class MoreInfoActivity extends BlinkActivity implements BLinkEventObserve
     @Override
     public void onBLinkEventException(BLinkApiException exception, String taskId){
         if(taskId == ApiCodes.TASK_MORE_INFO){
-            HideProgressDialog();
+            hideProgressDialog();
             new AlertDialog.Builder(MoreInfoActivity.this).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();
             if(Config.buildMode == BuildModes.OFFLINE) {
                 NextActivity();

@@ -13,12 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
-
-import java.util.ArrayList;
-
 import javanesecoffee.com.blink.R;
-import javanesecoffee.com.blink.entities.User;
 
 import static android.support.constraint.Constraints.TAG;
 

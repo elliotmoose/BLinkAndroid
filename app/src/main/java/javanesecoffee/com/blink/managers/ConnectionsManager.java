@@ -1,7 +1,5 @@
 package javanesecoffee.com.blink.managers;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +38,7 @@ public class ConnectionsManager extends Manager {
         }
     }
 
-    public void LoadAllConnections()
+    public void loadAllConnections()
     {
         if(UserManager.getLoggedInUser() != null) {
             String username = UserManager.getLoggedInUser().getUsername();
@@ -50,12 +48,12 @@ public class ConnectionsManager extends Manager {
     }
 
 
-    public void ConnectUsers(File image_file, String username){
+    public void connectUsers(File image_file, String username){
         ConnectUserTask task = new ConnectUserTask(getInstance());
         task.execute(username, image_file.getPath());
     }
 
-    public void UndoConnection(Connection connection) {
+    public void undoConnection(Connection connection) {
 
         if(connection!= null) {
             String connection_id = connection.getConnection_id();
@@ -99,10 +97,10 @@ public class ConnectionsManager extends Manager {
 
             switch (taskId) {
                 case ApiCodes.TASK_LOAD_CONNECTIONS:
-                    boolean success = ResponseParser.ResponseIsSuccess(response);
+                    boolean success = ResponseParser.responseIsSuccess(response);
 
                     if(success) {
-                        JSONObject data = ResponseParser.DataFromResponse(response);
+                        JSONObject data = ResponseParser.dataFromResponse(response);
 
                         //this needs to be done manually so the original reference isnt over written and then the adapter loses reference
                         recentConnections.clear();
@@ -134,7 +132,7 @@ public class ConnectionsManager extends Manager {
 
                     //both api calls will return a list of the recently connected to update the ui
                 case ApiCodes.TASK_UNDO_CONNECT:
-                    boolean undoSuccess = ResponseParser.ResponseIsSuccess(response);
+                    boolean undoSuccess = ResponseParser.responseIsSuccess(response);
                     if(undoSuccess)
                     {
                         try {
@@ -149,11 +147,11 @@ public class ConnectionsManager extends Manager {
                     break;
                 case ApiCodes.TASK_CONNECT_USERS:
                     try {
-                        boolean connectSuccess = ResponseParser.ResponseIsSuccess(response);
+                        boolean connectSuccess = ResponseParser.responseIsSuccess(response);
                         if(connectSuccess)
                         {
                             justConnected.clear();
-                            JSONArray array = ResponseParser.ArrayDataFromResponse(response);
+                            JSONArray array = ResponseParser.arrayDataFromResponse(response);
                             for(int i=0;i<array.length(); i++) {
                                 justConnected.add(new Connection(array.getJSONObject(i)));
                             }

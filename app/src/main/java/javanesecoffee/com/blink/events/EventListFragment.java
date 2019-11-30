@@ -7,19 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javanesecoffee.com.blink.R;
@@ -30,7 +25,6 @@ import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.Event;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.EventManager;
-import javanesecoffee.com.blink.social.UserDetailsActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -79,7 +73,7 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
         loadLayout(view, savedInstanceState);
     }
 
-    public void SetEvents(ArrayList<Event> newEvents) {
+    public void setEvents(ArrayList<Event> newEvents) {
 //        this.events = newEvents;
         //cannot change the reference otherwise adapter loses ref
         this.events.clear();
@@ -91,9 +85,9 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
             eventListAdapter.notifyDataSetChanged();
         }
     }
-    public void UpdateEventList()
+    public void updateEventList()
     {
-        SetEvents(EventManager.getInstance().eventsForType(this.type));
+        setEvents(EventManager.getInstance().eventsForType(this.type));
     }
 
     @Override
@@ -144,6 +138,6 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
         eventListView.setOnItemClickListener(temp);
         eventListAdapter = new EventsListAdapter(getContext(), R.layout.fragment_event, events);
         eventListView.setAdapter(eventListAdapter);
-        UpdateEventList();
+        updateEventList();
     }
 }

@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,15 +15,14 @@ import android.widget.ImageView;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.BLinkEventObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.IntentExtras;
-import javanesecoffee.com.blink.entities.Connection;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
+import javanesecoffee.com.blink.managers.ImageManager;
 
 public class SocialConnectConfirmationActivity extends AppCompatActivity implements BLinkEventObserver {
 
@@ -48,12 +46,17 @@ public class SocialConnectConfirmationActivity extends AppCompatActivity impleme
             if(image != null) {
                 imageView.setImageBitmap(image);
             }
+            else {
+                //resets when view is being reused
+                imageView.setImageBitmap(ImageManager.eventPlaceholder);
+            }
         }
 
         final Activity activity = this;
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                ConnectionsManager.getInstance().loadAllConnections();
                 activity.finish();
                 File file = new File(path);
                 file.delete();

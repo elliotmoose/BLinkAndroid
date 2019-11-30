@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import javanesecoffee.com.blink.api.BLinkApiException;
 
 public class ResponseParser {
-    public static boolean ResponseIsSuccess(JSONObject response) throws BLinkApiException
+    public static boolean responseIsSuccess(JSONObject response) throws BLinkApiException
     {
         String status = "";
         try {
@@ -26,7 +26,7 @@ public class ResponseParser {
             else
             {
                 //throws server given error
-                throw ExceptionFromResponse(response);
+                throw exceptionFromResponse(response);
             }
         }
         else
@@ -35,7 +35,7 @@ public class ResponseParser {
         }
     }
 
-    public static JSONObject DataFromResponse(JSONObject response) throws BLinkApiException
+    public static JSONObject dataFromResponse(JSONObject response) throws BLinkApiException
     {
         try {
             JSONObject data = response.getJSONObject("data");
@@ -46,7 +46,7 @@ public class ResponseParser {
         }
     }
 
-    public static JSONArray ArrayDataFromResponse(JSONObject response) throws BLinkApiException
+    public static JSONArray arrayDataFromResponse(JSONObject response) throws BLinkApiException
     {
         try {
             JSONArray data = response.getJSONArray("data");
@@ -57,7 +57,7 @@ public class ResponseParser {
         }
     }
 
-    public static BLinkApiException ExceptionFromData(JSONObject data) throws BLinkApiException
+    public static BLinkApiException exceptionFromData(JSONObject data) throws BLinkApiException
     {
         try {
             String status = data.getString("status");
@@ -71,9 +71,9 @@ public class ResponseParser {
         }
     }
 
-    public static BLinkApiException ExceptionFromResponse(JSONObject response) throws BLinkApiException
+    public static BLinkApiException exceptionFromResponse(JSONObject response) throws BLinkApiException
     {
-        return ExceptionFromData(DataFromResponse(response));
+        return exceptionFromData(dataFromResponse(response));
     }
 
 }

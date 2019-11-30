@@ -2,22 +2,16 @@ package javanesecoffee.com.blink.managers;
 
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
-import javanesecoffee.com.blink.api.ConnectUserTask;
 import javanesecoffee.com.blink.api.LoginTask;
 import javanesecoffee.com.blink.api.MoreInfoTask;
 import javanesecoffee.com.blink.api.RegisterFaceTask;
 import javanesecoffee.com.blink.api.RegisterTask;
 import javanesecoffee.com.blink.constants.ApiCodes;
-import javanesecoffee.com.blink.helpers.RequestHandler;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.helpers.ResponseParser;
 
@@ -41,7 +35,7 @@ public class UserManager extends Manager{
      * @param username username for login
      * @param password password for login
      */
-    public static void Login(String username, String password)
+    public static void login(String username, String password)
     {
         LoginTask task = new LoginTask(getInstance()); //pass singleton in as handler
         task.execute(username, password); //pass in params
@@ -63,17 +57,17 @@ public class UserManager extends Manager{
      *
      */
 
-    public static void Register(String username, String password, String displayname, String email){
+    public static void register(String username, String password, String displayname, String email){
         RegisterTask task = new RegisterTask(getInstance()); //pass singleton in as handler
         task.execute(username, password, displayname ,email); //pass in params
     }
 
-    public static void RegisterFace(File image_file, String username){
+    public static void registerFace(File image_file, String username){
         RegisterFaceTask task = new RegisterFaceTask(getInstance()); //pass singleton in as handler
         task.execute(username, image_file.getPath()); //pass in params
     }
 
-    public static void RegisterMoreInfo(String bio, String position, String company, String linkedin, String facebook, String instagram) throws BLinkApiException{
+    public static void registerMoreInfo(String bio, String position, String company, String linkedin, String facebook, String instagram) throws BLinkApiException{
         User user = getLoggedInUser();
 
         if(user != null && user.getUsername() != "") {
@@ -104,10 +98,10 @@ public class UserManager extends Manager{
             case ApiCodes.TASK_REGISTER:
 
                 try {
-                    boolean success = ResponseParser.ResponseIsSuccess(response);
+                    boolean success = ResponseParser.responseIsSuccess(response);
                     if(success)
                     {
-                        JSONObject data = ResponseParser.DataFromResponse(response);
+                        JSONObject data = ResponseParser.dataFromResponse(response);
                         User user = new User(data);
                         setLoggedInUser(user);
                     }
@@ -118,7 +112,7 @@ public class UserManager extends Manager{
 
             case ApiCodes.TASK_MORE_INFO:
                 try {
-                    boolean success = ResponseParser.ResponseIsSuccess(response);
+                    boolean success = ResponseParser.responseIsSuccess(response);
                     if(success)
                     {
                         //TODO send More info POST to server

@@ -3,6 +3,7 @@ package javanesecoffee.com.blink.entities;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,8 +15,8 @@ import javanesecoffee.com.blink.api.LoadImageTask;
 import javanesecoffee.com.blink.constants.Endpoints;
 
 
-public class Event implements ImageLoadObserver {
-    private ArrayList<ImageLoadObserver> observers = new ArrayList<>();
+public class Event {
+//    private ArrayList<ImageLoadObserver> observers = new ArrayList<>();
     private String name;
     private String organiser;
     private String description;
@@ -24,7 +25,7 @@ public class Event implements ImageLoadObserver {
     private String time;
     private String price;
     private String event_id;
-    private Bitmap eventpicture;
+    private ArrayList<User> participantList = new ArrayList<>();
 
     //TODO: for testing only
     public Event(String name, String organiser, String description, String address, String date, String time, String price, String event_id) {
@@ -49,6 +50,18 @@ public class Event implements ImageLoadObserver {
             this.address = data.getString("address");
             this.time = data.getString("time");
             this.price = data.getString("price");
+
+            JSONArray participantArray = data.getJSONArray("participants");
+
+
+            for(int i=0; i<participantArray.length(); i++) {
+                JSONObject userObject = participantArray.getJSONObject(i);
+                User user = new User(userObject);
+                participantList.add(user);
+            }
+
+            Log.d("EVENT", "Event has " + participantList.size() + " participants");
+
         } catch (JSONException e) {
             e.printStackTrace();
             throw BLinkApiException.MALFORMED_DATA_EXCEPTION();
@@ -71,59 +84,7 @@ public class Event implements ImageLoadObserver {
 
     public String getTime() { return time; }
 
-    public Bitmap getEventImageAndLoadIfNeeded(ImageLoadObserver onFinishedObserver) {
-        if (this.eventpicture== null) {
-            LoadImage(onFinishedObserver);
-            return null;
-        }
-        else {
-            return eventpicture;
-        }
-    }
-
-
-    public void LoadImage(ImageLoadObserver o) {
-        registerObserver(o); //only notify once, so will remove once loaded
-
-        if(this.event_id != "")
-        {
-            LoadImageTask task = new LoadImageTask(this);
-            task.execute(Endpoints.GET_EVENT_IMAGE, this.event_id);
-        }
-        else
-        {
-            Log.e("Event_Error", "User has no valid event_id");
-        }
-    }
-
-    @Override
-    public void onImageLoad(Bitmap bitmap) {
-        this.eventpicture = bitmap;
-        notifyAllObserversImageLoaded(bitmap);
-    }
-
-    @Override
-    public void onImageLoadFailed(BLinkApiException exception) {
-        Log.e("User_Error", exception.message);
-    }
-
-    public void registerObserver(ImageLoadObserver o) {
-        if(!observers.contains(o)) {
-            observers.add(o);
-        }
-    }
-
-    public void deregisterObserver(ImageLoadObserver o) {
-        if(observers.contains(o)) {
-            observers.remove(o);
-        }
-    }
-
-    public void notifyAllObserversImageLoaded(Bitmap bitmap) {
-        for (int i=0; i<observers.size(); i++) {
-            ImageLoadObserver o = observers.get(i);
-            o.onImageLoad(bitmap);
-            deregisterObserver(o); //only notify once
-        }
+    public ArrayList<User> getParticipantList() {
+        return participantList;
     }
 }

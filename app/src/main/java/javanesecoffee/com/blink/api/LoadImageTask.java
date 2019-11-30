@@ -1,22 +1,15 @@
 package javanesecoffee.com.blink.api;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import javanesecoffee.com.blink.constants.Config;
-import javanesecoffee.com.blink.constants.Endpoints;
 import javanesecoffee.com.blink.helpers.RequestHandler;
 
 public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     BLinkApiException exception;
     ImageLoadObserver delegate;
+    String key;
 
     public LoadImageTask(ImageLoadObserver delegate)
     {
@@ -27,12 +20,12 @@ public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(String... params) {
         String endpoint = params[0];
-        String id = params[1];
-        String url_extension = endpoint + id;
+        key = params[1];
+        String url_extension = endpoint + key;
 
         Bitmap image = null;
         try {
-            image = RequestHandler.GetImage(url_extension);
+            image = RequestHandler.getImage(url_extension);
         } catch (BLinkApiException e) {
             this.exception = e;
         }
@@ -48,11 +41,11 @@ public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
         {
             if(exception == null)
             {
-                delegate.onImageLoad(bitmap);
+                delegate.onImageLoad(bitmap, key);
             }
             else
             {
-                delegate.onImageLoadFailed(this.exception);
+                delegate.onImageLoadFailed(this.exception, key);
             }
         }
     }

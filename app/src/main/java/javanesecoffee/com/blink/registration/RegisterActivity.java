@@ -1,6 +1,5 @@
 package javanesecoffee.com.blink.registration;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
@@ -84,20 +83,28 @@ public class RegisterActivity extends BlinkActivity implements BLinkEventObserve
                     startActivity(intent);
                 }
                 else {
-
                     EditText usernameField = findViewById(R.id.fieldUsername);
                     EditText passwordField = findViewById(R.id.fieldPassword);
                     EditText displaynameField = findViewById(R.id.fieldDisplayname);
                     EditText emailField = findViewById(R.id.positionField);
 
                     username = usernameField.getText().toString();
+
+                    //AUTO FILL:
+                    if(Config.REGISTER_AUTOFILL)
+                    {
+                        passwordField.setText("12345");
+                        displaynameField.setText(displaynameField.getText().toString().equals("") ? username : displaynameField.getText().toString());
+                        emailField.setText(username + "@gmail.com");
+                    }
+
                     password = passwordField.getText().toString();
                     displayname = displaynameField.getText().toString();
                     email = emailField.getText().toString();
 
                     if(validifyInputs(username, password, displayname, email)){
-                        ShowProgressDialog();
-                        UserManager.Register(username, password, displayname, email);
+                        showProgressDialog();
+                        UserManager.register(username, password, displayname, email);
                     }
                 }
             }
@@ -106,7 +113,7 @@ public class RegisterActivity extends BlinkActivity implements BLinkEventObserve
         login_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                MoveToRegisterActivity();
+                moveToLoginActivity();
             }
         });
         View decorview = getWindow().getDecorView();
@@ -137,14 +144,14 @@ public class RegisterActivity extends BlinkActivity implements BLinkEventObserve
         return true;
     }
 
-    public void NextActivity()
+    public void nextActivity()
     {
         Intent intent = new Intent(getApplicationContext(), FaceScanActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void MoveToRegisterActivity(){
+    public void moveToLoginActivity(){
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
         finish();
@@ -154,16 +161,16 @@ public class RegisterActivity extends BlinkActivity implements BLinkEventObserve
     public void onBLinkEventTriggered(JSONObject response, String taskId) throws BLinkApiException{
         if(taskId == ApiCodes.TASK_REGISTER)
         {
-            HideProgressDialog();
-            boolean success = ResponseParser.ResponseIsSuccess(response);
+            hideProgressDialog();
+            boolean success = ResponseParser.responseIsSuccess(response);
 
             if(success)
             {
-                NextActivity();
+                nextActivity();
             }
             else
             {
-                throw ResponseParser.ExceptionFromResponse(response);
+                throw ResponseParser.exceptionFromResponse(response);
             }
         }
     }
@@ -171,10 +178,10 @@ public class RegisterActivity extends BlinkActivity implements BLinkEventObserve
     @Override
     public void onBLinkEventException(BLinkApiException exception, String taskId) {
         if(taskId == ApiCodes.TASK_REGISTER) {
-            HideProgressDialog();
+            hideProgressDialog();
             new AlertDialog.Builder(RegisterActivity.this).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();
             if(Config.buildMode == BuildModes.OFFLINE) {
-                NextActivity();
+                nextActivity();
             }
         }
     }

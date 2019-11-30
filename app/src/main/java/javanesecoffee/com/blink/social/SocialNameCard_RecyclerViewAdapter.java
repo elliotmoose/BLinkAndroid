@@ -12,30 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.sql.Connection;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
-import javanesecoffee.com.blink.api.BLinkApiException;
-import javanesecoffee.com.blink.api.ImageLoadObserver;
+import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.User;
-import javanesecoffee.com.blink.managers.ConnectionsManager;
-import javanesecoffee.com.blink.managers.UserManager;
+import javanesecoffee.com.blink.managers.ImageManager;
 
 public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<SocialNameCard_RecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "SocialNameCard_Recycler";
 
     private Context mContext;
-    ArrayList<User> users = new ArrayList<>();
-    User currentUser = UserManager.getLoggedInUser();
+    ArrayList<User> users;
 
     public SocialNameCard_RecyclerViewAdapter(ArrayList<User> items,Context context) {
         super();
@@ -56,7 +49,7 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
         Log.d(TAG, "onBindViewHolder:called ");
 
         holder.user = users.get(i);
-        holder.UpdateData();
+        holder.updateData();
         final ViewHolder holderRef = holder;
         holder.cardViewProfile.setOnClickListener(new View.OnClickListener() {
 
@@ -87,7 +80,7 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
         return this.users.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements ImageLoadObserver {
+    public class ViewHolder extends RecyclerView.ViewHolder implements ImageEntityObserver {
 
         User user;
 
@@ -121,15 +114,19 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
             cardViewConnections = itemView.findViewById(R.id.card_view_connection);
         }
 
-        public void UpdateData() {
+        public void updateData() {
             if(user == null) {
                 return;
             }
 
-            Bitmap image = user.getProfilepictureAndLoadIfNeeded(this);
+            Bitmap image = ImageManager.getImageOrLoadIfNeeded(user.getUsername(), this, ImageManager.ImageType.PROFILE_IMAGE);
 
             if(image != null) {
                 cardImage.setImageBitmap(image);
+            }
+            else {
+                //resets when view is being reused
+                cardImage.setImageBitmap(ImageManager.dpPlaceholder);
             }
 
             cardUsername.setText(user.getUsername());
@@ -143,13 +140,8 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
         }
 
         @Override
-        public void onImageLoadFailed(BLinkApiException exception) {
-
-        }
-
-        @Override
-        public void onImageLoad(Bitmap bitmap) {
-            UpdateData();
+        public void onImageUpdated(Bitmap bitmap) {
+            updateData();
         }
     }
 }

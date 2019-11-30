@@ -3,7 +3,6 @@ package javanesecoffee.com.blink.social;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ public class SocialUndoConnectionsRecyclerViewAdapter extends RecyclerView.Adapt
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int i) {
         holder.connection = connections.get(i);
-        holder.UpdateData();
+        holder.updateData();
     }
 
     @Override
@@ -59,7 +58,7 @@ public class SocialUndoConnectionsRecyclerViewAdapter extends RecyclerView.Adapt
             undoButton = itemView.findViewById(R.id.undoButton);
         }
 
-        public void UpdateData() {
+        public void updateData() {
             if(connection == null) {
                 return;
             }
@@ -70,7 +69,7 @@ public class SocialUndoConnectionsRecyclerViewAdapter extends RecyclerView.Adapt
                 @Override
                 public void onClick(View v) {
                     if(connection != null) {
-                        ConnectionsManager.getInstance().UndoConnection(connection);
+                        ConnectionsManager.getInstance().undoConnection(connection);
                     }
                 }
             });

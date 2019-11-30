@@ -13,6 +13,7 @@ import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.EventManager;
+import javanesecoffee.com.blink.managers.ImageManager;
 import javanesecoffee.com.blink.managers.UserManager;
 import javanesecoffee.com.blink.social.SocialFragment;
 
@@ -27,14 +28,16 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         navListener.onNavigationItemSelected(bottomNav.getMenu().findItem(R.id.navhome));
 
+
+        ImageManager.initPlaceholders(this, getResources());
         LoadAllData();
     }
 
     private void LoadAllData() {
         User user = UserManager.getLoggedInUser();
         if(user != null) {
-            EventManager.getInstance().LoadEventsList();
-            ConnectionsManager.getInstance().LoadAllConnections();
+            EventManager.getInstance().loadEventsList();
+            ConnectionsManager.getInstance().loadAllConnections();
         }
     }
 
