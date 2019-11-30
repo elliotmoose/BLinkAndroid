@@ -28,6 +28,7 @@ import javanesecoffee.com.blink.api.BLinkEventObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.Event;
+import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.EventManager;
 import javanesecoffee.com.blink.social.UserDetailsActivity;
 
@@ -40,7 +41,7 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
 
     private ListView eventListView;
     private EventsListAdapter eventListAdapter;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<Event> events = new ArrayList<>();
 
     public EventListFragment(){
@@ -98,7 +99,16 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
     @Override
     public void onBLinkEventTriggered(JSONObject response, String taskId) throws BLinkApiException {
         if(taskId == ApiCodes.TASK_LOAD_EVENTS_LIST) {
-            this.UpdateEventList();
+            UpdateEvents();
+            if(swipeRefreshLayout!=null){
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }
+    }
+    private void UpdateEvents(){
+        UpdateEventList();
+        if(eventListAdapter!=null){
+            eventListAdapter.notifyDataSetChanged();
         }
     }
 
@@ -121,12 +131,13 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
                 startActivity(intent);
             }
         };
-        final SwipeRefreshLayout swipeRefreshLayout = getView().findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout = getView().findViewById(R.id.swipeRefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){
                 loadLayout(view, savedInstanceState);
                 swipeRefreshLayout.setRefreshing(false);
+                EventManager.getInstance().LoadEventsList();
             }
         });
 
