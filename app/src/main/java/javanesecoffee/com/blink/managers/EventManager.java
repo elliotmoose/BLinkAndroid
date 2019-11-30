@@ -25,7 +25,6 @@ public class EventManager extends Manager {
     }
 
     public static ArrayList<User> participant_list = new ArrayList<>();
-    public static EventListTypes current_request_event_list_type;
 
     ArrayList<Event> pastEvents = new ArrayList<>();
     ArrayList<Event> upcomingEvents = new ArrayList<>();

@@ -3,6 +3,7 @@ package javanesecoffee.com.blink.entities;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,7 +25,7 @@ public class Event {
     private String time;
     private String price;
     private String event_id;
-//    private Bitmap eventpicture;
+    private ArrayList<User> participantList = new ArrayList<>();
 
     //TODO: for testing only
     public Event(String name, String organiser, String description, String address, String date, String time, String price, String event_id) {
@@ -49,6 +50,11 @@ public class Event {
             this.address = data.getString("address");
             this.time = data.getString("time");
             this.price = data.getString("price");
+
+            JSONArray participantArray = data.getJSONArray("participants");
+
+
+
         } catch (JSONException e) {
             e.printStackTrace();
             throw BLinkApiException.MALFORMED_DATA_EXCEPTION();
@@ -70,4 +76,8 @@ public class Event {
     public String getPrice() { return price; }
 
     public String getTime() { return time; }
+
+    public ArrayList<User> getParticipantList() {
+        return participantList;
+    }
 }
