@@ -54,6 +54,13 @@ public class Event {
             JSONArray participantArray = data.getJSONArray("participants");
 
 
+            for(int i=0; i<participantArray.length(); i++) {
+                JSONObject userObject = participantArray.getJSONObject(i);
+                User user = new User(userObject);
+                participantList.add(user);
+            }
+
+            Log.d("EVENT", "Event has " + participantList.size() + " participants");
 
         } catch (JSONException e) {
             e.printStackTrace();
