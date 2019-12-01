@@ -32,7 +32,7 @@ import javanesecoffee.com.blink.social.SocialNameCard_RecyclerViewAdapter;
 import javanesecoffee.com.blink.social.SocialSummaryFragment;
 import javanesecoffee.com.blink.social.SocialTabCard_RecyclerViewAdapter;
 
-public class EventDetailActivity extends AppCompatActivity  {
+public class EventPastDetailActivity extends AppCompatActivity {
     User currentUser;
     Event currentEvent;
     ArrayList<Event> eventArray;
@@ -47,32 +47,27 @@ public class EventDetailActivity extends AppCompatActivity  {
     TextView eventPrice;
     TextView eventDescription;
 
-
-    Button eventRegister;
     RecyclerView eventTags;
-    RecyclerView eventAlsoAttending;
+    RecyclerView eventPhotos;
 
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.event_detail_page);
+        setContentView(R.layout.event_detail_page_past);
 
         //textview
-        eventName = findViewById(R.id.event_detail_name);
-        eventDate = findViewById(R.id.event_detail_date);
-        eventTime = findViewById(R.id.event_detail_time);
-        eventLocation = findViewById(R.id.event_detail_location);
-        eventPrice = findViewById(R.id.event_detail_price);
-        eventDescription = findViewById(R.id.event_detail_description);
-
-        //button
-        eventRegister = findViewById(R.id.event_detail_register_button);
+        eventName = findViewById(R.id.event_past_detail_name);
+        eventDate = findViewById(R.id.event_past_detail_date);
+        eventTime = findViewById(R.id.event_past_detail_time);
+        eventLocation = findViewById(R.id.event_past_detail_location);
+        eventPrice = findViewById(R.id.event_past_detail_price);
+        eventDescription = findViewById(R.id.event_past_detail_description);
 
         //recyclerview
         eventTags = findViewById(R.id.event_detail_tags);
-        eventAlsoAttending = findViewById(R.id.event_also_attending_profile_pic);
+        eventPhotos = findViewById(R.id.event_past_photos_taken);
 
         currentUser = UserManager.getLoggedInUser();
 
@@ -98,15 +93,6 @@ public class EventDetailActivity extends AppCompatActivity  {
         }*/
         }
 
-        eventRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("EVENT DETAILS ACTIVITY", "onClick: Opening Dialogue");
-                EventRegisterDialog dialog = new EventRegisterDialog();
-                dialog.show(getSupportFragmentManager(),"EventRegisterDialogue");
-            }
-        });
-
 
         View decorview = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -131,18 +117,18 @@ public class EventDetailActivity extends AppCompatActivity  {
 
     }
 
-    private void initRecyclerView() {
+    /*private void initRecyclerView() {
         ArrayList<User> alsoAttending = EventManager.getInstance().getParticipantList();
 
         EventDetailImageAdapter DetailImage_adapter = new EventDetailImageAdapter(alsoAttending, this);
 
         eventAlsoAttending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        EventDetailActivity.HorizontalSpaceItemDecoration spaceDecoration = new EventDetailActivity.HorizontalSpaceItemDecoration(40);
+        EventPastDetailActivity.HorizontalSpaceItemDecoration spaceDecoration = new EventPastDetailActivity.HorizontalSpaceItemDecoration(40);
         eventAlsoAttending.addItemDecoration(spaceDecoration);
 
         eventAlsoAttending.setAdapter(DetailImage_adapter);
-    }
+    }*/
 
     public class HorizontalSpaceItemDecoration extends RecyclerView.ItemDecoration {
         private final int space;
@@ -157,3 +143,4 @@ public class EventDetailActivity extends AppCompatActivity  {
         }
     }
 }
+

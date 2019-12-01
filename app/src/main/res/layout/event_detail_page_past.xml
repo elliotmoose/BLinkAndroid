@@ -6,11 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/gradient_rect"
-    android:id="@+id/event_detail_page"
+    android:id="@+id/event_past_detail_page"
     tools:context=".events.EventDetailActivity">
 
     <TextView
-        android:id="@+id/event_detail_name"
+        android:id="@+id/event_past_detail_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/event_name"
@@ -23,7 +23,7 @@
         />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/event_detail_tags"
+        android:id="@+id/event_past_detail_tags"
         android:layout_width="match_parent"
         android:layout_height="41dp"
         android:orientation="horizontal"
@@ -37,7 +37,7 @@
         android:layout_marginTop="10dp">
 
         <TextView
-            android:id="@+id/event_detail_date"
+            android:id="@+id/event_past_detail_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
@@ -50,12 +50,12 @@
             />
 
         <TextView
-            android:id="@+id/event_detail_time"
+            android:id="@+id/event_past_detail_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_date"
+            app:layout_constraintTop_toBottomOf="@id/event_past_detail_date"
             android:text="@string/event_start_time"
             android:fontFamily="@font/montserrat"
             android:textColor="@color/colorWhite"
@@ -63,12 +63,12 @@
             />
 
         <TextView
-            android:id="@+id/event_detail_location"
+            android:id="@+id/event_past_detail_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_time"
+            app:layout_constraintTop_toBottomOf="@id/event_past_detail_time"
             android:text="@string/event_location"
             android:fontFamily="@font/montserrat"
             android:textColor="@color/colorWhite"
@@ -76,12 +76,12 @@
             />
 
         <TextView
-            android:id="@+id/event_detail_price"
+            android:id="@+id/event_past_detail_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_location"
+            app:layout_constraintTop_toBottomOf="@id/event_past_detail_location"
             android:text="@string/event_price"
             android:fontFamily="@font/montserrat"
             android:textColor="@color/colorWhite"
@@ -96,7 +96,7 @@
         android:layout_marginTop="20dp">
 
         <TextView
-            android:id="@+id/event_detail_description_tag"
+            android:id="@+id/event_past_detail_description_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -109,15 +109,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/event_detail_description"
+            android:id="@+id/event_past_detail_description"
             android:layout_width="338dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:text="@string/event_description"
             android:textColor="@color/colorWhite"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@id/event_detail_description_tag"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_description_tag"
+            app:layout_constraintStart_toStartOf="@id/event_past_detail_description_tag"
+            app:layout_constraintTop_toBottomOf="@id/event_past_detail_description_tag"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
@@ -135,26 +135,14 @@
         android:text="@string/event_also_attending"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/event_also_attending_profile_pic"
+        android:id="@+id/event_past_photos_taken"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:orientation="horizontal" />
 
-    <Button
-        android:id="@+id/event_detail_register_button"
-        android:layout_width="208dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/button_gradient_blue"
-        android:elevation="2dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/event_register"
-        android:textColor="@color/colorWhite"
-        android:textSize="25sp"
-        android:textStyle="bold"
+
 
         />
 

@@ -111,21 +111,33 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
     public void onBLinkEventException(BLinkApiException exception, String taskId) {
 
     }
+
     public void loadLayout(@NonNull final View view, @Nullable final Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         eventListView = getView().findViewById(R.id.eventListView);
+
         AdapterView.OnItemClickListener temp = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //System.out.println(events.get(position));
                 //Toast.makeText(getContext(), String.valueOf(events.get(position)), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent (getActivity(), EventDetailActivity.class);
-                intent.putExtra(IntentExtras.EVENT.EVENT_ID_KEY,String.valueOf(events.get(position).getEvent_id()));
-                intent.putExtra(IntentExtras.EVENT.EVENT_TYPE_KEY,type.toString());
-                intent.putExtra(IntentExtras.EVENT.EVENT_POSITION_KEY,position);
-                startActivity(intent);
+                if(type == EventListTypes.EXPLORE || type == EventListTypes.UPCOMING){
+                    Intent intent = new Intent (getActivity(), EventDetailActivity.class);
+                    intent.putExtra(IntentExtras.EVENT.EVENT_ID_KEY,String.valueOf(events.get(position).getEvent_id()));
+                    intent.putExtra(IntentExtras.EVENT.EVENT_TYPE_KEY,type.toString());
+                    intent.putExtra(IntentExtras.EVENT.EVENT_POSITION_KEY,position);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent (getActivity(), EventPastDetailActivity.class);
+                    intent.putExtra(IntentExtras.EVENT.EVENT_ID_KEY,String.valueOf(events.get(position).getEvent_id()));
+                    intent.putExtra(IntentExtras.EVENT.EVENT_TYPE_KEY,type.toString());
+                    intent.putExtra(IntentExtras.EVENT.EVENT_POSITION_KEY,position);
+                    startActivity(intent);
+                }
             }
         };
+
         swipeRefreshLayout = getView().findViewById(R.id.swipeRefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override

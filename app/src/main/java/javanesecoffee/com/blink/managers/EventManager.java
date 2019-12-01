@@ -50,6 +50,8 @@ public class EventManager extends Manager {
         load_participant_list.execute(event_id);
     }
 
+    public ArrayList<User> getParticipantList(){return participant_list;}
+
     /**
      * Method to be called from activity
      */
