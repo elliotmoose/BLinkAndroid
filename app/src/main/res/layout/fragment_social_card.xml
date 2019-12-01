@@ -177,6 +177,7 @@
                     android:fontFamily="@font/montserrat"
                     android:layout_marginTop="8dp"
                     android:text="@string/instagram"
+                    android:autoLink="web"
                     android:textColor="#474BAC"
                     android:textSize="8sp"/>
 

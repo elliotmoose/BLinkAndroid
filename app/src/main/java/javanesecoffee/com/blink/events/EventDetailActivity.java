@@ -105,9 +105,9 @@ public class EventDetailActivity extends AppCompatActivity {
 
             }
         });*/
-
-
-
+        View decorview = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorview.setSystemUiVisibility(uiOptions);
         UpdateData();
         //initRecyclerView();
 

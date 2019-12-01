@@ -81,7 +81,9 @@ public class LoginActivity extends BlinkActivity implements BLinkEventObserver {
                 }
             }
         });
-
+        View decorview = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorview.setSystemUiVisibility(uiOptions);
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

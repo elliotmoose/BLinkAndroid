@@ -6,6 +6,7 @@ import android.os.Bundle;
 //import android.os.UserManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,9 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
         }
 
         updateData();
+        View decorview = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorview.setSystemUiVisibility(uiOptions);
     }
 
 

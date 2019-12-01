@@ -87,6 +87,9 @@ public class FaceScanActivity extends BlinkActivity implements BLinkEventObserve
 
             }
         });
+        View decorview = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorview.setSystemUiVisibility(uiOptions);
     }
 
     @Override

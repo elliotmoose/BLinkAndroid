@@ -100,11 +100,12 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
         }
     }
     private void UpdateEvents(){
-        UpdateEventList();
+        updateEventList();
         if(eventListAdapter!=null){
             eventListAdapter.notifyDataSetChanged();
         }
     }
+
 
     @Override
     public void onBLinkEventException(BLinkApiException exception, String taskId) {
@@ -131,7 +132,7 @@ public class EventListFragment extends Fragment implements BLinkEventObserver {
             public void onRefresh(){
                 loadLayout(view, savedInstanceState);
                 swipeRefreshLayout.setRefreshing(false);
-                EventManager.getInstance().LoadEventsList();
+                EventManager.getInstance().loadEventsList();
             }
         });
 

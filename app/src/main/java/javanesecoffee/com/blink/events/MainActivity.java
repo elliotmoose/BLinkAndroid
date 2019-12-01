@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import javanesecoffee.com.blink.CameraFragment;
 import javanesecoffee.com.blink.HomeFragment;
@@ -27,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         navListener.onNavigationItemSelected(bottomNav.getMenu().findItem(R.id.navhome));
-
-
+        View decorview = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorview.setSystemUiVisibility(uiOptions);
         ImageManager.initPlaceholders(this, getResources());
         LoadAllData();
     }

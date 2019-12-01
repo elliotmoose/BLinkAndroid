@@ -68,6 +68,9 @@ public class SocialConnectConfirmationActivity extends AppCompatActivity impleme
 //        SocialSummaryFragment.HorizontalSpaceItemDecoration spaceDecoration = new SocialSummaryFragment.HorizontalSpaceItemDecoration(40);
         newConnectionsRecyclerView.setAdapter(adapter);
         ConnectionsManager.getInstance().registerObserver(this);
+        View decorview = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorview.setSystemUiVisibility(uiOptions);
     }
 
     @Override

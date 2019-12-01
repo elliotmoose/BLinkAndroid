@@ -99,7 +99,9 @@ public class MoreInfoActivity extends BlinkActivity implements BLinkEventObserve
                 NextActivity();
             }
         });
-
+        View decorview = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorview.setSystemUiVisibility(uiOptions);
         UserManager.getInstance().registerObserver(this);
     }
 
