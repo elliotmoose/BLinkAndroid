@@ -2,7 +2,6 @@ package javanesecoffee.com.blink.events;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,7 +41,6 @@ import javanesecoffee.com.blink.social.SocialTabCard_RecyclerViewAdapter;
 public class EventDetailActivity extends AppCompatActivity  implements BLinkEventObserver  {
     User currentUser;
     Event currentEvent;
-    ArrayList<Event> eventArray;
     String eventType;
     String eventID;
     int eventPosition;
@@ -55,10 +53,11 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
     TextView eventDescription;
 
 
-    Button eventRegister;
+    Button eventRegisterButton;
     RecyclerView eventTags;
     RecyclerView eventAlsoAttending;
 
+    ArrayList<User> alsoAttending = new ArrayList<>();
 
 
     @Override
@@ -66,6 +65,7 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_detail_page);
 
+        EventManager.getInstance().registerObserver(this);
         //textview
         eventName = findViewById(R.id.event_detail_name);
         eventDate = findViewById(R.id.event_detail_date);
@@ -75,7 +75,7 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
         eventDescription = findViewById(R.id.event_detail_description);
 
         //button
-        eventRegister = findViewById(R.id.event_detail_register_button);
+        eventRegisterButton = findViewById(R.id.event_detail_register_button);
 
         //recyclerview
         eventTags = findViewById(R.id.event_detail_tags);
@@ -91,44 +91,25 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
         eventPosition = intent.getIntExtra(IntentExtras.EVENT.EVENT_POSITION_KEY,0);
 
         if (eventID != null) {
-            eventArray = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType));
-            currentEvent = eventArray.get(eventPosition);
-
-            /*switch (eventType){
-                case IntentExtras.EVENT.EVENT_TYPE_EXPLORE:
-                    eventArray = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType));
-                    currentEvent = eventArray.get(eventPosition);
-                    break;
-                case IntentExtras.EVENT.EVENT_TYPE_UPCOMING:
-                    eventArray = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType));
-                    currentEvent = eventArray.get(eventPosition);
-                    break;
-                case IntentExtras.EVENT.EVENT_TYPE_PAST:
-        }*/
+            currentEvent = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType)).get(eventPosition);
         }
 
-        eventRegister.setOnClickListener(new View.OnClickListener() {
+        eventRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("EVENT DETAILS ACTIVITY", "onClick: Opening Dialogue");
                 new AlertDialog.Builder(EventDetailActivity.this).
-                        setTitle("Confirm Your Registration")
+                        setTitle("Confirm")
+                        .setMessage("Are you sure you want to register for this event?")
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String username = currentUser.getUsername();
                                 String event_id = eventID;
                                 EventManager.register(username, event_id);
-                                Intent intent = new Intent(EventDetailActivity.this, EventListFragment.class);
-                                startActivity(intent);
-                                finish();
                             }
                         })
                         .setNegativeButton("Cancel", null)
                         .show();
-
-//                EventRegisterDialog dialog = new EventRegisterDialog();
-//                dialog.show(getSupportFragmentManager(),"EventRegisterDialogue");
             }
         });
 
@@ -136,28 +117,41 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
         View decorview = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorview.setSystemUiVisibility(uiOptions);
-        UpdateData();
+        updateData();
         initRecyclerView();
 
     }
 
+    @Override
+    protected void onDestroy() {
+        EventManager.getInstance().deregisterObserver(this);
+        super.onDestroy();
+    }
 
-    public void UpdateData(){
+    public void updateData(){
         if(currentEvent!=null){
-            Log.d("EVENT DETAILS ACTIVITY", "updateData: EVENT DETAILS ACTIITY");
             eventName.setText(currentEvent.getName());
             eventDate.setText(currentEvent.getDate());
             eventTime.setText(currentEvent.getTime());
             eventLocation.setText(currentEvent.getAddress());
             eventPrice.setText(currentEvent.getPrice());
             eventDescription.setText(currentEvent.getDescription());
-        }
 
+            alsoAttending.clear();
+            for(User participant : currentEvent.getParticipantList()) {
+                alsoAttending.add(participant);
+            }
+
+            if(EventListTypes.valueOf(eventType) == EventListTypes.UPCOMING || EventListTypes.valueOf(eventType) == EventListTypes.PAST_EVENTS) {
+                eventRegisterButton.setVisibility(View.GONE);
+            }
+            else {
+                eventRegisterButton.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void initRecyclerView() {
-        ArrayList<User> alsoAttending = EventManager.getInstance().getParticipantList();
-
         EventDetailImageAdapter DetailImage_adapter = new EventDetailImageAdapter(alsoAttending, this);
 
         eventAlsoAttending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -176,7 +170,19 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
 
             if(success)
             {
-                this.finish();
+                //refresh
+                EventManager.getInstance().loadEventsList();
+
+                new AlertDialog.Builder(EventDetailActivity.this).
+                        setTitle("Success")
+                        .setMessage("You have successfully registered for the event!")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        })
+                        .show();
             }
             else
             {
@@ -188,7 +194,7 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
 
     @Override
     public void onBLinkEventException(BLinkApiException exception, String taskId) {
-        if(taskId == ApiCodes.TASK_REGISTER) {
+        if(taskId == ApiCodes.TASK_REGISTER_FOR_EVENT) {
             new AlertDialog.Builder(EventDetailActivity.this).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();
 
     }}

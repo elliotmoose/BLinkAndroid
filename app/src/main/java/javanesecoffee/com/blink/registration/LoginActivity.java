@@ -49,6 +49,10 @@ public class LoginActivity extends BlinkActivity implements BLinkEventObserver {
             passwordField.setText("12345");
         }
 
+        if(Config.REGISTER_AUTOFILL) {
+            passwordField.setText("12345");
+        }
+
         UserManager.getInstance().registerObserver(this);
 
         login_button.setOnClickListener(new View.OnClickListener() {

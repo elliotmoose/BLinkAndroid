@@ -20,7 +20,7 @@ public class RegisterForEventTask extends BLinkAsyncTask {
         String username = params[0];
         String event_id = params[1];
 
-        RequestHandler requestHandler = RequestHandler.PostRequestHandler(Endpoints.REGISTER);
+        RequestHandler requestHandler = RequestHandler.PostRequestHandler(Endpoints.REGISTER_EVENT);
         requestHandler.addPostField("username", username);
         requestHandler.addPostField("event_id", event_id);
         return requestHandler.sendPostRequest();

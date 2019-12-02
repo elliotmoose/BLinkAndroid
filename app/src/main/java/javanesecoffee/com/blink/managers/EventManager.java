@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.LoadEventListTask;
-import javanesecoffee.com.blink.api.LoadParticipantListTask;
 import javanesecoffee.com.blink.api.RegisterForEventTask;
 import javanesecoffee.com.blink.api.RegisterTask;
 import javanesecoffee.com.blink.constants.ApiCodes;
@@ -25,8 +24,6 @@ public class EventManager extends Manager {
     public static EventManager getInstance() {
         return singleton;
     }
-
-    public static ArrayList<User> participant_list = new ArrayList<>();
 
     ArrayList<Event> pastEvents = new ArrayList<>();
     ArrayList<Event> upcomingEvents = new ArrayList<>();
@@ -45,17 +42,6 @@ public class EventManager extends Manager {
 
     /**
      * Method to be called from activity
-     * @param event_id
-     */
-    public void getParticipantList(String event_id){
-        LoadParticipantListTask load_participant_list = new LoadParticipantListTask(getInstance());
-        load_participant_list.execute(event_id);
-    }
-
-    public ArrayList<User> getParticipantList(){return participant_list;}
-
-    /**
-     * Method to be called from activity
      */
     public void loadEventsList(){
         if(UserManager.getLoggedInUser() != null) {
@@ -70,20 +56,6 @@ public class EventManager extends Manager {
 
         switch (taskId)
         {
-            case ApiCodes.TASK_LOAD_PARTICIPANT_LIST:
-
-                try {
-                    boolean success = ResponseParser.responseIsSuccess(response);
-                    if(success)
-                    {
-                        JSONObject data = ResponseParser.dataFromResponse(response);
-                        EventManager.participant_list = userListFromData(data);
-                    }
-                } catch (BLinkApiException e) {
-                    e.printStackTrace();
-                }
-                break;
-
             case ApiCodes.TASK_LOAD_EVENTS_LIST:
                 try {
                     boolean success = ResponseParser.responseIsSuccess(response);
