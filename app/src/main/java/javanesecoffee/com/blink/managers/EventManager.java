@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.LoadEventListTask;
 import javanesecoffee.com.blink.api.LoadParticipantListTask;
+import javanesecoffee.com.blink.api.RegisterForEventTask;
+import javanesecoffee.com.blink.api.RegisterTask;
 import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.Config;
 import javanesecoffee.com.blink.entities.Event;
@@ -142,6 +144,11 @@ public class EventManager extends Manager {
         } catch (BLinkApiException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void register(String username, String event_id){
+        RegisterForEventTask task = new RegisterForEventTask(getInstance()); //pass singleton in as handler
+        task.execute(username, event_id); //pass in params
     }
 
 

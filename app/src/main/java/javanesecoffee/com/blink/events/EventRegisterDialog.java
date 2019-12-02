@@ -11,9 +11,15 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import javanesecoffee.com.blink.R;
+import org.json.JSONObject;
 
-public class EventRegisterDialog extends DialogFragment {
+import javanesecoffee.com.blink.R;
+import javanesecoffee.com.blink.api.BLinkApiException;
+import javanesecoffee.com.blink.api.BLinkEventObserver;
+import javanesecoffee.com.blink.constants.ApiCodes;
+import javanesecoffee.com.blink.helpers.ResponseParser;
+
+public class EventRegisterDialog extends DialogFragment  {
     private static final String TAG = "MyCustomDialog";
 
 
@@ -34,6 +40,7 @@ public class EventRegisterDialog extends DialogFragment {
         ActionCancel = view.findViewById(R.id.event_register_action_cancel);
         ActionConfirm = view.findViewById(R.id.event_register_action_confirm);
 
+
         ActionCancel.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -48,6 +55,7 @@ public class EventRegisterDialog extends DialogFragment {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: capturing input");
                 //TO-DO need to implement register evnet task
+
                 getDialog().dismiss();
             }
 
