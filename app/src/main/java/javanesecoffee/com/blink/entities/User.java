@@ -14,6 +14,7 @@ public class User {
     private String linkedin;
     private String facebook;
     private String instagram;
+    private Connection connection;
 
     public User(String username) {
         this.username = username;
@@ -41,6 +42,17 @@ public class User {
             this.linkedin = data.getString("linkedin");
             this.facebook = data.getString("facebook");
             this.instagram = data.getString("instagram");
+
+            try {
+                JSONObject connectionObject = data.getJSONObject("connection");
+                this.connection = new Connection(connectionObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            catch (BLinkApiException e) {
+                e.printStackTrace();
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
             throw BLinkApiException.MALFORMED_DATA_EXCEPTION();
@@ -66,5 +78,7 @@ public class User {
     public String getLinkedin() { return linkedin; }
     public String getFacebook() { return facebook; }
     public String getInstagram() { return instagram; }
-
+    public Connection getConnection() {
+        return connection;
+    }
 }

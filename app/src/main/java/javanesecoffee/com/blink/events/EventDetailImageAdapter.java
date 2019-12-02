@@ -65,7 +65,7 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
 
     @Override
     public int getItemCount() {
-        return 4;
+        return users.size();
     }
 
 
@@ -78,6 +78,7 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             parentLayout = itemView.findViewById(R.id.event_also_attending);
+            also_attendedImage = itemView.findViewById(R.id.also_attending_profile_pic);
         }
 
         public void updateData() {

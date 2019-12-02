@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
+import javanesecoffee.com.blink.ViewConnectionActivity;
 import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.User;
@@ -69,8 +70,12 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
 
             @Override
             public void onClick(View view) {
+                String username = holderRef.user.getUsername();
                 Log.d(TAG, "onClick: clicked on view connections");
                 Toast.makeText(mContext, "loading user connections",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, ViewConnectionActivity.class);
+                intent.putExtra(IntentExtras.USER.USER_NAME_KEY,username);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -84,16 +89,19 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
 
         User user;
 
+        ConstraintLayout parentLayout;
+        LinearLayout cardContactDetails;
+
         CircleImageView cardImage;
+
         TextView cardUsername;
         TextView cardDesignation;
-        LinearLayout cardContactDetails;
         TextView cardEmail;
         TextView cardLinkedin;
         TextView cardFacebook;
         TextView cardInstagram;
         TextView cardCompany;
-        ConstraintLayout parentLayout;
+
         Button cardViewProfile;
         Button cardViewConnections;
 
