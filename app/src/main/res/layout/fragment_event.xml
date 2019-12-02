@@ -75,6 +75,15 @@
 
                 </LinearLayout>
 
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="40dp"
+                    android:layout_height="17dp"
+                    android:orientation="horizontal"
+                    android:id="@+id/EventTagRecyclerView"
+                    >
+
+                </android.support.v7.widget.RecyclerView>
+
             </LinearLayout>
 
 
