@@ -66,6 +66,7 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_detail_page);
 
+        EventManager.getInstance().registerObserver(this);
         //textview
         eventName = findViewById(R.id.event_detail_name);
         eventDate = findViewById(R.id.event_detail_date);
@@ -97,25 +98,19 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
         eventRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("EVENT DETAILS ACTIVITY", "onClick: Opening Dialogue");
                 new AlertDialog.Builder(EventDetailActivity.this).
-                        setTitle("Confirm Your Registration")
+                        setTitle("Confirm")
+                        .setMessage("Are you sure you want to register for this event?")
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String username = currentUser.getUsername();
                                 String event_id = eventID;
                                 EventManager.register(username, event_id);
-                                Intent intent = new Intent(EventDetailActivity.this, EventListFragment.class);
-                                startActivity(intent);
-                                finish();
                             }
                         })
                         .setNegativeButton("Cancel", null)
                         .show();
-
-//                EventRegisterDialog dialog = new EventRegisterDialog();
-//                dialog.show(getSupportFragmentManager(),"EventRegisterDialogue");
             }
         });
 
@@ -128,9 +123,14 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
 
     }
 
+    @Override
+    protected void onDestroy() {
+        EventManager.getInstance().deregisterObserver(this);
+        super.onDestroy();
+    }
+
     public void updateData(){
         if(currentEvent!=null){
-            Log.d("EVENT DETAILS ACTIVITY", "updateData: EVENT DETAILS ACTIITY");
             eventName.setText(currentEvent.getName());
             eventDate.setText(currentEvent.getDate());
             eventTime.setText(currentEvent.getTime());
@@ -171,7 +171,19 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
 
             if(success)
             {
-                this.finish();
+                //refresh
+                EventManager.getInstance().loadEventsList();
+
+                new AlertDialog.Builder(EventDetailActivity.this).
+                        setTitle("Success")
+                        .setMessage("You have successfully registered for the event!")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        })
+                        .show();
             }
             else
             {
@@ -183,7 +195,7 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
 
     @Override
     public void onBLinkEventException(BLinkApiException exception, String taskId) {
-        if(taskId == ApiCodes.TASK_REGISTER) {
+        if(taskId == ApiCodes.TASK_REGISTER_FOR_EVENT) {
             new AlertDialog.Builder(EventDetailActivity.this).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();
 
     }}

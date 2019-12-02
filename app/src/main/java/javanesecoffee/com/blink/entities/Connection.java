@@ -34,7 +34,6 @@ public class Connection{
                 this.image_id = data.getString("image_id");
             }  catch (JSONException e) {
                 e.printStackTrace();
-                throw BLinkApiException.MALFORMED_DATA_EXCEPTION();
             }
 
         } catch (JSONException e) {

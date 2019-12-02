@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.LoadEventListTask;
-import javanesecoffee.com.blink.api.LoadParticipantListTask;
 import javanesecoffee.com.blink.api.RegisterForEventTask;
 import javanesecoffee.com.blink.api.RegisterTask;
 import javanesecoffee.com.blink.constants.ApiCodes;

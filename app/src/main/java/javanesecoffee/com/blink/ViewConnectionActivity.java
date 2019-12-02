@@ -33,8 +33,9 @@ public class ViewConnectionActivity extends AppCompatActivity implements ImageEn
         timestampTextView = findViewById(R.id.connection_time_stamp_textview);
         imageView = findViewById(R.id.connectionImageView);
 
-//        Log.d("CONNECTION", connection.getConnection_id());
+//        Log.d("CONNECTION", connection.getImage_id());
 //        new AlertDialog.Builder(this).setTitle("Connection").setMessage(connection.getConnection_id()).setPositiveButton("Ok", null).show();
+        updateData();
     }
 
     private void updateData() {
