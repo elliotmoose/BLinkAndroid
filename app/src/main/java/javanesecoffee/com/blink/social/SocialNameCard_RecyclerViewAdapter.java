@@ -89,16 +89,19 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
 
         User user;
 
+        ConstraintLayout parentLayout;
+        LinearLayout cardContactDetails;
+
         CircleImageView cardImage;
+
         TextView cardUsername;
         TextView cardDesignation;
-        LinearLayout cardContactDetails;
         TextView cardEmail;
         TextView cardLinkedin;
         TextView cardFacebook;
         TextView cardInstagram;
         TextView cardCompany;
-        ConstraintLayout parentLayout;
+
         Button cardViewProfile;
         Button cardViewConnections;
 

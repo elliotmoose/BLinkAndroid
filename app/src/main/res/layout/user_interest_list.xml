@@ -20,6 +20,7 @@
             android:layout_height="match_parent">
 
             <Button
+                android:id="@+id/tag_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/button_gradient_green"

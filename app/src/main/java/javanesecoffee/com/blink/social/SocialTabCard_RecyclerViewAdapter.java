@@ -51,7 +51,6 @@ public class SocialTabCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soci
         holder.user = users.get(i);
         holder.updateData();
 
-
         holder.cardViewProfile.setOnClickListener(new View.OnClickListener() {
 
             @Override
