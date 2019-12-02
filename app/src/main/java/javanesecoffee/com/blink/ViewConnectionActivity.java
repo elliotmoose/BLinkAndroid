@@ -8,6 +8,11 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.Connection;
@@ -33,13 +38,20 @@ public class ViewConnectionActivity extends AppCompatActivity implements ImageEn
         timestampTextView = findViewById(R.id.connection_time_stamp_textview);
         imageView = findViewById(R.id.connectionImageView);
 
-//        Log.d("CONNECTION", connection.getImage_id());
-//        new AlertDialog.Builder(this).setTitle("Connection").setMessage(connection.getConnection_id()).setPositiveButton("Ok", null).show();
         updateData();
     }
 
     private void updateData() {
         if (connection != null) {
+
+            long unixSeconds = Long.parseLong(connection.getTime());
+            Date date = new Date(unixSeconds); // *1000 is to convert seconds to milliseconds
+            TimeZone timezone = TimeZone.getTimeZone("SGT");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy h:mm a (EEEE)"); // the format of your date
+            sdf.setTimeZone(timezone);
+            String formattedDate = sdf.format(date);
+            timestampTextView.setText("Connection Made On: "+ formattedDate);
+
             Bitmap image = ImageManager.getImageOrLoadIfNeeded(connection.getImage_id(), this, ImageManager.ImageType.CONNECTION_IMAGE);
 
             if(image != null) {

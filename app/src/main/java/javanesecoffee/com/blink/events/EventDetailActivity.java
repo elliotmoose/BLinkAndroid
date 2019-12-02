@@ -20,6 +20,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import javanesecoffee.com.blink.BlinkActivity;
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.BLinkEventObserver;
@@ -39,7 +40,7 @@ import javanesecoffee.com.blink.social.SocialNameCard_RecyclerViewAdapter;
 import javanesecoffee.com.blink.social.SocialSummaryFragment;
 import javanesecoffee.com.blink.social.SocialTabCard_RecyclerViewAdapter;
 
-public class EventDetailActivity extends AppCompatActivity  implements BLinkEventObserver  {
+public class EventDetailActivity extends BlinkActivity implements BLinkEventObserver  {
     User currentUser;
     Event currentEvent;
     String eventType;
@@ -107,6 +108,7 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
                                 String username = currentUser.getUsername();
                                 String event_id = eventID;
                                 EventManager.register(username, event_id);
+                                showProgressDialog("Registering...");
                             }
                         })
                         .setNegativeButton("Cancel", null)
@@ -167,6 +169,7 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
     public void onBLinkEventTriggered(JSONObject response, String taskId) throws BLinkApiException {
         if(taskId == ApiCodes.TASK_REGISTER_FOR_EVENT)
         {
+            hideProgressDialog();
             boolean success = ResponseParser.responseIsSuccess(response);
 
             if(success)
@@ -196,9 +199,10 @@ public class EventDetailActivity extends AppCompatActivity  implements BLinkEven
     @Override
     public void onBLinkEventException(BLinkApiException exception, String taskId) {
         if(taskId == ApiCodes.TASK_REGISTER_FOR_EVENT) {
+            hideProgressDialog();
             new AlertDialog.Builder(EventDetailActivity.this).setTitle(exception.statusText).setMessage(exception.message).setPositiveButton("Ok", null).show();
-
-    }}
+        }
+    }
 
     public class HorizontalSpaceItemDecoration extends RecyclerView.ItemDecoration {
         private final int space;

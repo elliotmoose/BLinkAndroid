@@ -1,6 +1,7 @@
 package javanesecoffee.com.blink.entities;
 
 import android.graphics.Bitmap;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -16,7 +17,9 @@ import javanesecoffee.com.blink.constants.Endpoints;
 public class Connection{
     private String username;
     private String connection_id;
+    @Nullable
     private String image_id;
+    private String time;
 
     public Connection(String username) {
         this.username = username;
@@ -28,9 +31,10 @@ public class Connection{
     public Connection(JSONObject data) throws BLinkApiException {
         try {
             this.username = data.getString("username");
+            this.connection_id = data.getString("connection_id");
 
             try {
-                this.connection_id = data.getString("connection_id");
+                this.time = data.getString("time");
                 this.image_id = data.getString("image_id");
             }  catch (JSONException e) {
                 e.printStackTrace();
@@ -52,5 +56,9 @@ public class Connection{
 
     public String getImage_id() {
         return image_id;
+    }
+
+    public String getTime() {
+        return time;
     }
 }
