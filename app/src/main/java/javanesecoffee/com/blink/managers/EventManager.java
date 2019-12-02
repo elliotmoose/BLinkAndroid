@@ -110,6 +110,7 @@ public class EventManager extends Manager {
             JSONArray json_user_list = data.getJSONArray("user_list");
             for(int i = 0; i < json_user_list.length(); i++){
                 user_list.add(new User(json_user_list.getJSONObject(i)));
+                UserManager.addUserToCache(new User(json_user_list.getJSONObject(i)));
             }
         } catch (JSONException e) {
             e.printStackTrace();
