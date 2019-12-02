@@ -60,7 +60,7 @@ public class Event {
                 participantList.add(user);
             }
 
-            Log.d("EVENT", "Event has " + participantList.size() + " participants");
+//            Log.d("EVENT", "Event has " + participantList.size() + " participants");
 
         } catch (JSONException e) {
             e.printStackTrace();

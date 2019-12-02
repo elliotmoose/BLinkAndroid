@@ -92,37 +92,37 @@
                 android:id="@+id/social_icons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_below="@id/card_profile_pic"
                 android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/card_profile_pic"
                 app:layout_constraintTop_toBottomOf="@id/card_profile_pic">
 
                 <ImageView
                     android:layout_width="13dp"
                     android:layout_height="13dp"
-                    android:src="@drawable/mail"
-                    />
+                    android:src="@drawable/mail" />
+
                 <ImageView
                     android:layout_width="13dp"
                     android:layout_height="13dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/linkedin"
-                    />
+                    android:src="@drawable/linkedin" />
+
                 <ImageView
                     android:layout_width="13dp"
                     android:layout_height="13dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/facebook"
-                    />
+                    android:src="@drawable/facebook" />
+
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_marginStart="-3dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/instagram"
-                    />
+                    android:src="@drawable/instagram" />
 
 
             </LinearLayout>
@@ -132,54 +132,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/card_profile_pic"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/social_icons"
                 app:layout_constraintStart_toEndOf="@id/social_icons"
-                app:layout_constraintTop_toBottomOf="@id/card_profile_pic"
-                android:orientation="vertical">
+                app:layout_constraintTop_toBottomOf="@id/card_profile_pic">
 
                 <TextView
                     android:id="@+id/card_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:autoLink="email"
                     android:fontFamily="@font/montserrat"
                     android:text="@string/email"
-                    android:autoLink="email"
                     android:textColor="#474BAC"
-                    android:textSize="8sp"/>
+                    android:textSize="8sp" />
 
                 <TextView
                     android:id="@+id/card_linkedin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
                     android:layout_marginTop="8dp"
-                    android:text="@string/linkedin"
                     android:autoLink="web"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/linkedin"
                     android:textColor="#474BAC"
-                    android:textSize="8sp"/>
+                    android:textSize="8sp" />
 
                 <TextView
                     android:id="@+id/card_facebook"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
                     android:layout_marginTop="8dp"
-                    android:text="@string/facebook"
                     android:autoLink="web"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/facebook"
                     android:textColor="#474BAC"
-                    android:textSize="8sp"/>
+                    android:textSize="8sp" />
 
                 <TextView
                     android:id="@+id/card_instagram"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
                     android:layout_marginTop="8dp"
-                    android:text="@string/instagram"
                     android:autoLink="web"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/instagram"
                     android:textColor="#474BAC"
-                    android:textSize="8sp"/>
+                    android:textSize="8sp" />
 
             </LinearLayout>
 

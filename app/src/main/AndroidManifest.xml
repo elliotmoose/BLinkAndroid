@@ -19,17 +19,17 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:hardwareAccelerated="false"
-        android:largeHeap="true"
-        >
-        <activity android:name=".social.SocialConnectConfirmationActivity"></activity>
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ViewConnectionActivity"></activity>
+        <activity android:name=".social.SocialConnectConfirmationActivity" />
         <activity android:name=".registration.RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,12 +43,13 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".registration.FaceScanActivity"></activity>
-        <activity android:name=".registration.MoreInfoActivity"></activity>
-        <activity android:name=".registration.CompleteRegistrationActivity"></activity>
-        <activity android:name=".events.MainActivity"></activity>
-        <activity android:name=".events.EventDetailActivity"></activity>
-        <activity android:name=".social.UserDetailsActivity"></activity>
+        <activity android:name=".registration.FaceScanActivity" />
+        <activity android:name=".registration.MoreInfoActivity" />
+        <activity android:name=".registration.CompleteRegistrationActivity" />
+        <activity android:name=".events.MainActivity" />
+        <activity android:name=".events.EventDetailActivity" />
+        <activity android:name=".events.EventPastDetailActivity" />
+        <activity android:name=".social.UserDetailsActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

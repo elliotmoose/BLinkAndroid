@@ -80,7 +80,7 @@ public class SocialConnectConfirmationActivity extends AppCompatActivity impleme
     }
 
     private void UpdateData() {
-        new AlertDialog.Builder(this).setTitle("Connections Left").setMessage(ConnectionsManager.getInstance().getJustConnected().size() +"").setPositiveButton("Ok", null).show();
+//        new AlertDialog.Builder(this).setTitle("Connections Left").setMessage(ConnectionsManager.getInstance().getJustConnected().size() +"").setPositiveButton("Ok", null).show();
         adapter.notifyDataSetChanged();
     }
 

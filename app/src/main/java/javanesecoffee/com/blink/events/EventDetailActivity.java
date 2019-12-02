@@ -1,11 +1,9 @@
 package javanesecoffee.com.blink.events;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,28 +12,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import javanesecoffee.com.blink.R;
-import javanesecoffee.com.blink.api.BLinkApiException;
-import javanesecoffee.com.blink.api.ImageEntityObserver;
-import javanesecoffee.com.blink.api.ImageLoadObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.Event;
 import javanesecoffee.com.blink.entities.User;
-import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.EventManager;
 import javanesecoffee.com.blink.managers.UserManager;
-import javanesecoffee.com.blink.social.SocialNameCard_RecyclerViewAdapter;
-import javanesecoffee.com.blink.social.SocialSummaryFragment;
-import javanesecoffee.com.blink.social.SocialTabCard_RecyclerViewAdapter;
 
 public class EventDetailActivity extends AppCompatActivity  {
     User currentUser;
     Event currentEvent;
-    ArrayList<Event> eventArray;
     String eventType;
     String eventID;
     int eventPosition;
@@ -48,10 +36,11 @@ public class EventDetailActivity extends AppCompatActivity  {
     TextView eventDescription;
 
 
-    Button eventRegister;
+    Button eventRegisterButton;
     RecyclerView eventTags;
     RecyclerView eventAlsoAttending;
 
+    ArrayList<User> alsoAttending = new ArrayList<>();
 
 
     @Override
@@ -68,7 +57,7 @@ public class EventDetailActivity extends AppCompatActivity  {
         eventDescription = findViewById(R.id.event_detail_description);
 
         //button
-        eventRegister = findViewById(R.id.event_detail_register_button);
+        eventRegisterButton = findViewById(R.id.event_detail_register_button);
 
         //recyclerview
         eventTags = findViewById(R.id.event_detail_tags);
@@ -82,23 +71,10 @@ public class EventDetailActivity extends AppCompatActivity  {
         eventPosition = intent.getIntExtra(IntentExtras.EVENT.EVENT_POSITION_KEY,0);
 
         if (eventID != null) {
-            eventArray = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType));
-            currentEvent = eventArray.get(eventPosition);
-
-            /*switch (eventType){
-                case IntentExtras.EVENT.EVENT_TYPE_EXPLORE:
-                    eventArray = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType));
-                    currentEvent = eventArray.get(eventPosition);
-                    break;
-                case IntentExtras.EVENT.EVENT_TYPE_UPCOMING:
-                    eventArray = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType));
-                    currentEvent = eventArray.get(eventPosition);
-                    break;
-                case IntentExtras.EVENT.EVENT_TYPE_PAST:
-        }*/
+            currentEvent = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType)).get(eventPosition);
         }
 
-        eventRegister.setOnClickListener(new View.OnClickListener() {
+        eventRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("EVENT DETAILS ACTIVITY", "onClick: Opening Dialogue");
@@ -111,12 +87,12 @@ public class EventDetailActivity extends AppCompatActivity  {
         View decorview = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorview.setSystemUiVisibility(uiOptions);
-        UpdateData();
-        //initRecyclerView();
+        updateData();
+        initRecyclerView();
 
     }
 
-    public void UpdateData(){
+    public void updateData(){
         if(currentEvent!=null){
             Log.d("EVENT DETAILS ACTIVITY", "updateData: EVENT DETAILS ACTIITY");
             eventName.setText(currentEvent.getName());
@@ -125,15 +101,22 @@ public class EventDetailActivity extends AppCompatActivity  {
             eventLocation.setText(currentEvent.getAddress());
             eventPrice.setText(currentEvent.getPrice());
             eventDescription.setText(currentEvent.getDescription());
+
+            alsoAttending.clear();
+            for(User participant : currentEvent.getParticipantList()) {
+                alsoAttending.add(participant);
+            }
+
+            if(EventListTypes.valueOf(eventType) == EventListTypes.UPCOMING || EventListTypes.valueOf(eventType) == EventListTypes.PAST_EVENTS) {
+                eventRegisterButton.setVisibility(View.GONE);
+            }
+            else {
+                eventRegisterButton.setVisibility(View.VISIBLE);
+            }
         }
-
-
-
     }
 
     private void initRecyclerView() {
-        ArrayList<User> alsoAttending = EventManager.getInstance().getParticipantList();
-
         EventDetailImageAdapter DetailImage_adapter = new EventDetailImageAdapter(alsoAttending, this);
 
         eventAlsoAttending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));

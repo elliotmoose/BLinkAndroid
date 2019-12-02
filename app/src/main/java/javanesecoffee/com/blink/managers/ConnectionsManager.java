@@ -155,7 +155,7 @@ public class ConnectionsManager extends Manager {
                             for(int i=0;i<array.length(); i++) {
                                 justConnected.add(new Connection(array.getJSONObject(i)));
                             }
-
+                            
                         }
                     } catch (BLinkApiException e) {
                         e.printStackTrace();

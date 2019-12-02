@@ -14,10 +14,9 @@ import javanesecoffee.com.blink.api.LoadImageTask;
 import javanesecoffee.com.blink.constants.Endpoints;
 
 public class Connection{
-
-    private ArrayList<ImageLoadObserver> observers = new ArrayList<>();
     private String username;
     private String connection_id;
+    private String image_id;
 
     public Connection(String username) {
         this.username = username;
@@ -29,7 +28,15 @@ public class Connection{
     public Connection(JSONObject data) throws BLinkApiException {
         try {
             this.username = data.getString("username");
-            this.connection_id = data.getString("connection_id");
+
+            try {
+                this.connection_id = data.getString("connection_id");
+                this.image_id = data.getString("image_id");
+            }  catch (JSONException e) {
+                e.printStackTrace();
+                throw BLinkApiException.MALFORMED_DATA_EXCEPTION();
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
             throw BLinkApiException.MALFORMED_DATA_EXCEPTION();
@@ -42,5 +49,9 @@ public class Connection{
 
     public String getConnection_id() {
         return connection_id;
+    }
+
+    public String getImage_id() {
+        return image_id;
     }
 }
