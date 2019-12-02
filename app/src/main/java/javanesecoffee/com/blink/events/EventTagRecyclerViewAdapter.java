@@ -3,6 +3,7 @@ package javanesecoffee.com.blink.events;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,12 @@ public class EventTagRecyclerViewAdapter extends RecyclerView.Adapter<EventTagRe
     public EventTagRecyclerViewAdapter(ArrayList<String> items, Context context){
         this.tags = items;
         this.context = context;
+
     }
     @NonNull
     @Override
     public EventTagRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_event, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_interest_list, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -32,7 +34,10 @@ public class EventTagRecyclerViewAdapter extends RecyclerView.Adapter<EventTagRe
     public void onBindViewHolder(@NonNull EventTagRecyclerViewAdapter.ViewHolder holder, int i) {
         //holder.tag = tags.get(i);
         holder.tag = "Java";
+        Log.d("rec", (String) holder.tag_name.getText());
+        //System.out.println(holder.tag_name.getText());
         holder.tag_name.setText(holder.tag);
+
     }
 
     @Override
