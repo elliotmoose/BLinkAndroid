@@ -114,14 +114,17 @@ public class ConnectionsManager extends Manager {
 
                             for(int i=0; i < recent_list.length(); i++){
                                 recentConnections.add(new User(recent_list.getJSONObject(i)));
+                                UserManager.addUserToCache(new User(recent_list.getJSONObject(i)));
                             }
 
                             for(int i=0; i < recommended_list.length(); i++){
                                 recommendedConnections.add(new User(recommended_list.getJSONObject(i)));
+                                UserManager.addUserToCache(new User(recommended_list.getJSONObject(i)));
                             }
 
                             for(int i=0; i < all_list.length(); i++){
                                 allConnections.add(new User(all_list.getJSONObject(i)));
+                                UserManager.addUserToCache(new User(all_list.getJSONObject(i)));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

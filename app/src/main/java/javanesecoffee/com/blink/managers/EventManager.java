@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.LoadEventListTask;
+import javanesecoffee.com.blink.api.LoadParticipantListTask;
+import javanesecoffee.com.blink.api.RegisterForEventTask;
+import javanesecoffee.com.blink.api.RegisterTask;
 import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.Config;
 import javanesecoffee.com.blink.entities.Event;
@@ -80,6 +83,7 @@ public class EventManager extends Manager {
             JSONArray json_user_list = data.getJSONArray("user_list");
             for(int i = 0; i < json_user_list.length(); i++){
                 user_list.add(new User(json_user_list.getJSONObject(i)));
+                UserManager.addUserToCache(new User(json_user_list.getJSONObject(i)));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -114,6 +118,11 @@ public class EventManager extends Manager {
         } catch (BLinkApiException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void register(String username, String event_id){
+        RegisterForEventTask task = new RegisterForEventTask(getInstance()); //pass singleton in as handler
+        task.execute(username, event_id); //pass in params
     }
 
 

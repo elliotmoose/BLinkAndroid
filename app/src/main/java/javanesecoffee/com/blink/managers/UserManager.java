@@ -5,6 +5,7 @@ import android.util.Log;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.HashMap;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.LoginTask;
@@ -28,6 +29,8 @@ public class UserManager extends Manager{
     public static User getLoggedInUser() {
         return loggedInUser;
     }
+
+    public static HashMap<String, User> userCache = new HashMap<>();
 
     /**
      * Send a login request to the URL
@@ -78,6 +81,16 @@ public class UserManager extends Manager{
         {
             throw new BLinkApiException("MORE_INFO_ERROR", "More Info Error", "Invalid user. Please try again.");
         }
+    }
+
+    public static void addUserToCache(User user){
+        if(!userCache .containsKey(user.getUsername())){
+            userCache.put(user.getUsername(), user);
+        }
+    }
+
+    public static User getUserFromCache( String username){
+        return userCache.get(username);
     }
 
 

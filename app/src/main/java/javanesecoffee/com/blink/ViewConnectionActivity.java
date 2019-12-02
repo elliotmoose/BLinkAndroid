@@ -34,7 +34,7 @@ public class ViewConnectionActivity extends AppCompatActivity implements ImageEn
         imageView = findViewById(R.id.connectionImageView);
 
 //        Log.d("CONNECTION", connection.getConnection_id());
-        new AlertDialog.Builder(this).setTitle("Connection").setMessage(connection.getConnection_id()).setPositiveButton("Ok", null).show();
+//        new AlertDialog.Builder(this).setTitle("Connection").setMessage(connection.getConnection_id()).setPositiveButton("Ok", null).show();
     }
 
     private void updateData() {
