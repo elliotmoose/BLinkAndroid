@@ -116,19 +116,17 @@ public class EventPastDetailActivity extends AppCompatActivity {
 
 
     }
-
-    /*private void initRecyclerView() {
-        ArrayList<User> alsoAttending = EventManager.getInstance().getParticipantList();
-
-        EventDetailImageAdapter DetailImage_adapter = new EventDetailImageAdapter(alsoAttending, this);
-
-        eventAlsoAttending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-        EventPastDetailActivity.HorizontalSpaceItemDecoration spaceDecoration = new EventPastDetailActivity.HorizontalSpaceItemDecoration(40);
-        eventAlsoAttending.addItemDecoration(spaceDecoration);
-
-        eventAlsoAttending.setAdapter(DetailImage_adapter);
-    }*/
+//    private void initRecyclerView() {
+//       ArrayList<User> alsoAttending = EventManager.getInstance().getParticipantList();
+//       EventDetailImageAdapter DetailImage_adapter = new EventDetailImageAdapter(alsoAttending, this);
+//
+//        eventAlsoAttending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//
+//        EventPastDetailActivity.HorizontalSpaceItemDecoration spaceDecoration = new EventPastDetailActivity.HorizontalSpaceItemDecoration(40);
+//        eventAlsoAttending.addItemDecoration(spaceDecoration);
+//
+//        eventAlsoAttending.setAdapter(DetailImage_adapter);
+//    }
 
     public class HorizontalSpaceItemDecoration extends RecyclerView.ItemDecoration {
         private final int space;

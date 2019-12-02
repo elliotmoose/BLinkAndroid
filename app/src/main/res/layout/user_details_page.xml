@@ -60,7 +60,8 @@
         android:layout_width="54dp"
         android:layout_height="28dp"
         app:layout_constraintStart_toStartOf="@+id/company"
-        app:layout_constraintTop_toBottomOf="@+id/company" />
+        app:layout_constraintTop_toBottomOf="@+id/company"
+        />
 
     <TextView
         android:id="@+id/loginUsername"

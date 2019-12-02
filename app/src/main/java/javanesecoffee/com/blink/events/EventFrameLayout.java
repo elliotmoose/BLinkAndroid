@@ -5,11 +5,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.ImageEntityObserver;
@@ -19,6 +23,8 @@ import javanesecoffee.com.blink.managers.ImageManager;
 public class EventFrameLayout extends FrameLayout implements ImageEntityObserver {
 
     private Event event;
+    private EventTagRecyclerViewAdapter EventTagRecyclerViewAdapter;
+
 
     public EventFrameLayout(@NonNull Context context) {
         super(context);
@@ -65,7 +71,15 @@ public class EventFrameLayout extends FrameLayout implements ImageEntityObserver
                 //resets when view is being reused
                 imageView.setImageBitmap(ImageManager.eventPlaceholder);
             }
+            initRecyclerView();
         }
+    }
+    private void initRecyclerView(){
+        RecyclerView EventTagRecyclerView = findViewById(R.id.EventTagRecyclerView);
+        ArrayList<String> tags = event.getTags();
+        EventTagRecyclerViewAdapter = new EventTagRecyclerViewAdapter(tags, getContext());
+        EventTagRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
+        EventTagRecyclerView.setAdapter(EventTagRecyclerViewAdapter);
     }
 
     @Override

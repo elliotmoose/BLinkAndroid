@@ -26,9 +26,10 @@ public class Event {
     private String price;
     private String event_id;
     private ArrayList<User> participantList = new ArrayList<>();
+    private ArrayList<String> tags = new ArrayList<>();
 
     //TODO: for testing only
-    public Event(String name, String organiser, String description, String address, String date, String time, String price, String event_id) {
+    public Event(String name, String organiser, String description, String address, String date, String time, String price, String event_id, ArrayList<String> tag) {
         this.name = name;
         this.organiser = organiser;
         this.description = description;
@@ -37,6 +38,7 @@ public class Event {
         this.time = time;
         this.price = price;
         this.event_id = event_id;
+        this.tags = tag;
     }
 
 
@@ -58,6 +60,11 @@ public class Event {
                 JSONObject userObject = participantArray.getJSONObject(i);
                 User user = new User(userObject);
                 participantList.add(user);
+            }
+            JSONArray tagArray = data.getJSONArray("tags");
+            for(int i =0; i<tagArray.length(); i++){
+                JSONObject userObject = tagArray.getJSONObject(i);
+                tags.add(userObject.toString());
             }
 
 //            Log.d("EVENT", "Event has " + participantList.size() + " participants");
@@ -87,4 +94,6 @@ public class Event {
     public ArrayList<User> getParticipantList() {
         return participantList;
     }
+
+    public ArrayList<String> getTags(){ return tags;}
 }

@@ -5,10 +5,14 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 //import android.os.UserManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import javax.sql.DataSource;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
@@ -39,8 +43,7 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
         editBio = findViewById(R.id.bio);
         editDesignation = findViewById(R.id.designation);
         editCompany = findViewById(R.id.company);
-
-        currentUser = UserManager.getLoggedInUser();
+                currentUser = UserManager.getLoggedInUser();
 
         Intent intent = getIntent();
         String type = intent.getStringExtra(IntentExtras.USER.USER_TYPE_KEY);
@@ -59,7 +62,6 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
                     break;
             }
         }
-
         updateData();
         View decorview = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;

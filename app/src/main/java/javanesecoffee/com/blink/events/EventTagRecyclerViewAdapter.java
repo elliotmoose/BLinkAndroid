@@ -30,7 +30,8 @@ public class EventTagRecyclerViewAdapter extends RecyclerView.Adapter<EventTagRe
 
     @Override
     public void onBindViewHolder(@NonNull EventTagRecyclerViewAdapter.ViewHolder holder, int i) {
-        holder.tag = tags.get(i);
+        //holder.tag = tags.get(i);
+        holder.tag = "Java";
         holder.tag_name.setText(holder.tag);
     }
 
@@ -38,6 +39,7 @@ public class EventTagRecyclerViewAdapter extends RecyclerView.Adapter<EventTagRe
     public int getItemCount() {
         return this.tags.size();
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         String tag;
         TextView tag_name;
