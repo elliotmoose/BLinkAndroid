@@ -161,11 +161,13 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
     private void initRecyclerView() {
         EventDetailImageAdapter DetailImage_adapter = new EventDetailImageAdapter(alsoAttending, this);
         EventTagRecyclerViewAdapter Tag_adapter = new EventTagRecyclerViewAdapter(eventTagList,this);
+
         eventAlsoAttending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         eventTags.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
 
         EventDetailActivity.HorizontalSpaceItemDecoration spaceDecoration = new EventDetailActivity.HorizontalSpaceItemDecoration(40);
         eventAlsoAttending.addItemDecoration(spaceDecoration);
+        eventTags.addItemDecoration(spaceDecoration);
 
         eventAlsoAttending.setAdapter(DetailImage_adapter);
         eventTags.setAdapter(Tag_adapter);

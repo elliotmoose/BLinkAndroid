@@ -55,7 +55,7 @@
                 android:fontFamily="@font/montserrat"
                 android:text="@string/username"
                 android:textColor="#000000"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/card_profile_pic"
                 app:layout_constraintTop_toTopOf="@id/card_profile_pic" />
