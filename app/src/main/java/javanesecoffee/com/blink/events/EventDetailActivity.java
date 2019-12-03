@@ -55,9 +55,10 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
 
 
     Button eventRegisterButton;
+
     RecyclerView eventTags;
     RecyclerView eventAlsoAttending;
-    RecyclerView eventTagRecyclerViewDetailsPage;
+
     ArrayList<User> alsoAttending = new ArrayList<>();
     ArrayList<String> eventTagList = new ArrayList<>();
 
@@ -81,9 +82,9 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
         //recyclerview
         eventTags = findViewById(R.id.event_detail_tags);
         eventAlsoAttending = findViewById(R.id.event_also_attending_profile_pic);
+
+        //user
         currentUser = UserManager.getLoggedInUser();
-
-
 
         Intent intent = getIntent();
         eventID = intent.getStringExtra(IntentExtras.EVENT.EVENT_ID_KEY);
@@ -137,7 +138,12 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
             eventLocation.setText(currentEvent.getAddress());
             eventPrice.setText(currentEvent.getPrice());
             eventDescription.setText(currentEvent.getDescription());
-            eventTagList = currentEvent.getTags();
+
+            eventTagList.clear();
+            for(String tag: currentEvent.getTags()){
+                eventTagList.add(tag);
+            }
+
             alsoAttending.clear();
             for(User participant : currentEvent.getParticipantList()) {
                 alsoAttending.add(participant);
@@ -157,8 +163,10 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
         EventTagRecyclerViewAdapter Tag_adapter = new EventTagRecyclerViewAdapter(eventTagList,this);
         eventAlsoAttending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         eventTags.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+
         EventDetailActivity.HorizontalSpaceItemDecoration spaceDecoration = new EventDetailActivity.HorizontalSpaceItemDecoration(40);
         eventAlsoAttending.addItemDecoration(spaceDecoration);
+
         eventAlsoAttending.setAdapter(DetailImage_adapter);
         eventTags.setAdapter(Tag_adapter);
     }

@@ -108,7 +108,7 @@ public class SocialTabCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soci
                 cardImage.setImageBitmap(ImageManager.dpPlaceholder);
             }
 
-            cardUsername.setText(user.getUsername());
+            cardUsername.setText(user.getDisplayname());
             cardDesignation.setText(user.getPosition());
             cardCompany.setText(user.getCompany());
         }

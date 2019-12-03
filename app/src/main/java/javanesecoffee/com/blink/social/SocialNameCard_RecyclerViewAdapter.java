@@ -137,7 +137,7 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
                 cardImage.setImageBitmap(ImageManager.dpPlaceholder);
             }
 
-            cardUsername.setText(user.getUsername());
+            cardUsername.setText(user.getDisplayname());
             cardDesignation.setText(user.getPosition());
             //holder.cardContactDetails.setText(bCardContactDetails.get(i));
             cardEmail.setText(user.getEmail());

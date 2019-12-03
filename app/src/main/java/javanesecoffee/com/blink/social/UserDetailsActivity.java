@@ -91,7 +91,7 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
     public void updateData() {
         if(currentUser != null) {
             Log.d("USER_DETAILS_ACTIVITY", currentUser.getUsername());
-            editUsername.setText(currentUser.getUsername());
+            editUsername.setText(currentUser.getDisplayname());
             editBio.setText(currentUser.getBio());
             editDesignation.setText(currentUser.getPosition());
             editCompany.setText(currentUser.getCompany());

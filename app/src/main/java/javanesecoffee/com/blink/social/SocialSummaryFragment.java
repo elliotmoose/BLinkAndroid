@@ -104,7 +104,8 @@ public class SocialSummaryFragment extends Fragment implements ImageEntityObserv
 
         if(user != null) {
             String username = user.getUsername();
-            editUsername.setText(username);
+            String displayName = user.getDisplayname();
+            editUsername.setText(displayName);
             Bitmap image = ImageManager.getImageOrLoadIfNeeded(username, this, ImageManager.ImageType.PROFILE_IMAGE);
             if(image != null){
                 editProfilePic.setImageBitmap(image);
