@@ -32,8 +32,8 @@ public class EventTagRecyclerViewAdapter extends RecyclerView.Adapter<EventTagRe
 
     @Override
     public void onBindViewHolder(@NonNull EventTagRecyclerViewAdapter.ViewHolder holder, int i) {
-        //holder.tag = tags.get(i);
-        holder.tag = "Java";
+        holder.tag = tags.get(i);
+        //holder.tag = "Java";
         Log.d("rec", (String) holder.tag_name.getText());
         //System.out.println(holder.tag_name.getText());
         holder.tag_name.setText(holder.tag);

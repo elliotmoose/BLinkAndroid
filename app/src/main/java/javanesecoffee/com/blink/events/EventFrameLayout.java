@@ -71,16 +71,16 @@ public class EventFrameLayout extends FrameLayout implements ImageEntityObserver
                 //resets when view is being reused
                 imageView.setImageBitmap(ImageManager.eventPlaceholder);
             }
-            initRecyclerView();
+//            initRecyclerView();
         }
     }
-    private void initRecyclerView(){
-        RecyclerView EventTagRecyclerView = findViewById(R.id.EventTagRecyclerView);
-        ArrayList<String> tags = event.getTags();
-        EventTagRecyclerViewAdapter = new EventTagRecyclerViewAdapter(tags, getContext());
-        EventTagRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
-        EventTagRecyclerView.setAdapter(EventTagRecyclerViewAdapter);
-    }
+//    private void initRecyclerView(){
+//        RecyclerView EventTagRecyclerView = findViewById(R.id.EventTagRecyclerView);
+//        ArrayList<String> tags = event.getTags();
+//        EventTagRecyclerViewAdapter = new EventTagRecyclerViewAdapter(tags, getContext());
+//        EventTagRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
+//        EventTagRecyclerView.setAdapter(EventTagRecyclerViewAdapter);
+//    }
 
     @Override
     public void onImageUpdated(Bitmap bitmap) {
