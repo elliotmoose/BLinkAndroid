@@ -68,7 +68,7 @@ public class SocialSummaryFragment extends Fragment implements ImageEntityObserv
     private void initRecyclerView(){
         ArrayList<User> recentConnections = ConnectionsManager.getInstance().getRecentConnections();
         ArrayList<User> recommendedConnections = ConnectionsManager.getInstance().getRecommendedConnections();
-        nameCard_adapter = new SocialNameCard_RecyclerViewAdapter(recentConnections, getActivity());
+        nameCard_adapter = new SocialNameCard_RecyclerViewAdapter(recentConnections, getActivity(), false);
         smallCard_adapter = new SocialTabCard_RecyclerViewAdapter(recommendedConnections,getActivity());
 
         recyclerView_NameCard.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeRefreshSocial"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@+id/socialTab"
-    android:id="@+id/swipeRefreshSocial"
-    android:orientation="vertical"
     android:layout_gravity="center"
-    android:padding="25dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical"
+    android:padding="15dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/socialNameCardRecycler_all"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"
-        android:orientation="vertical"
-        android:foregroundGravity="center_horizontal"/>
+        android:foregroundGravity="center_horizontal"
+        android:orientation="vertical" />
 
 </android.support.v4.widget.SwipeRefreshLayout>
