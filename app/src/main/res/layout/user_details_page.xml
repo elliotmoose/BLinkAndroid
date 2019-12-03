@@ -55,13 +55,16 @@
         app:layout_constraintStart_toStartOf="@+id/designation"
         app:layout_constraintTop_toBottomOf="@+id/designation" />
 
-    <include
-        layout="@layout/user_interest_list"
-        android:layout_width="54dp"
-        android:layout_height="28dp"
-        app:layout_constraintStart_toStartOf="@+id/company"
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="40dp"
+        android:layout_height="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/company"
-        />
+        android:id="@+id/userDetailsTag">
+
+    </android.support.v7.widget.RecyclerView>
 
     <TextView
         android:id="@+id/loginUsername"

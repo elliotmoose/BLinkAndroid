@@ -86,10 +86,12 @@ public class UserManager extends Manager{
     public static void addUserToCache(User user){
         if(!userCache .containsKey(user.getUsername())){
             userCache.put(user.getUsername(), user);
+            Log.d("UserManager", "User cache added: " + user.getUsername());
         }
     }
 
     public static User getUserFromCache( String username){
+        Log.d("UserManager", "Getting : " + username);
         return userCache.get(username);
     }
 

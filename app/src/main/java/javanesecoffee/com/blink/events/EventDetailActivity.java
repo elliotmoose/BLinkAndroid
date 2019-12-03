@@ -57,9 +57,9 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
     Button eventRegisterButton;
     RecyclerView eventTags;
     RecyclerView eventAlsoAttending;
-
+    RecyclerView eventTagRecyclerViewDetailsPage;
     ArrayList<User> alsoAttending = new ArrayList<>();
-
+    ArrayList<String> eventTagList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +81,6 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
         //recyclerview
         eventTags = findViewById(R.id.event_detail_tags);
         eventAlsoAttending = findViewById(R.id.event_also_attending_profile_pic);
-
         currentUser = UserManager.getLoggedInUser();
 
 
@@ -138,7 +137,7 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
             eventLocation.setText(currentEvent.getAddress());
             eventPrice.setText(currentEvent.getPrice());
             eventDescription.setText(currentEvent.getDescription());
-
+            eventTagList = currentEvent.getTags();
             alsoAttending.clear();
             for(User participant : currentEvent.getParticipantList()) {
                 alsoAttending.add(participant);
@@ -155,13 +154,13 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
 
     private void initRecyclerView() {
         EventDetailImageAdapter DetailImage_adapter = new EventDetailImageAdapter(alsoAttending, this);
-
+        EventTagRecyclerViewAdapter Tag_adapter = new EventTagRecyclerViewAdapter(eventTagList,this);
         eventAlsoAttending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
+        eventTags.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         EventDetailActivity.HorizontalSpaceItemDecoration spaceDecoration = new EventDetailActivity.HorizontalSpaceItemDecoration(40);
         eventAlsoAttending.addItemDecoration(spaceDecoration);
-
         eventAlsoAttending.setAdapter(DetailImage_adapter);
+        eventTags.setAdapter(Tag_adapter);
     }
 
     @Override
