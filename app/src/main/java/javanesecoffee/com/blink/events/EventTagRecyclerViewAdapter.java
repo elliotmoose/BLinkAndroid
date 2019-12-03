@@ -23,7 +23,7 @@ public class EventTagRecyclerViewAdapter extends RecyclerView.Adapter<EventTagRe
     @NonNull
     @Override
     public EventTagRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_event, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_interest_list, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -50,5 +50,7 @@ public class EventTagRecyclerViewAdapter extends RecyclerView.Adapter<EventTagRe
             tag_name = itemView.findViewById(R.id.tag_name);
             parentLayout = itemView.findViewById(R.id.tag_parent);
         }
+
+
     }
 }

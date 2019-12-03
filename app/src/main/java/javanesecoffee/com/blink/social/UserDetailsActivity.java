@@ -32,6 +32,11 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
     TextView editCompany;
     CircleImageView editProfilePic;
 
+    TextView mailTextView;
+    TextView linkedinTextView;
+    TextView facebookTextView;
+    TextView instagramTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,14 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
         editBio = findViewById(R.id.bio);
         editDesignation = findViewById(R.id.designation);
         editCompany = findViewById(R.id.company);
-                currentUser = UserManager.getLoggedInUser();
+        mailTextView = findViewById(R.id.mailTextView);
+        linkedinTextView = findViewById(R.id.linkedInTextView);
+        facebookTextView = findViewById(R.id.facebookTextView);
+        instagramTextView = findViewById(R.id.instagramTextView);
+
+
+
+        currentUser = UserManager.getLoggedInUser();
 
         Intent intent = getIntent();
         String type = intent.getStringExtra(IntentExtras.USER.USER_TYPE_KEY);
@@ -77,6 +89,12 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
             editBio.setText(currentUser.getBio());
             editDesignation.setText(currentUser.getPosition());
             editCompany.setText(currentUser.getCompany());
+
+            mailTextView.setText(currentUser.getEmail());
+            linkedinTextView.setText(currentUser.getLinkedin());
+            facebookTextView.setText(currentUser.getFacebook());
+            instagramTextView.setText(currentUser.getInstagram());
+
             Bitmap image = ImageManager.getImageOrLoadIfNeeded(currentUser.getUsername(), this, ImageManager.ImageType.PROFILE_IMAGE);
             if(image != null) {
                 editProfilePic.setImageBitmap(image);
