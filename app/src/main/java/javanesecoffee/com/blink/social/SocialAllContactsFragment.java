@@ -49,7 +49,7 @@ public class SocialAllContactsFragment extends Fragment {
         Log.d(TAG, "initRecyclerView: Commenced");
 
         ArrayList<User> allConnections= ConnectionsManager.getInstance().getAllConnections();
-        SocialNameCard_RecyclerViewAdapter nameCard_adapter = new SocialNameCard_RecyclerViewAdapter(allConnections, getActivity());
+        SocialNameCard_RecyclerViewAdapter nameCard_adapter = new SocialNameCard_RecyclerViewAdapter(allConnections, getActivity(), true);
         VerticalSpaceItemDecoration spaceDecoration = new VerticalSpaceItemDecoration(40);
         recyclerView_NameCard.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView_NameCard.setAdapter(nameCard_adapter);

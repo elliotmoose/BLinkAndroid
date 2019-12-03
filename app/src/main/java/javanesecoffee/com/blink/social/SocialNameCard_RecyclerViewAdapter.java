@@ -1,5 +1,6 @@
 package javanesecoffee.com.blink.social;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,18 +31,20 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
 
     private Context mContext;
     ArrayList<User> users;
+    boolean itemWidthMatchParent;
 
-    public SocialNameCard_RecyclerViewAdapter(ArrayList<User> items,Context context) {
+    public SocialNameCard_RecyclerViewAdapter(ArrayList<User> items,Context context, boolean itemWidthMatchParent) {
         super();
         this.users = items;
         this.mContext = context;
+        this.itemWidthMatchParent =itemWidthMatchParent;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_social_card, parent, false);
-        ViewHolder holder = new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view, itemWidthMatchParent);
         return holder;
     }
 
@@ -106,7 +109,7 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
         Button cardViewConnections;
 
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, boolean itemWidthMatchParent) {
             super(itemView);
             parentLayout = itemView.findViewById(R.id.fragment_social_card);
             cardImage = itemView.findViewById(R.id.card_profile_pic);
@@ -120,6 +123,9 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
             cardInstagram = itemView.findViewById(R.id.card_instagram);
             cardViewProfile = itemView.findViewById(R.id.card_view_profile);
             cardViewConnections = itemView.findViewById(R.id.card_view_connection);
+
+            ConstraintLayout constraintLayout = itemView.findViewById(R.id.fragment_social_card);
+            constraintLayout.setLayoutParams(new ConstraintLayout.LayoutParams(itemWidthMatchParent ? ConstraintLayout.LayoutParams.MATCH_PARENT : ConstraintLayout.LayoutParams.WRAP_CONTENT , ConstraintLayout.LayoutParams.WRAP_CONTENT));
         }
 
         public void updateData() {

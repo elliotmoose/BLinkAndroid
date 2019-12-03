@@ -63,8 +63,8 @@ public class Event {
             }
             JSONArray tagArray = data.getJSONArray("tags");
             for(int i =0; i<tagArray.length(); i++){
-                JSONObject userObject = tagArray.getJSONObject(i);
-                tags.add(userObject.toString());
+                String tag  = tagArray.getString(i);
+                tags.add(tag);
             }
 
 //            Log.d("EVENT", "Event has " + participantList.size() + " participants");

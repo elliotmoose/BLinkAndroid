@@ -56,13 +56,13 @@
         app:layout_constraintTop_toBottomOf="@+id/designation" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="40dp"
+        android:id="@+id/userDetailsTag"
+        android:layout_width="0dp"
         android:layout_height="17dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.536"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company"
-        android:id="@+id/userDetailsTag">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/company"
+        app:layout_constraintTop_toBottomOf="@+id/company">
 
     </android.support.v7.widget.RecyclerView>
 
