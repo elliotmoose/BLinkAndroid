@@ -49,7 +49,7 @@ public class BLinkFirebaseMessagingService extends FirebaseMessagingService impl
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
-                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            Log.d(TAG, "getInstanceId failed", task.getException());
                             return;
                         }
 
@@ -61,11 +61,12 @@ public class BLinkFirebaseMessagingService extends FirebaseMessagingService impl
 
     }
     public void updateUserTokenForPushNotifications(String token) {
+        Log.d(TAG, "Updating token: " + token);
         BLinkFirebaseMessagingService.token = token;
 
         User user = UserManager.getLoggedInUser();
-        if(user == null) {
-            Log.w(TAG, "No logged in user");
+        if(user == null || user.equals("")) {
+            Log.d(TAG, "No logged in user");
             return;
         }
 
@@ -83,7 +84,7 @@ public class BLinkFirebaseMessagingService extends FirebaseMessagingService impl
                     Log.d(TAG, "Token updated");
                 }
                 else {
-                    Log.w(TAG, "Token update failed");
+                    Log.d(TAG, "Token update failed");
                 }
             } catch (BLinkApiException e) {
                 e.printStackTrace();
@@ -93,6 +94,7 @@ public class BLinkFirebaseMessagingService extends FirebaseMessagingService impl
 
     @Override
     public void onAsyncTaskFailedWithException(BLinkApiException exception, String taskId) {
+        Log.d(TAG, exception.message);
         exception.printStackTrace();
     }
 }
