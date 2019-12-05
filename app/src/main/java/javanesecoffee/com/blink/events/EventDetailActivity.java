@@ -51,6 +51,7 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
     TextView eventPrice;
     TextView eventDescription;
 
+    TextView alsoAttendingTextView;
 
     Button eventRegisterButton;
 
@@ -73,6 +74,7 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
         eventLocation = findViewById(R.id.event_detail_location);
         eventPrice = findViewById(R.id.event_detail_price);
         eventDescription = findViewById(R.id.event_detail_description);
+        alsoAttendingTextView = findViewById(R.id.alsoAttendingTextView);
 
         //button
         eventRegisterButton = findViewById(R.id.event_detail_register_button);
@@ -152,6 +154,13 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
             }
             else {
                 eventRegisterButton.setVisibility(View.VISIBLE);
+            }
+
+            if(EventListTypes.valueOf(eventType) == EventListTypes.PAST_EVENTS) {
+                alsoAttendingTextView.setText("Attended:");
+            }
+            else {
+                alsoAttendingTextView.setText("Also Attending:");
             }
         }
     }
