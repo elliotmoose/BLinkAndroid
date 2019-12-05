@@ -3,23 +3,17 @@ package javanesecoffee.com.blink.social;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-//import android.os.UserManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import javax.sql.DataSource;
-
+import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.User;
-import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.ImageManager;
 import javanesecoffee.com.blink.managers.UserManager;
 

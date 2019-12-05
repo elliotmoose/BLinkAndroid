@@ -1,11 +1,10 @@
 package javanesecoffee.com.blink.registration;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 
+import androidx.core.content.FileProvider;
 import javanesecoffee.com.blink.BlinkActivity;
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;

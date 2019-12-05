@@ -2,8 +2,6 @@ package javanesecoffee.com.blink.events;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +11,15 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.BLinkEventObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.helpers.ResponseParser;
 
-public class EventRegisterDialog extends DialogFragment  {
+public class EventRegisterDialog extends DialogFragment {
     private static final String TAG = "MyCustomDialog";
 
 

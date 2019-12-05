@@ -1,8 +1,8 @@
 package javanesecoffee.com.blink.registration;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +32,7 @@ public class MoreInfoActivity extends BlinkActivity implements BLinkEventObserve
         super.onCreate(savedInstanceState);
         setContentView(more_info);
         next = findViewById(R.id.next);
+
 
         EditText bioField = findViewById(R.id.bioField);
         EditText positionField = findViewById(R.id.positionField);

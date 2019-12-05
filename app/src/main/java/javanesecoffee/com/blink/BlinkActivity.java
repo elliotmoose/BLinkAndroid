@@ -3,8 +3,9 @@ package javanesecoffee.com.blink;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class BlinkActivity extends AppCompatActivity {
     private ProgressDialog dialog;
@@ -12,6 +13,7 @@ public class BlinkActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+
 
         initProgressDialog();
     }

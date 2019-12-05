@@ -1,7 +1,6 @@
 package javanesecoffee.com.blink.entities;
 
 import android.graphics.Bitmap;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -9,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.ImageLoadObserver;
 import javanesecoffee.com.blink.api.LoadImageTask;
@@ -20,7 +20,6 @@ public class Connection{
     @Nullable
     private String image_id;
     private String time;
-
     public Connection(String username) {
         this.username = username;
     }

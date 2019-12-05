@@ -1,5 +1,6 @@
 package javanesecoffee.com.blink;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,11 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +23,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.BLinkEventObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
@@ -43,7 +43,7 @@ import javanesecoffee.com.blink.social.SocialConnectConfirmationActivity;
 public class CameraFragment extends Fragment implements BLinkEventObserver {
     private File imageFile;
     static final int REQUEST_SELFIE_CONNECT_CAPTURE = 2;
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         initProgressDialog();

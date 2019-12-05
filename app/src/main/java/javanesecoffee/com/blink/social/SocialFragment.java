@@ -4,18 +4,19 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.tabs.TabLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import javanesecoffee.com.blink.R;
 
-import static android.support.constraint.Constraints.TAG;
 
 public class SocialFragment extends Fragment {
 
@@ -56,11 +57,6 @@ public class SocialFragment extends Fragment {
         });
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-    }
-
-
-    public void initCards(){
-        Log.d(TAG, "initCards: preparing recent contacts");
     }
 
 }
