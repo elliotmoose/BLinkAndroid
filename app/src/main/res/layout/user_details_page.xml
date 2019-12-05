@@ -144,7 +144,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="14dp"
                 android:layout_weight="1"
-                android:autoLink="web"
+                android:autoLink="email"
                 android:gravity="center|start"
                 android:text="TextView"
                 android:textColor="@color/colorWhite" />
