@@ -148,8 +148,11 @@ public class SocialSummaryFragment extends Fragment implements ImageEntityObserv
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent (getActivity(), UserDetailsActivity.class);
-                intent.putExtra(IntentExtras.USER.USER_TYPE_KEY,IntentExtras.USER.USER_TYPE_SELF);
-                startActivity(intent);
+                User user = UserManager.getLoggedInUser();
+                if(user != null) {
+                    intent.putExtra(IntentExtras.USER.USER_NAME_KEY, user.getUsername());
+                    startActivity(intent);
+                }
             }
         });
         swipeRefreshLayout = getView().findViewById(R.id.swipeRefreshSocial2);

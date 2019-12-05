@@ -54,8 +54,9 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
                 String username = holderfinal.user.getUsername();
                 Log.d(TAG, "onClick: clicked on view profile");
                 Toast.makeText(mContext, "loading user image",Toast.LENGTH_SHORT).show();
+                //TODO: check if this user is a connection
+                //if he is not a connection, go to locked UserDetailsActivity
                 Intent intent = new Intent(mContext, UserDetailsActivity.class);
-                intent.putExtra(IntentExtras.USER.USER_TYPE_KEY,IntentExtras.USER.USER_TYPE_EXPLORE);
                 intent.putExtra(IntentExtras.USER.USER_NAME_KEY,username);
                 mContext.startActivity(intent);
             }

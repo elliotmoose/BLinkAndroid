@@ -78,7 +78,6 @@ public class RegisterActivity extends BlinkActivity implements BLinkEventObserve
                 else if (Config.buildMode == BuildModes.TEST_SOCIAL_DETAIL) {
                     ConnectionsManager.getInstance();
                     Intent intent = new Intent(getApplicationContext(), UserDetailsActivity.class);
-                    intent.putExtra(IntentExtras.USER.USER_TYPE_KEY, IntentExtras.USER.USER_TYPE_CONNECTION);
                     intent.putExtra(IntentExtras.USER.USER_NAME_KEY, "mooselliot");
                     startActivity(intent);
                 }

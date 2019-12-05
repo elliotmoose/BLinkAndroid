@@ -78,27 +78,9 @@ public class EventManager extends Manager {
         super.onAsyncTaskComplete(response, taskId); //notify observers
     }
 
-    public ArrayList<User> userListFromData(JSONObject data){
-        ArrayList<User> user_list = new ArrayList<>();
-        try {
-            //TODO: change user_list into the correct json field name
-            JSONArray json_user_list = data.getJSONArray("user_list");
-            for(int i = 0; i < json_user_list.length(); i++){
-                user_list.add(new User(json_user_list.getJSONObject(i)));
-                UserManager.addUserToCache(new User(json_user_list.getJSONObject(i)));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (BLinkApiException e){
-            e.printStackTrace();
-        }
-        return user_list;
-    }
-
-
     public ArrayList<Event> eventListFromData(JSONObject data, String key) throws BLinkApiException{
-
         ArrayList<Event> output = new ArrayList<>();
+
         try {
             JSONArray explore_event_list = data.getJSONArray(key);
 

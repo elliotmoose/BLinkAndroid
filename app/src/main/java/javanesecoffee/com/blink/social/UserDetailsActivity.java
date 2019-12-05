@@ -49,32 +49,14 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
 
 
 
-        currentUser = UserManager.getLoggedInUser();
-
         Intent intent = getIntent();
-        String type = intent.getStringExtra(IntentExtras.USER.USER_TYPE_KEY);
         String username = intent.getStringExtra(IntentExtras.USER.USER_NAME_KEY);
 
-//        if(username != null) {
-//            switch (type) {
-//                case IntentExtras.USER.USER_TYPE_CONNECTION:
-//                    currentUser = ConnectionsManager.getInstance().getUserFromConnections(username);
-//                    break;
-//                case IntentExtras.USER.USER_TYPE_EXPLORE:
-//                    currentUser = ConnectionsManager.getInstance().getUserFromExploreConnections(username);
-//                    break;
-//                case IntentExtras.USER.USER_TYPE_SELF:
-//                    currentUser = UserManager.getLoggedInUser();
-//                    break;
-//            }
-//        }
-        if(type.equals(IntentExtras.USER.USER_TYPE_SELF) ){
-            currentUser = UserManager.getLoggedInUser();
+        currentUser = UserManager.getUserFromCache(username);
 
-        }else{
-            currentUser = UserManager.getUserFromCache(username);
-        }
         updateData();
+
+
         View decorview = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorview.setSystemUiVisibility(uiOptions);

@@ -47,9 +47,9 @@ public class MoreInfoActivity extends BlinkActivity implements BLinkEventObserve
             if(user != null) {
                 String username = user.getUsername();
                 bioField.setText("My name is " + username + " and this is my bio");
-                positionField.setText("Full Time Student");
+                positionField.setText("Software Developer");
                 companyField.setText("SUTD");
-                linkedinField.setText("facebook.com/"+username);
+                facebookField.setText("facebook.com/"+username);
                 linkedinField.setText("linkedin.com/in/"+username);
                 instagramField.setText(username);
             }

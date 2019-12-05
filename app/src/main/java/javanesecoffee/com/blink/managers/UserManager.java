@@ -96,6 +96,11 @@ public class UserManager extends Manager{
     }
 
     public static User getUserFromCache( String username){
+        if(getLoggedInUser() != null) {
+            if(getLoggedInUser().getUsername() == username) {
+                return getLoggedInUser();
+            }
+        }
         Log.d("UserManager", "Getting : " + username);
         return userCache.get(username);
     }
