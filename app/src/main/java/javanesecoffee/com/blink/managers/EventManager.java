@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
+import javanesecoffee.com.blink.api.LoadEventListForUsernameTask;
 import javanesecoffee.com.blink.api.LoadEventListTask;
 import javanesecoffee.com.blink.api.RegisterForEventTask;
 import javanesecoffee.com.blink.api.RegisterTask;
@@ -52,6 +53,11 @@ public class EventManager extends Manager {
             LoadEventListTask loadEventTask = new LoadEventListTask(getInstance());
             loadEventTask.execute(username);
         }
+    }
+
+    public void loadEventsListForUsername(String username) {
+        LoadEventListForUsernameTask task = new LoadEventListForUsernameTask(getInstance());
+        task.execute(username);
     }
 
     @Override //UserManager on async task complete, call super to notify observers

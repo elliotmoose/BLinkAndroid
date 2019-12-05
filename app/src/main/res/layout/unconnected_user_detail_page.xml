@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/gradient_rect"
-    tools:context=".social.UserDetailsActivity"
+    tools:context=".social.UnconnectedUserDetailsActivity"
     >
 
     <!--If company name too long, might
