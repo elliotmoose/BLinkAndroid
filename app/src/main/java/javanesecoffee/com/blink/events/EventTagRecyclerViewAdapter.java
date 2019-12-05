@@ -1,6 +1,7 @@
 package javanesecoffee.com.blink.events;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,6 @@ public class EventTagRecyclerViewAdapter extends RecyclerView.Adapter<EventTagRe
     public EventTagRecyclerViewAdapter(ArrayList<String> items, Context context){
         this.tags = items;
         this.context = context;
-
     }
     @NonNull
     @Override
@@ -33,10 +33,11 @@ public class EventTagRecyclerViewAdapter extends RecyclerView.Adapter<EventTagRe
     @Override
     public void onBindViewHolder(@NonNull EventTagRecyclerViewAdapter.ViewHolder holder, int i) {
         holder.tag = tags.get(i);
-        //holder.tag = "Java";
+        int[] colors = {R.drawable.button_gradient_red, R.drawable.button_gradient_green, R.drawable.button_gradient_yellow};
         Log.d("rec", (String) holder.tag_name.getText());
         //System.out.println(holder.tag_name.getText());
         holder.tag_name.setText(holder.tag);
+        holder.tag_name.setBackgroundResource(colors[i%3]);
 
     }
 

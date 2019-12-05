@@ -7,8 +7,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="40dp"
-        android:layout_height="15dp"
+        android:layout_width="47dp"
+        android:layout_height="16dp"
         android:layout_centerInParent="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
@@ -26,6 +26,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/button_gradient_green"
                 android:fontFamily="@font/montserrat"
+                android:gravity="center"
                 android:text="java"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
