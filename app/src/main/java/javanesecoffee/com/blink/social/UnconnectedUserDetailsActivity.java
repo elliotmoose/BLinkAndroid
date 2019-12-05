@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
@@ -39,6 +41,8 @@ public class UnconnectedUserDetailsActivity extends AppCompatActivity implements
     TextView editCompany;
     CircleImageView editProfilePic;
 
+    RecyclerView recyclerView_eventCard;
+
     ArrayList<Event> events = new ArrayList<>();
 
 
@@ -47,10 +51,12 @@ public class UnconnectedUserDetailsActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.unconnected_user_detail_page);
 
-        editProfilePic = findViewById(R.id.profile_pic);
-        editUsername = findViewById(R.id.loginUsername);
-        editDesignation = findViewById(R.id.designation);
-        editCompany = findViewById(R.id.company);
+        editProfilePic = findViewById(R.id.unconnected_profile_pic);
+        editUsername = findViewById(R.id.unconnected_loginUsername);
+        editDesignation = findViewById(R.id.unconnected_designation);
+        editCompany = findViewById(R.id.unconnected_company);
+
+        recyclerView_eventCard = findViewById(R.id.unconnectedUserEventRecyclerView);
 
         Intent intent = getIntent();
         String username = intent.getStringExtra(IntentExtras.USER.USER_NAME_KEY);
@@ -80,6 +86,7 @@ public class UnconnectedUserDetailsActivity extends AppCompatActivity implements
             editUsername.setText(displayedUser.getDisplayname());
             editDesignation.setText(displayedUser.getPosition());
             editCompany.setText(displayedUser.getCompany());
+
 
             Bitmap image = ImageManager.getImageOrLoadIfNeeded(displayedUser.getUsername(), this, ImageManager.ImageType.PROFILE_IMAGE);
             if(image != null) {

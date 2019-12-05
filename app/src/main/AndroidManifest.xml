@@ -53,6 +53,7 @@
         <activity android:name=".registration.FaceScanActivity" />
         <activity android:name=".registration.MoreInfoActivity" />
         <activity android:name=".registration.CompleteRegistrationActivity" />
+        <activity android:name=".social.UnconnectedUserDetailsActivity" />
         <activity android:name=".events.MainActivity" />
         <activity android:name=".events.EventDetailActivity" />
         <activity android:name=".social.UserDetailsActivity" />
