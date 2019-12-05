@@ -93,7 +93,7 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
             mailTextView.setText(currentUser.getEmail());
             linkedinTextView.setText(currentUser.getLinkedin());
             facebookTextView.setText(currentUser.getFacebook());
-            instagramTextView.setText("@"+currentUser.getInstagram());
+            instagramTextView.setText("https://instagram.com/"+currentUser.getInstagram());
 
             Bitmap image = ImageManager.getImageOrLoadIfNeeded(currentUser.getUsername(), this, ImageManager.ImageType.PROFILE_IMAGE);
             if(image != null) {
