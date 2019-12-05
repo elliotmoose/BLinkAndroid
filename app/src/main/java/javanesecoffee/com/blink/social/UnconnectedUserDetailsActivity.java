@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -27,6 +28,7 @@ import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.Event;
 import javanesecoffee.com.blink.entities.User;
+import javanesecoffee.com.blink.events.EventCardRecyclerViewAdapter;
 import javanesecoffee.com.blink.helpers.ResponseParser;
 import javanesecoffee.com.blink.managers.EventManager;
 import javanesecoffee.com.blink.managers.ImageManager;
@@ -42,6 +44,7 @@ public class UnconnectedUserDetailsActivity extends AppCompatActivity implements
     CircleImageView editProfilePic;
 
     RecyclerView recyclerView_eventCard;
+    EventCardRecyclerViewAdapter adapter;
 
     ArrayList<Event> events = new ArrayList<>();
 
@@ -56,7 +59,10 @@ public class UnconnectedUserDetailsActivity extends AppCompatActivity implements
         editDesignation = findViewById(R.id.unconnected_designation);
         editCompany = findViewById(R.id.unconnected_company);
 
+        adapter = new EventCardRecyclerViewAdapter(events, UnconnectedUserDetailsActivity.this);
         recyclerView_eventCard = findViewById(R.id.unconnectedUserEventRecyclerView);
+        recyclerView_eventCard.setLayoutManager(new LinearLayoutManager(UnconnectedUserDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView_eventCard.setAdapter(adapter);
 
         Intent intent = getIntent();
         String username = intent.getStringExtra(IntentExtras.USER.USER_NAME_KEY);
@@ -132,7 +138,9 @@ public class UnconnectedUserDetailsActivity extends AppCompatActivity implements
                                 }
                             }
 
-                            Log.d(TAG, events.size() + "");
+                            if(adapter != null) {
+                                adapter.notifyDataSetChanged();
+                            }
                             return;
                         } catch (JSONException e) {
                             Log.d(TAG, e.toString());

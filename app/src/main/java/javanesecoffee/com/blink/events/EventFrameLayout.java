@@ -44,6 +44,7 @@ public class EventFrameLayout extends FrameLayout implements ImageEntityObserver
 
     public void setEvent(Event event) {
         this.event = event;
+        updateData();
     }
 
     public void updateData() {

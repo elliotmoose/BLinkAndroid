@@ -48,8 +48,7 @@ public class EventCardRecyclerViewAdapter extends RecyclerView.Adapter<EventCard
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
 
-        holder.event = events.get(i);
-        holder.updateData();
+        holder.setEvent(events.get(i));
         final ViewHolder holderfinal = holder;
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
@@ -74,53 +73,19 @@ public class EventCardRecyclerViewAdapter extends RecyclerView.Adapter<EventCard
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements ImageEntityObserver {
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
+        EventFrameLayout parentLayout;
         Event event;
-
-        ImageView eventImage;
-
-        TextView eventNameText;
-        TextView eventOrganiser ;
-        TextView eventDate;
-        TextView eventTime;
-
-        ConstraintLayout parentLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             parentLayout = itemView.findViewById(R.id.fragment_event);
-            eventImage = itemView.findViewById(R.id.EventImage);
-            eventNameText = itemView.findViewById(R.id.eventNameTextView);
-            eventOrganiser = itemView.findViewById(R.id.eventOrganiserTextView);
-            eventDate = itemView.findViewById(R.id.eventDateTextView);
-            eventTime = itemView.findViewById(R.id.eventTimeTextView);
-
         }
 
-        public void updateData() {
-            if(event == null) {
-                return;
-            }
-
-            Bitmap image = ImageManager.getImageOrLoadIfNeeded(event.getEvent_id(), this, ImageManager.ImageType.EVENT_IMAGE);
-
-            if(image != null) {
-                eventImage.setImageBitmap(image);
-            }
-            else {
-                //resets when view is being reused
-                eventImage.setImageBitmap(ImageManager.eventPlaceholder);
-            }
-
-            eventNameText.setText(event.getName());
-            eventOrganiser.setText(event.getOrganiser());
-            eventDate.setText(event.getDate());
-            eventTime.setText(event.getTime());
-        }
-
-        @Override
-        public void onImageUpdated(Bitmap bitmap) {
-            updateData();
+        public void setEvent(Event event) {
+            this.event = event;
+            parentLayout.setEvent(event);
         }
     }
 }
