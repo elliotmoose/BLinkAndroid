@@ -148,7 +148,7 @@ public class SocialNameCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soc
             cardEmail.setText(user.getEmail());
             cardLinkedin.setText(user.getLinkedin());
             cardFacebook.setText(user.getFacebook());
-            cardInstagram.setText("instagram.com/" + user.getInstagram());
+            cardInstagram.setText(user.getInstagram().equals("") ? "" : "instagram.com/" + user.getInstagram());
             cardCompany.setText(user.getCompany());
         }
 
