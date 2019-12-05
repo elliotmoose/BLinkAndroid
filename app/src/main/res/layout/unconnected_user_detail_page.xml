@@ -84,38 +84,88 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/profile_pic" />
 
+
     <ImageView
-        android:layout_width="147dp"
-        android:layout_height="230dp"
+        android:id="@+id/imageView4"
+        android:layout_width="64dp"
+        android:layout_height="91dp"
         android:src="@drawable/lock"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company" />
+        app:layout_constraintTop_toBottomOf="@+id/company"
+        app:layout_constraintVertical_bias="0.065" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Information Locked"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="@font/montserrat"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/socialMediaContainerLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="292dp"
+        android:layout_height="94dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="top"
+        android:text="Please connect with this user to view his/her information."
+        android:textAlignment="center"
+        android:textColor="@color/colorOrange"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/socialMediaContainerLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <LinearLayout
-        android:id="@+id/socialMediaContainerLinearLayout"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Attending:"
+        android:textColor="@color/colorWhite"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/unconnectedUserEventRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.86" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/unconnectedUserEventRecyclerView"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="36dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.679">
 
 
-    </LinearLayout>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.4136253" />
+        app:layout_constraintGuide_begin="170dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
