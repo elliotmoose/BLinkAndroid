@@ -62,7 +62,7 @@
             <TextView
                 android:id="@+id/small_card_designation"
                 android:layout_width="wrap_content"
-                android:layout_height="15dp"
+                android:layout_height="17dp"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/designation"
                 android:textColor="#474BAC"
@@ -70,7 +70,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:textSize="12sp"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="0dp"
                 android:layout_centerHorizontal="true"
                 />
 

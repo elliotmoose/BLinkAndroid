@@ -74,7 +74,7 @@ public class UserDetailsActivity extends AppCompatActivity implements ImageEntit
 //                    break;
 //            }
 //        }
-        if(type == IntentExtras.USER.USER_TYPE_SELF ){
+        if(type.equals(IntentExtras.USER.USER_TYPE_SELF) ){
             currentUser = UserManager.getLoggedInUser();
 
         }else{

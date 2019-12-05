@@ -33,7 +33,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
 
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="59dp"
                 android:adjustViewBounds="false"
@@ -63,16 +63,16 @@
             <TextView
                 android:id="@+id/card_designation"
                 android:layout_width="wrap_content"
-                android:layout_height="19dp"
+                android:layout_height="21dp"
                 android:layout_alignTop="@+id/card_username"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/designation"
                 android:textColor="#474BAC"
                 android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@id/card_profile_pic"
-                app:layout_constraintTop_toBottomOf="@id/card_username" />
+                app:layout_constraintTop_toTopOf="@id/card_username" />
 
             <TextView
                 android:id="@+id/card_company"
