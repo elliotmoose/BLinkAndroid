@@ -58,7 +58,7 @@ public class SocialTabCard_RecyclerViewAdapter extends RecyclerView.Adapter<Soci
                 String username = fholder.user.getUsername();
                 Log.d(TAG, "onClick: clicked on view profile");
                 Toast.makeText(sCardContext, "loading user profile", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(sCardContext, UserDetailsActivity.class);
+                Intent intent = new Intent(sCardContext, UnconnectedUserDetailsActivity.class);
                 intent.putExtra(IntentExtras.USER.USER_NAME_KEY, username);
                 sCardContext.startActivity(intent);
             }

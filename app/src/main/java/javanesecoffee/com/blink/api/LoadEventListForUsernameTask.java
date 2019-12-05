@@ -11,7 +11,7 @@ import javanesecoffee.com.blink.helpers.RequestHandler;
 
 public class LoadEventListForUsernameTask extends BLinkAsyncTask{
     public LoadEventListForUsernameTask(AsyncResponseHandler responseHandler){
-        super(responseHandler, ApiCodes.TASK_LOAD_EVENTS_LIST);
+        super(responseHandler, ApiCodes.TASK_LOAD_EVENTS_LIST_FOR_USERNAME);
     }
     @Override
     JSONObject executeMainTask(String... params) throws IOException, JSONException, BLinkApiException{

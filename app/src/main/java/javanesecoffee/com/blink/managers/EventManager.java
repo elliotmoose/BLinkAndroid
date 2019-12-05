@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.LoadEventListForUsernameTask;
@@ -26,6 +27,8 @@ public class EventManager extends Manager {
         return singleton;
     }
 
+    public static HashMap<String, Event> eventCache = new HashMap<>();
+
     ArrayList<Event> pastEvents = new ArrayList<>();
     ArrayList<Event> upcomingEvents = new ArrayList<>();
     ArrayList<Event> exploreEvents = new ArrayList<>();
@@ -42,6 +45,14 @@ public class EventManager extends Manager {
 //            exploreEvents.add(new Event("Information Session", "Google", "A talk!", "8 Somapah Road", "18/12/19", "3:00pm", "FREE", "event2" ));
             exploreEvents.add(new Event("Interview Workshop", "Facebook", "A talk!", "8 Somapah Road", "25/12/19", "1:00pm", "FREE", "event2" , tag));
         }
+    }
+
+    public static void addEventToCache(Event event){
+        eventCache.put(event.getEvent_id(), event);
+    }
+
+    public static Event getEventFromCache(String event_id){
+        return eventCache.get(event_id);
     }
 
     /**
@@ -91,7 +102,9 @@ public class EventManager extends Manager {
             JSONArray explore_event_list = data.getJSONArray(key);
 
             for(int i=0; i < explore_event_list.length(); i++){
-                output.add(new Event(explore_event_list.getJSONObject(i)));
+                Event event = new Event(explore_event_list.getJSONObject(i));
+                output.add(event);
+                addEventToCache(event);
             }
         } catch (JSONException e) {
             e.printStackTrace();

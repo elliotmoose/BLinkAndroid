@@ -31,6 +31,7 @@ import javanesecoffee.com.blink.managers.ImageManager;
 import javanesecoffee.com.blink.managers.UserManager;
 
 public class UnconnectedUserDetailsActivity extends AppCompatActivity implements ImageEntityObserver, BLinkEventObserver {
+    private static String TAG = "UNCONNECTED_USER_DETAILS_ACTIVITY";
     User displayedUser;
 
     TextView editUsername;
@@ -108,7 +109,7 @@ public class UnconnectedUserDetailsActivity extends AppCompatActivity implements
                 }
 
                 if (keys.size() != 0) {
-                    if(displayedUser != null && displayedUser.getUsername() == keys.get(0)){
+                    if(displayedUser != null && displayedUser.getUsername().equals(keys.get(0))){
                         try {
                             ArrayList<String> event_ids = new ArrayList<>();
                             JSONArray eventIdsArray = data.getJSONArray(keys.get(0));
@@ -117,13 +118,26 @@ public class UnconnectedUserDetailsActivity extends AppCompatActivity implements
                             }
 
                             events.clear();
+                            for(String event_id: event_ids) {
+                                Event event = EventManager.getEventFromCache(event_id);
+                                if(event != null) {
+                                    events.add(event);
+                                }
+                            }
 
-                            //TODO: event_ids to events
+                            Log.d(TAG, events.size() + "");
                             return;
                         } catch (JSONException e) {
+                            Log.d(TAG, e.toString());
                             throw BLinkApiException.MALFORMED_DATA_EXCEPTION();
                         }
                     }
+                    else {
+                        Log.d(TAG, "Username mismatch: " + keys.get(0));
+                    }
+                }
+                else {
+                    Log.d(TAG, "No keys");
                 }
 
                 Log.d("UNCONNECTED_USER_DETAILS_ACTIVITY", "Cannot find user events");

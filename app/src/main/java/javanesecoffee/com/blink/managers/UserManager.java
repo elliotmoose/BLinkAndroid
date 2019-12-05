@@ -89,10 +89,7 @@ public class UserManager extends Manager{
     }
 
     public static void addUserToCache(User user){
-        if(!userCache .containsKey(user.getUsername())){
-            userCache.put(user.getUsername(), user);
-            Log.d("UserManager", "User cache added: " + user.getUsername());
-        }
+        userCache.put(user.getUsername(), user);
     }
 
     public static User getUserFromCache( String username){

@@ -12,7 +12,6 @@
     <!--If company name too long, might
     need to change font size ie give a condition-->
 
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_pic"
         android:layout_width="0dp"
