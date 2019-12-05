@@ -14,7 +14,7 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_pic"
+        android:id="@+id/unconnected_profile_pic"
         android:layout_width="0dp"
         android:layout_height="130dp"
         android:layout_alignParentStart="true"
@@ -29,48 +29,48 @@
         android:src="@drawable/dp"
         app:civ_border_color="#FFFFFF"
         app:civ_border_width="3dp"
-        app:layout_constraintEnd_toStartOf="@+id/loginUsername"
+        app:layout_constraintEnd_toStartOf="@+id/unconnected_loginUsername"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/designation"
+        android:id="@+id/unconnected_designation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:text="@string/designation"
         android:textColor="#FFFFFF"
         android:textSize="8pt"
-        app:layout_constraintStart_toStartOf="@+id/loginUsername"
-        app:layout_constraintTop_toBottomOf="@+id/loginUsername" />
+        app:layout_constraintStart_toStartOf="@+id/unconnected_loginUsername"
+        app:layout_constraintTop_toBottomOf="@+id/unconnected_loginUsername" />
 
     <TextView
-        android:id="@+id/company"
+        android:id="@+id/unconnected_company"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:text="@string/company"
         android:textColor="#FFFFFF"
         android:textSize="8pt"
-        app:layout_constraintStart_toStartOf="@+id/designation"
-        app:layout_constraintTop_toBottomOf="@+id/designation" />
+        app:layout_constraintStart_toStartOf="@+id/unconnected_designation"
+        app:layout_constraintTop_toBottomOf="@+id/unconnected_designation" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userDetailsTag"
-        android:layout_width="0dp"
-        android:layout_height="17dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/company"
-        app:layout_constraintTop_toBottomOf="@+id/company">
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/userDetailsTag"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="17dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/unconnected_company"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/unconnected_company">-->
 
-    </androidx.recyclerview.widget.RecyclerView>
+<!--    </androidx.recyclerview.widget.RecyclerView>-->
 
     <TextView
-        android:id="@+id/loginUsername"
+        android:id="@+id/unconnected_loginUsername"
         android:layout_width="0dp"
         android:layout_height="44dp"
-        android:layout_below="@+id/profile_pic"
+        android:layout_below="@+id/unconnected_profile_pic"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="28dp"
         android:fontFamily="sans-serif"
@@ -82,7 +82,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/profile_pic" />
+        app:layout_constraintTop_toTopOf="@+id/unconnected_profile_pic" />
 
 
     <ImageView
@@ -94,7 +94,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company"
+        app:layout_constraintTop_toBottomOf="@+id/unconnected_company"
         app:layout_constraintVertical_bias="0.065" />
 
     <TextView
@@ -134,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
-        android:text="Attending:"
+        android:text="Attending Events:"
         android:textColor="@color/colorWhite"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -143,19 +143,19 @@
         app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.86" />
+        app:layout_constraintVertical_bias="0.581" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/unconnectedUserEventRecyclerView"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.679">
+        app:layout_constraintVertical_bias="0.600">
 
 
     </androidx.recyclerview.widget.RecyclerView>
