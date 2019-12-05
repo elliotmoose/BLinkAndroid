@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <javanesecoffee.com.blink.events.EventFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_event"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#E2E2E2"
-    tools:context=".events.EventFragment"
-    android:id="@+id/fragment_event"
-    >
+    android:background="@android:color/transparent"
+    tools:context=".events.EventFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.cardview.widget.CardView
@@ -31,6 +30,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="130dp">
+
                 <ImageView
                     android:id="@+id/EventImage"
                     android:layout_width="match_parent"
@@ -76,15 +76,15 @@
 
                 </LinearLayout>
 
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/EventTagRecyclerView"-->
-<!--                    android:layout_width="40dp"-->
-<!--                    android:layout_height="17dp"-->
-<!--                    android:layout_alignParentRight="true"-->
-<!--                    android:layout_marginRight="40dp"-->
-<!--                    android:orientation="horizontal">-->
+                <!--                <androidx.recyclerview.widget.RecyclerView-->
+                <!--                    android:id="@+id/EventTagRecyclerView"-->
+                <!--                    android:layout_width="40dp"-->
+                <!--                    android:layout_height="17dp"-->
+                <!--                    android:layout_alignParentRight="true"-->
+                <!--                    android:layout_marginRight="40dp"-->
+                <!--                    android:orientation="horizontal">-->
 
-<!--                </androidx.recyclerview.widget.RecyclerView>-->
+                <!--                </androidx.recyclerview.widget.RecyclerView>-->
 
             </LinearLayout>
 
@@ -130,7 +130,6 @@
 
 
     </androidx.cardview.widget.CardView>
-
 
 
 </javanesecoffee.com.blink.events.EventFrameLayout>

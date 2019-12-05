@@ -6,12 +6,10 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -22,21 +20,18 @@ import javanesecoffee.com.blink.BlinkActivity;
 import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.BLinkApiException;
 import javanesecoffee.com.blink.api.BLinkEventObserver;
-import javanesecoffee.com.blink.api.ImageEntityObserver;
-import javanesecoffee.com.blink.api.ImageLoadObserver;
 import javanesecoffee.com.blink.constants.ApiCodes;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.Event;
 import javanesecoffee.com.blink.entities.User;
 import javanesecoffee.com.blink.helpers.ResponseParser;
-import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.EventManager;
 import javanesecoffee.com.blink.managers.UserManager;
 
 public class EventDetailActivity extends BlinkActivity implements BLinkEventObserver  {
     User currentUser;
     Event currentEvent;
-    String eventType;
+//    String eventType;
     String eventID;
     int eventPosition;
 
@@ -88,11 +83,10 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
 
         Intent intent = getIntent();
         eventID = intent.getStringExtra(IntentExtras.EVENT.EVENT_ID_KEY);
-        eventType = intent.getStringExtra(IntentExtras.EVENT.EVENT_TYPE_KEY);
         eventPosition = intent.getIntExtra(IntentExtras.EVENT.EVENT_POSITION_KEY,0);
 
         if (eventID != null) {
-            currentEvent = EventManager.getInstance().eventsForType(EventListTypes.valueOf(eventType)).get(eventPosition);
+            currentEvent = EventManager.getEventFromCache(eventID);
         }
 
         eventRegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -149,14 +143,16 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
                 alsoAttending.add(participant);
             }
 
-            if(EventListTypes.valueOf(eventType) == EventListTypes.UPCOMING || EventListTypes.valueOf(eventType) == EventListTypes.PAST_EVENTS) {
+            EventListTypes eventType = EventManager.getInstance().getEventType(currentEvent);
+
+            if(eventType == EventListTypes.UPCOMING || eventType == EventListTypes.PAST_EVENTS) {
                 eventRegisterButton.setVisibility(View.GONE);
             }
             else {
                 eventRegisterButton.setVisibility(View.VISIBLE);
             }
 
-            if(EventListTypes.valueOf(eventType) == EventListTypes.PAST_EVENTS) {
+            if(eventType == EventListTypes.PAST_EVENTS) {
                 alsoAttendingTextView.setText("Attended:");
                 eventRegisteredTextView.setVisibility(View.GONE);
             }
@@ -168,7 +164,7 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
     }
 
     private void initRecyclerView() {
-        EventDetailImageAdapter DetailImage_adapter = new EventDetailImageAdapter(alsoAttending, this);
+        UserDPListAdapter alsoAttendingAdapter = new UserDPListAdapter(alsoAttending, this);
         EventTagRecyclerViewAdapter Tag_adapter = new EventTagRecyclerViewAdapter(eventTagList,this);
 
         eventAlsoAttending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -178,7 +174,7 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
         eventAlsoAttending.addItemDecoration(spaceDecoration);
         eventTags.addItemDecoration(spaceDecoration);
 
-        eventAlsoAttending.setAdapter(DetailImage_adapter);
+        eventAlsoAttending.setAdapter(alsoAttendingAdapter);
         eventTags.setAdapter(Tag_adapter);
     }
 

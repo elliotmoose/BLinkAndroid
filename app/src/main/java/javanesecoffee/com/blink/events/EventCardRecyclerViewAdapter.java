@@ -55,12 +55,8 @@ public class EventCardRecyclerViewAdapter extends RecyclerView.Adapter<EventCard
             @Override
             public void onClick(View view) {
                 String event_id = holderfinal.event.getEvent_id();
-                //TODO: check if this user is a connection
-                //if he is not a connection, go to locked UserDetailsActivity
                 Intent intent = new Intent(mContext, EventDetailActivity.class);
                 intent.putExtra(IntentExtras.EVENT.EVENT_ID_KEY,event_id);
-                intent.putExtra(IntentExtras.EVENT.EVENT_TYPE_KEY,IntentExtras.EVENT.EVENT_TYPE_EXPLORE);
-//                intent.putExtra(IntentExtras.EVENT.EVENT_POSITION_KEY,);
                 mContext.startActivity(intent);
             }
         });

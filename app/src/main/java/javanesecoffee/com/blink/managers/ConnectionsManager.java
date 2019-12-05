@@ -38,6 +38,15 @@ public class ConnectionsManager extends Manager {
         }
     }
 
+    public boolean usernameIsConnection(String username) {
+        for(User user : allConnections) {
+            if(user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void loadAllConnections()
     {
         if(UserManager.getLoggedInUser() != null) {

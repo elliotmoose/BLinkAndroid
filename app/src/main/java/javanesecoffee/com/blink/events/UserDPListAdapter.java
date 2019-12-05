@@ -19,15 +19,17 @@ import javanesecoffee.com.blink.R;
 import javanesecoffee.com.blink.api.ImageEntityObserver;
 import javanesecoffee.com.blink.constants.IntentExtras;
 import javanesecoffee.com.blink.entities.User;
+import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.ImageManager;
+import javanesecoffee.com.blink.social.UnconnectedUserDetailsActivity;
 import javanesecoffee.com.blink.social.UserDetailsActivity;
 
-public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailImageAdapter.ViewHolder> {
+public class UserDPListAdapter extends RecyclerView.Adapter<UserDPListAdapter.ViewHolder> {
     private static final String TAG = "AlsoAttending_Recycler";
     private Context mContext;
     ArrayList<User> users = new ArrayList<>();
 
-    public EventDetailImageAdapter(ArrayList<User> items,Context context) {
+    public UserDPListAdapter(ArrayList<User> items, Context context) {
         super();
         this.users = items;
         this.mContext = context;
@@ -54,11 +56,17 @@ public class EventDetailImageAdapter extends RecyclerView.Adapter<EventDetailIma
                 String username = holderfinal.user.getUsername();
                 Log.d(TAG, "onClick: clicked on view profile");
                 Toast.makeText(mContext, "loading user image",Toast.LENGTH_SHORT).show();
-                //TODO: check if this user is a connection
-                //if he is not a connection, go to locked UserDetailsActivity
-                Intent intent = new Intent(mContext, UserDetailsActivity.class);
-                intent.putExtra(IntentExtras.USER.USER_NAME_KEY,username);
-                mContext.startActivity(intent);
+                if(ConnectionsManager.getInstance().usernameIsConnection(username)) {
+
+                    Intent intent = new Intent(mContext, UserDetailsActivity.class);
+                    intent.putExtra(IntentExtras.USER.USER_NAME_KEY,username);
+                    mContext.startActivity(intent);
+                }
+                else { //if he is not a connection, go to locked UserDetailsActivity
+                    Intent intent = new Intent(mContext, UnconnectedUserDetailsActivity.class);
+                    intent.putExtra(IntentExtras.USER.USER_NAME_KEY,username);
+                    mContext.startActivity(intent);
+                }
             }
         });
 

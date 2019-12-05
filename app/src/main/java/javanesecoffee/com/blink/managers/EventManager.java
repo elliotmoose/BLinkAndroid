@@ -55,6 +55,18 @@ public class EventManager extends Manager {
         return eventCache.get(event_id);
     }
 
+    public EventListTypes getEventType(Event event){
+        if(pastEvents.contains(event)) {
+            return EventListTypes.PAST_EVENTS;
+        }
+
+        if(upcomingEvents.contains(event)) {
+            return EventListTypes.UPCOMING;
+        }
+
+        return EventListTypes.EXPLORE;
+    }
+
     /**
      * Method to be called from activity
      */
