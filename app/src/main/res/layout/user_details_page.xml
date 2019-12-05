@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="@+id/designation"
         app:layout_constraintTop_toBottomOf="@+id/designation" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userDetailsTag"
         android:layout_width="0dp"
         android:layout_height="17dp"
@@ -64,7 +64,7 @@
         app:layout_constraintStart_toStartOf="@+id/company"
         app:layout_constraintTop_toBottomOf="@+id/company">
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:id="@+id/loginUsername"
@@ -226,7 +226,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

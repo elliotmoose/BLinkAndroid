@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
     <!-- tools:showIn="@layout/fragment_social"-->
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/recentConnection_view1"
         android:layout_width="320dp"
         android:layout_height="180dp"
@@ -222,5 +222,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

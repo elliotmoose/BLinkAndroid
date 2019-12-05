@@ -2,6 +2,8 @@ package javanesecoffee.com.blink.managers;
 
 import android.util.Log;
 
+import com.google.firebase.messaging.FirebaseMessagingService;
+
 import org.json.JSONObject;
 
 import java.io.File;
@@ -48,6 +50,9 @@ public class UserManager extends Manager{
     public static void setLoggedInUser(User loggedInUser) {
         UserManager.loggedInUser = loggedInUser;
         Log.d("UserManager", "Logged in as user: " + loggedInUser.getUsername());
+
+        //update fcm
+        BLinkFirebaseMessagingService.getInstance().updateUserTokenForPushNotifications();
     }
 
     /**
