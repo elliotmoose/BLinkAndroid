@@ -55,7 +55,6 @@
         <activity android:name=".registration.CompleteRegistrationActivity" />
         <activity android:name=".events.MainActivity" />
         <activity android:name=".events.EventDetailActivity" />
-        <activity android:name=".events.EventPastDetailActivity" />
         <activity android:name=".social.UserDetailsActivity" />
 
 
