@@ -31,11 +31,6 @@ import javanesecoffee.com.blink.helpers.ResponseParser;
 import javanesecoffee.com.blink.managers.ConnectionsManager;
 import javanesecoffee.com.blink.managers.EventManager;
 import javanesecoffee.com.blink.managers.UserManager;
-import javanesecoffee.com.blink.registration.FaceScanActivity;
-import javanesecoffee.com.blink.registration.RegisterActivity;
-import javanesecoffee.com.blink.social.SocialNameCard_RecyclerViewAdapter;
-import javanesecoffee.com.blink.social.SocialSummaryFragment;
-import javanesecoffee.com.blink.social.SocialTabCard_RecyclerViewAdapter;
 
 public class EventDetailActivity extends BlinkActivity implements BLinkEventObserver  {
     User currentUser;
@@ -52,6 +47,7 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
     TextView eventDescription;
 
     TextView alsoAttendingTextView;
+    TextView eventRegisteredTextView;
 
     Button eventRegisterButton;
 
@@ -75,6 +71,8 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
         eventPrice = findViewById(R.id.event_detail_price);
         eventDescription = findViewById(R.id.event_detail_description);
         alsoAttendingTextView = findViewById(R.id.alsoAttendingTextView);
+        eventRegisteredTextView = findViewById(R.id.eventRegisteredTextView);
+
 
         //button
         eventRegisterButton = findViewById(R.id.event_detail_register_button);
@@ -158,9 +156,11 @@ public class EventDetailActivity extends BlinkActivity implements BLinkEventObse
 
             if(EventListTypes.valueOf(eventType) == EventListTypes.PAST_EVENTS) {
                 alsoAttendingTextView.setText("Attended:");
+                eventRegisteredTextView.setVisibility(View.GONE);
             }
             else {
                 alsoAttendingTextView.setText("Also Attending:");
+                eventRegisteredTextView.setVisibility(View.VISIBLE);
             }
         }
     }
