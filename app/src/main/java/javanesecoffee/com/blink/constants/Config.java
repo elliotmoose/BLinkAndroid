@@ -7,9 +7,9 @@ public class Config {
 //    public static final String DOMAIN = "http://192.168.1.110/";
 //    public static final String DOMAIN = "http://192.168.1.1/";
 //   public static final String DOMAIN = "http://10.12.52.139/";
-//   public static final String DOMAIN = "http://10.12.87.72/";
+   public static final String DOMAIN = "http://10.12.87.72/";
 //    public static final String DOMAIN = "http://192.168.1.74/";
 //public static final String DOMAIN = "http://172.20.10.3/";
-    public static final String DOMAIN = "http://192.168.1.88/";
+//    public static final String DOMAIN = "http://192.168.1.88/";
 }
 
