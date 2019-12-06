@@ -137,8 +137,9 @@ public class UserManager extends Manager{
                     boolean success = ResponseParser.responseIsSuccess(response);
                     if(success)
                     {
-                        //TODO send More info POST to server
-                        Log.d("UserManager", "MORE_INFO_TASK performed succesfully");
+                        JSONObject data = ResponseParser.dataFromResponse(response);
+                        User user = new User(data);
+                        setLoggedInUser(user);
                     }
                 } catch (BLinkApiException e) {
                     e.printStackTrace();
